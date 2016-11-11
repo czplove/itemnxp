@@ -123,7 +123,7 @@ static PWRM_DECLARE_CALLBACK_DESCRIPTOR(Wakeup);
  * void
  *
  ****************************************************************************/
-PUBLIC void vAppMain(void)
+PUBLIC void vAppMain(void)	//-这是一个应用的起点,前面的东西不用管,根据这个可以确定一个应用
 {
     #if JENNIC_CHIP_FAMILY == JN516x
         /* Wait until FALSE i.e. on XTAL  - otherwise uart data will be at wrong speed */

@@ -105,7 +105,7 @@
  * RETURNS: bool
  *
  ****************************************************************************/
-PUBLIC bool_t APP_bButtonInitialise(void)
+PUBLIC bool_t APP_bButtonInitialise(void)	//-实际按键初始化
 {
     /* Set DIO lines to inputs with buttons connected */
     vAHI_DioSetDirection(APP_BUTTONS_DIO_MASK, 0);

@@ -214,7 +214,7 @@ PUBLIC void APP_vInitialiseNode(void)
 {
     DBG_vPrintf(TRACE_SWITCH_NODE, "\nAPP_vInitialiseNode*");
 
-    APP_vInitLeds();
+    APP_vInitLeds();	//-指示灯初始化
 
 #ifdef DEEP_SLEEP_ENABLE
     vReloadSleepTimers();
@@ -223,7 +223,7 @@ PUBLIC void APP_vInitialiseNode(void)
     /* Initialise buttons; if a button is held down as the device is reset, delete the device
      * context from flash
      */
-    APP_bButtonInitialise();
+    APP_bButtonInitialise();	//-按键初始化
 
     /*In case of a deep sleep device any button wake up would cause a PDM delete , only check for DIO8
      * pressed for deleting the context */
@@ -249,7 +249,7 @@ PUBLIC void APP_vInitialiseNode(void)
     /* Initialize ZBPro stack */
     ZPS_eAplAfInit();
 
-    DBG_vPrintf(TRACE_SWITCH_NODE, "ZPS_eAplAfInit\n");
+    DBG_vPrintf(TRACE_SWITCH_NODE, "ZPS_eAplAfInit\n");	//-初始化的调光开关执行到了这里
     /*Set Save default channel mask as it is going to be manipulated */
     vEZ_SetDefaultAIBChMask();
 
