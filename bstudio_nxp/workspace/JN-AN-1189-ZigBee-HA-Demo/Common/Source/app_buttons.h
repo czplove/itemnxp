@@ -44,7 +44,7 @@
 /***        Type Definitions                                              ***/
 /****************************************************************************/
 
-#if (defined BUTTON_MAP_DR1199)
+#if (defined BUTTON_MAP_DR1199)	//-这个宏应该是定义了的,仅仅不符合这个软件要求所以不能识别
 
 	typedef enum {
 		APP_E_BUTTONS_BUTTON_1 = 0,
@@ -53,7 +53,7 @@
 		APP_E_BUTTONS_BUTTON_SW2,
 		APP_E_BUTTONS_BUTTON_SW1
 	} APP_teButtons;
-
+//-下面定义了所有的按键信息,也许如何设置的看不见,但是可以使用
     #define APP_BUTTONS_NUM             (5UL)
     #define APP_BUTTONS_BUTTON_1        (8)
 	#define APP_BUTTONS_BUTTON_SW4		(1)
