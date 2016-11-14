@@ -215,19 +215,19 @@ OS_TASK(APP_ButtonsScanTask)
 
     uint8 u8AllReleased = 0xff;
     unsigned int i;
-    uint32 u32DIOState = u32AHI_DioReadInput() & APP_BUTTONS_DIO_MASK;
-
+    uint32 u32DIOState = u32AHI_DioReadInput() & APP_BUTTONS_DIO_MASK;	//-最终直接读IO口值
+	//-上面读IO口的状态说明了这个系统的特殊性
 
     for (i = 0; i < APP_BUTTONS_NUM; i++)
     {
         uint8 u8Button = (uint8) ((u32DIOState >> s_u8ButtonDIOLine[i]) & 1);
 
         s_u8ButtonDebounce[i] <<= 1;
-        s_u8ButtonDebounce[i] |= u8Button;
+        s_u8ButtonDebounce[i] |= u8Button;	//-防抖
         u8AllReleased &= s_u8ButtonDebounce[i];
 
         if (0 == s_u8ButtonDebounce[i] && !s_u8ButtonState[i])
-        {
+        {//-按键被按下
             s_u8ButtonState[i] = TRUE;
 
             /*
@@ -240,7 +240,7 @@ OS_TASK(APP_ButtonsScanTask)
             sButtonEvent.uEvent.sButton.u8Button = i;
             sButtonEvent.uEvent.sButton.u32DIOState=u32DIOState;
             DBG_vPrintf(TRACE_APP_BUTTON, "Button DN=%d\n", i);
-
+			//-发送消息给应用程序
             OS_ePostMessage(APP_msgEvents, &sButtonEvent);
         }
         else if (0xff == s_u8ButtonDebounce[i] && s_u8ButtonState[i] != FALSE)

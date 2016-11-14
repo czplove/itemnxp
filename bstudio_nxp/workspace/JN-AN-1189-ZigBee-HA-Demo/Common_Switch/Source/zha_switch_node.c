@@ -555,7 +555,7 @@ PRIVATE void vHandleJoinAndRejoinNWK( ZPS_tsAfEvent *pZPSevent,teEZ_JoinAction e
  *
  ****************************************************************************/
 PRIVATE void vActionOnButtonActivationAfterDeepSleep(void)
-{
+{//-实现了按键的识别
 
     APP_tsEvent sButton;
     uint32 u32DIOState = u32AHI_DioReadInput();

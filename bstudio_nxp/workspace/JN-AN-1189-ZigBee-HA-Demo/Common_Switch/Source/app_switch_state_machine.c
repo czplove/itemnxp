@@ -515,7 +515,7 @@ PUBLIC void vApp_ProcessKeyCombination(APP_tsEvent sButton)	//-这里应该还是事件,
         case APP_E_EVENT_BUTTON_DOWN:
             DBG_vPrintf(TRACE_SWITCH_STATE, "\nButton Number= %d",sButton.uEvent.sButton.u8Button);
             DBG_vPrintf(TRACE_SWITCH_STATE, "\nDIO State    = %08x\n",sButton.uEvent.sButton.u32DIOState);
-
+			vGenericLEDSetOutput(1, 1);
             eTransitionCode=sButton.uEvent.sButton.u8Button;
 
             if(0 == (sButton.uEvent.sButton.u32DIOState & (UP|ON)))
@@ -551,7 +551,7 @@ PUBLIC void vApp_ProcessKeyCombination(APP_tsEvent sButton)	//-这里应该还是事件,
         case APP_E_EVENT_BUTTON_UP:
             DBG_vPrintf(TRACE_SWITCH_STATE, "\nButton Number= %d",sButton.uEvent.sButton.u8Button);
             DBG_vPrintf(TRACE_SWITCH_STATE, "\nDIO State    = %08x\n",sButton.uEvent.sButton.u32DIOState);
-			vGenericLEDSetOutput(1, 1);	//-点亮对应的LED灯
+			vGenericLEDSetOutput(1, 0);	//-点亮对应的LED灯
 			switch (sButton.uEvent.sButton.u8Button)
             {
                 case 0:
