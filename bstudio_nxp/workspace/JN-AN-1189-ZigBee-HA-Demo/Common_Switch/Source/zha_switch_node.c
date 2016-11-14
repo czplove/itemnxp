@@ -210,7 +210,7 @@ PRIVATE uint16 u16FastPoll;
  * void
  *
  ****************************************************************************/
-PUBLIC void APP_vInitialiseNode(void)
+PUBLIC void APP_vInitialiseNode(void)	//-初始化端点
 {
     DBG_vPrintf(TRACE_SWITCH_NODE, "\nAPP_vInitialiseNode*");
 
@@ -284,7 +284,7 @@ PUBLIC void APP_vInitialiseNode(void)
        /* Register callback that will handle ZDP (mgmt) leave requests */
        ZPS_vAplZdoRegisterZdoLeaveActionCallback(bHandleZdoLeaveRequest);
 
-    OS_eActivateTask(APP_ZHA_Switch_Task);
+    OS_eActivateTask(APP_ZHA_Switch_Task);	//?激活任务,然后系统调用
 }
 /****************************************************************************
  *
@@ -433,7 +433,7 @@ OS_TASK(APP_ZHA_Switch_Task)
                     }
                 }
             #endif
-            vHandleAppEvent( sAppEvent );
+            vHandleAppEvent( sAppEvent );	//-周期运行处理应用事件
             vEZ_EZModeNWKFindAndBindHandler(&sStackEvent);
             break;
         default:
@@ -793,7 +793,7 @@ PRIVATE void vHandleAppEvent( APP_tsEvent sAppEvent )
         case APP_E_EVENT_BUTTON_DOWN:
         case APP_E_EVENT_BUTTON_UP:
 
-            vApp_ProcessKeyCombination(sAppEvent);
+            vApp_ProcessKeyCombination(sAppEvent);	//-按键事件的处理,那中断呢
             #ifdef SLEEP_ENABLE
                 vReloadSleepTimers();
             #endif

@@ -506,7 +506,7 @@ PRIVATE void vSwitchStateMachine(te_TransitionCode eTransitionCode )
  * void
  *
  ****************************************************************************/
-PUBLIC void vApp_ProcessKeyCombination(APP_tsEvent sButton)
+PUBLIC void vApp_ProcessKeyCombination(APP_tsEvent sButton)	//-这里应该还是事件,中断在哪
 {
     te_TransitionCode eTransitionCode=NUMBER_OF_TRANSITION_CODE;
     DBG_vPrintf(TRACE_SWITCH_STATE, "\nButton Event = %d",sButton.eType);
@@ -551,7 +551,8 @@ PUBLIC void vApp_ProcessKeyCombination(APP_tsEvent sButton)
         case APP_E_EVENT_BUTTON_UP:
             DBG_vPrintf(TRACE_SWITCH_STATE, "\nButton Number= %d",sButton.uEvent.sButton.u8Button);
             DBG_vPrintf(TRACE_SWITCH_STATE, "\nDIO State    = %08x\n",sButton.uEvent.sButton.u32DIOState);
-            switch (sButton.uEvent.sButton.u8Button)
+			vGenericLEDSetOutput(1, 1);	//-点亮对应的LED灯
+			switch (sButton.uEvent.sButton.u8Button)
             {
                 case 0:
                     eTransitionCode=COMM_BUTTON_RELEASED;
