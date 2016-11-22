@@ -74,6 +74,8 @@
 #include "app_nwk_event_handler.h"
 #include "app_blink_led.h"
 
+#include "E93196.h"
+
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
@@ -145,6 +147,7 @@ PUBLIC void APP_vInitialiseNode(void)
      */
 
     APP_bButtonInitialise();
+	PIR_SetDefence();
 
     /* We need to get the previous state out off NVM and save it*/
     sSensor.sOccupancySensingServerCluster.u8Occupancy = bGetPreSleepOccupancyState();
@@ -271,6 +274,14 @@ OS_TASK(APP_ZHA_Sensor_Task)
     sAppEvent.eType = APP_E_EVENT_NONE;
     /*Collect the application events*/
 
+    /* check the Alarm clear timer */
+	if(OS_eGetSWTimerStatus(APP_AlarmClearTimer) == OS_E_SWTIMER_EXPIRED)
+	{
+	  OS_eStopSWTimer(APP_AlarmClearTimer);
+	  ProcessDOCIInterrupt();
+	  DBG_vPrintf(TRACE_SENSOR_NODE, "\nAPP E93196 Sensor Task: App Event CLEAN");
+	}
+    
     if (OS_eCollectMessage(APP_msgEvents, &sAppEvent) == OS_E_OK)
     {
         DBG_vPrintf(TRACE_SENSOR_NODE, "\nAPP ZHA Sensor Task: App Event");

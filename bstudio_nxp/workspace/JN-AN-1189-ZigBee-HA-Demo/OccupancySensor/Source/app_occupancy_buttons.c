@@ -149,6 +149,7 @@ PUBLIC void APP_bButtonInitialise(void)
 #ifndef RTOS
 OS_ISR(vISR_SystemController)
 {
+    uint32 u32IOStatus=u32AHI_DioInterruptStatus();
 
 
     ZPS_eAplZdoPoll();
@@ -199,6 +200,16 @@ OS_ISR(vISR_SystemController)
         sButtonEvent.eType = APP_E_EVENT_PERIODIC_REPORT;
         OS_ePostMessage(APP_msgEvents, &sButtonEvent);
     }
+
+	if( u32IOStatus & (1<<17) )
+	{
+		/* disable edge detection until scan complete */
+		//-vAHI_DioInterruptEnable(0, APP_BUTTONS_DIO_MASK);
+		//-OS_eStartSWTimer(APP_ButtonsScanTimer, APP_TIME_MS(10), NULL);
+		//-eInterruptType = E_INTERRUPT_BUTTON;
+		DBG_vPrintf(TRUE, "\nAPP E93196 Sensor Task: App Event ALEARM");
+		OS_eStartSWTimer(APP_AlarmClearTimer, APP_TIME_MS(5000), NULL);
+	}
 
 #ifdef CHECK_VBO_FOR_OTA_ACTIVITY
     uint32 u32BOStatus = u32AHI_BrownOutPoll();

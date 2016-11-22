@@ -219,6 +219,8 @@ endif
 APPSRC += app_zcl_tick_handler.c
 APPSRC += app_blink_led.c
 
+APPSRC += E93196.c
+
 APPSRC += haEzJoin.c
 APPSRC += haEzFindAndBind.c
 APPSRC += haKeys.c
