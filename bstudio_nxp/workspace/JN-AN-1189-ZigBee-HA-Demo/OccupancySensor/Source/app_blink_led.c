@@ -43,6 +43,13 @@
 #include "os.h"
 #include "os_gen.h"
 #include "pwrm.h"
+#include "app_blink_led.h"
+
+/*
+ * 指示灯逻辑:
+ * 上电的时候初始化为输出,当需要的时候把对应的灯标志为闪耀,只要有一个灯在闪,软件定时器就运行
+ * 可以通过查询定时器状态来判断是否启动
+ * */
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
@@ -54,11 +61,15 @@
 /****************************************************************************/
 /***        Type Definitions                                              ***/
 /****************************************************************************/
+
+
+
+
 #define BLINK_LED    GEN_BOARD_LED_D3_VAL
 /****************************************************************************/
 /***        Local Function Prototypes                                     ***/
 /****************************************************************************/
-PRIVATE void vToggleLED(void);
+void vToggleLED(void);
 /****************************************************************************/
 /***        Exported Variables                                            ***/
 /****************************************************************************/
@@ -67,9 +78,18 @@ PRIVATE void vToggleLED(void);
 /****************************************************************************/
 PRIVATE bool_t bDIO1State = FALSE;
 PRIVATE uint32 u32BlinkTickTime = 0;
+uint32 u32Blink_LED = 0;	//-对应位为1说明灯需要闪
 /****************************************************************************/
 /***        Exported Functions                                            ***/
 /****************************************************************************/
+
+PUBLIC void APP_bLedInitialise(void)
+{
+	vAHI_DioSetDirection(0, APP_LedS_DIO_MASK);	//-IO口输出
+}
+
+
+
 
 /****************************************************************************
  *
@@ -121,7 +141,8 @@ PUBLIC void vStopBlinkTimer(void)
     DBG_vPrintf(TRACE_BLINK_LED, "\nAPP Blink LED: Stopping Blink Timer");
     OS_eStopSWTimer(APP_BlinkTimer);
     u32BlinkTickTime = 0;
-    vGenericLEDSetOutput(BLINK_LED, FALSE);
+    //-vGenericLEDSetOutput(BLINK_LED, FALSE);
+	zGenericLEDSetOutput(0, FALSE);
 }
 
 /****************************************************************************/
@@ -138,11 +159,56 @@ PUBLIC void vStopBlinkTimer(void)
  * void
  *
  ****************************************************************************/
-PRIVATE void vToggleLED(void)
+void vToggleLED(void)
 {
     DBG_vPrintf(TRACE_BLINK_LED, "\nAPP Blink LED: Toggle LED to %b", !bDIO1State);
     bDIO1State = !bDIO1State;
-    vGenericLEDSetOutput(BLINK_LED, bDIO1State);
+    //-vGenericLEDSetOutput(BLINK_LED, bDIO1State);
+    u32Blink_LED = 0x0f;
+    zGenericLEDSetOutput(u32Blink_LED, bDIO1State);
+}
+
+void zGenericLEDSetOutput(uint32 LED_num,bool_t bDIOState)
+{
+	//-vAHI_DioSetDirection(0, APP_LedS_DIO_MASK);	//-IO口输出
+	if(LED_num & 0x0001)
+	{
+		DBG_vPrintf(TRACE_BLINK_LED, "\n1");
+	  if(bDIOState)
+	  {
+		vAHI_DioSetOutput(BOARDLED0,0);
+		DBG_vPrintf(TRACE_BLINK_LED, "\n11");
+	  }
+	  else
+	  {
+	  	vAHI_DioSetOutput(0,BOARDLED0);
+	  	DBG_vPrintf(TRACE_BLINK_LED, "\n10");
+	  }
+	}
+	if(LED_num & 0x0002)
+	{
+		DBG_vPrintf(TRACE_BLINK_LED, "\n2");
+	  if(bDIOState)
+		vAHI_DioSetOutput(BOARDLED1,0);
+	  else
+	  	vAHI_DioSetOutput(0,BOARDLED1);
+	}
+	if(LED_num & 0x0004)
+	{
+		DBG_vPrintf(TRACE_BLINK_LED, "\n3");
+	  if(bDIOState)
+		vAHI_DioSetOutput(BOARDLED2,0);
+	  else
+	  	vAHI_DioSetOutput(0,BOARDLED2);
+	}
+	if(LED_num & 0x0008)
+	{
+		DBG_vPrintf(TRACE_BLINK_LED, "\n4");
+	  if(bDIOState)
+		vAHI_DioSetOutput(BOARDLED3,0);
+	  else
+	  	vAHI_DioSetOutput(0,BOARDLED3);
+	}
 }
 /****************************************************************************/
 /***        END OF FILE                                                   ***/

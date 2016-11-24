@@ -140,7 +140,8 @@ PUBLIC void APP_vInitialiseNode(void)
     PDM_teStatus eStatusReportReload;
     DBG_vPrintf(TRACE_SENSOR_NODE, "\nAPP Sensor Node: APP_vInitialiseNode*");
 
-    vGenericLEDInit();
+    //-vGenericLEDInit();
+    APP_bLedInitialise();
     /*Initialise the application buttons*/
     /* Initialise buttons; if a button is held down as the device is reset, delete the device
      * context from flash

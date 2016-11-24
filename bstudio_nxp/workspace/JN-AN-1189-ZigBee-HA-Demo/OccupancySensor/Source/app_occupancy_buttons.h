@@ -54,12 +54,32 @@
         APP_E_BUTTONS_BUTTON_SW1
     } APP_teButtons;
 
-    #define APP_BUTTONS_NUM             (5UL)
+    #define APP_BUTTONS_NUM             (5UL)	//-最多5个按键
     #define APP_BUTTONS_BUTTON_1        (8)
+#if (APP_BUTTONS_NUM > 1)	
     #define APP_BUTTONS_BUTTON_SW4        (1)
-    #define APP_BUTTONS_BUTTON_SW3        (8)
-    #define APP_BUTTONS_BUTTON_SW2        (12)
-    #define APP_BUTTONS_BUTTON_SW1        (9)
+#else
+	#define APP_BUTTONS_BUTTON_SW4        (APP_BUTTONS_BUTTON_1)
+#endif
+
+#if (APP_BUTTONS_NUM > 2)	
+    #define APP_BUTTONS_BUTTON_SW3        (1)
+#else
+	#define APP_BUTTONS_BUTTON_SW3        (APP_BUTTONS_BUTTON_1)
+#endif
+
+#if (APP_BUTTONS_NUM > 3)	
+    #define APP_BUTTONS_BUTTON_SW2        (1)
+#else
+	#define APP_BUTTONS_BUTTON_SW2        (APP_BUTTONS_BUTTON_1)
+#endif
+
+#if (APP_BUTTONS_NUM > 4)	
+    #define APP_BUTTONS_BUTTON_SW1        (1)
+#else
+	#define APP_BUTTONS_BUTTON_SW1        (APP_BUTTONS_BUTTON_1)
+#endif
+
     #define APP_BUTTONS_DIO_MASK        ((1 << APP_BUTTONS_BUTTON_1)|(1 << APP_BUTTONS_BUTTON_SW4) | (1 << APP_BUTTONS_BUTTON_SW3) | (1 << APP_BUTTONS_BUTTON_SW2) | (1 << APP_BUTTONS_BUTTON_SW1))
     #define APP_BUTTONS_DIO_MASK_FOR_DEEP_SLEEP        ((1 << APP_BUTTONS_BUTTON_SW4) | (1 << APP_BUTTONS_BUTTON_SW3) | (1 << APP_BUTTONS_BUTTON_SW2) | (1 << APP_BUTTONS_BUTTON_SW1))
 
@@ -78,6 +98,9 @@ typedef enum {
     E_INTERRUPT_BUTTON,
     E_INTERRUPT_WAKE_TIMER_EXPIRY
 } teInterruptType;
+
+//-指示灯
+
 
 /****************************************************************************/
 /***        Exported Functions                                            ***/

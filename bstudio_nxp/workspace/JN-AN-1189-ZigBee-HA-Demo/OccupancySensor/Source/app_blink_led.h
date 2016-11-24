@@ -43,6 +43,19 @@
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
+#define APP_LEDS_NUM         (4UL)
+#define BOARDLED0_pin            (16)
+#define BOARDLED1_pin            (13)
+#define BOARDLED2_pin            (0)
+#define BOARDLED3_pin            (16)
+
+
+#define BOARDLED0            (1 << BOARDLED0_pin)
+#define BOARDLED1            (1 << BOARDLED1_pin)
+#define BOARDLED2            (1 << BOARDLED2_pin)
+#define BOARDLED3            (1 << BOARDLED3_pin)
+
+#define APP_LedS_DIO_MASK        ((1 << BOARDLED0_pin) | (1 << BOARDLED1_pin) | (1 << BOARDLED2_pin) | (1 << BOARDLED3_pin))
 
 /****************************************************************************/
 /***        Type Definitions                                              ***/
