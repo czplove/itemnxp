@@ -57,19 +57,19 @@
     #define APP_BUTTONS_NUM             (5UL)	//-最多5个按键
     #define APP_BUTTONS_BUTTON_1        (8)
 #if (APP_BUTTONS_NUM > 1)	
-    #define APP_BUTTONS_BUTTON_SW4        (1)
+    #define APP_BUTTONS_BUTTON_SW4        (11)
 #else
 	#define APP_BUTTONS_BUTTON_SW4        (APP_BUTTONS_BUTTON_1)
 #endif
 
 #if (APP_BUTTONS_NUM > 2)	
-    #define APP_BUTTONS_BUTTON_SW3        (1)
+    #define APP_BUTTONS_BUTTON_SW3        (12)
 #else
 	#define APP_BUTTONS_BUTTON_SW3        (APP_BUTTONS_BUTTON_1)
 #endif
 
 #if (APP_BUTTONS_NUM > 3)	
-    #define APP_BUTTONS_BUTTON_SW2        (1)
+    #define APP_BUTTONS_BUTTON_SW2        (17)
 #else
 	#define APP_BUTTONS_BUTTON_SW2        (APP_BUTTONS_BUTTON_1)
 #endif

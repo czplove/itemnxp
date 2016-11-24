@@ -148,7 +148,7 @@ PUBLIC void APP_vInitialiseNode(void)
      */
 
     APP_bButtonInitialise();
-	PIR_SetDefence();
+	//-PIR_SetDefence();
 
     /* We need to get the previous state out off NVM and save it*/
     sSensor.sOccupancySensingServerCluster.u8Occupancy = bGetPreSleepOccupancyState();
