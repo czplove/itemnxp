@@ -77,6 +77,8 @@ extern const uint8 u8MyEndpoint;
 /****************************************************************************/
 /***        Local Variables                                               ***/
 /****************************************************************************/
+uint32 BUTTON_start_tick;
+uint8 consecutiveButtonPressCount = 0;
 
 /****************************************************************************/
 /***        Exported Functions                                            ***/
@@ -158,7 +160,11 @@ PUBLIC void vAppHandleAppEvent(APP_tsEvent sButton)
             DBG_vPrintf(TRACE_EVENT_HANDLER, "\nAPP Process Buttons: Transition Code = %d",eTransitionCode);
 
             eTransitionCode=sButton.uEvent.sButton.u8Button;
-            vDioEventHandler(eTransitionCode);
+            //-vDioEventHandler(eTransitionCode);
+            if(sButton.uEvent.sButton.u8Button == 0)
+            	BUTTON_start_tick = u32AHI_TickTimerRead();
+            if(OS_eGetSWTimerStatus(APP_ButtonDelayTimer) != OS_E_SWTIMER_STOPPED)
+            	OS_eStopSWTimer(APP_ButtonDelayTimer);
             break;
 
         case APP_E_EVENT_BUTTON_UP:
@@ -168,7 +174,15 @@ PUBLIC void vAppHandleAppEvent(APP_tsEvent sButton)
             eTransitionCode = BUTTON_RELEASED_OFFSET | sButton.uEvent.sButton.u8Button;
 
             DBG_vPrintf(TRACE_EVENT_HANDLER, "\nAPP Process Buttons: Transition Code = %d",eTransitionCode);
-            vDioEventHandler(eTransitionCode);
+            //-vDioEventHandler(eTransitionCode);
+            if(sButton.uEvent.sButton.u8Button == 0)
+            {
+            	consecutiveButtonPressCount++;
+				if(OS_eGetSWTimerStatus(APP_ButtonDelayTimer) != OS_E_SWTIMER_RUNNING)
+			    	OS_eStartSWTimer(APP_ButtonDelayTimer, APP_TIME_MS(1000), NULL);
+            }
+            else
+            	vDioEventHandler(eTransitionCode);
             break;
 
         case APP_E_EVENT_WAKE_TIMER:
@@ -192,6 +206,25 @@ PUBLIC void vAppHandleAppEvent(APP_tsEvent sButton)
 /****************************************************************************/
 /***        Local Functions                                                  ***/
 /****************************************************************************/
+void consecutiveButtonPress_Handler()
+{
+	uint32 curr_tick, tick_delta, target_delta;
+	te_TransitionCode eTransitionCode=NUMBER_OF_TRANSITION_CODE;
+
+	curr_tick = u32AHI_TickTimerRead();
+		if (curr_tick > BUTTON_start_tick)
+		  tick_delta = curr_tick - BUTTON_start_tick;
+		else
+		  tick_delta =	4294967296 - BUTTON_start_tick + curr_tick;
+
+	DBG_vPrintf(TRACE_EVENT_HANDLER, "\nAPP Process Buttons: Button press nums = %d",consecutiveButtonPressCount);
+	DBG_vPrintf(TRACE_EVENT_HANDLER, "\nAPP Process Buttons: Button press time = %dS",tick_delta/(16*1000000));
+
+	eTransitionCode=COMM_BUTTON_PRESSED;
+	vDioEventHandler(eTransitionCode);
+	consecutiveButtonPressCount = 0;
+}
+
 /****************************************************************************
  *
  * NAME: vEventStartFindAndBind

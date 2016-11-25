@@ -279,8 +279,15 @@ OS_TASK(APP_ZHA_Sensor_Task)
 	if(OS_eGetSWTimerStatus(APP_AlarmClearTimer) == OS_E_SWTIMER_EXPIRED)
 	{
 	  OS_eStopSWTimer(APP_AlarmClearTimer);
-	  ProcessDOCIInterrupt();
+	  //-ProcessDOCIInterrupt();	  
 	  DBG_vPrintf(TRACE_SENSOR_NODE, "\nAPP E93196 Sensor Task: App Event CLEAN");
+	}
+
+	if(OS_eGetSWTimerStatus(APP_ButtonDelayTimer) == OS_E_SWTIMER_EXPIRED)
+	{
+		OS_eStopSWTimer(APP_ButtonDelayTimer);
+		consecutiveButtonPress_Handler();
+		DBG_vPrintf(TRACE_SENSOR_NODE, "\nAPP COMM BUTTON Task: Button Event");
 	}
     
     if (OS_eCollectMessage(APP_msgEvents, &sAppEvent) == OS_E_OK)
