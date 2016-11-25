@@ -54,10 +54,10 @@
         APP_E_BUTTONS_BUTTON_SW1
     } APP_teButtons;
 
-    #define APP_BUTTONS_NUM             (5UL)	//-最多5个按键
+    #define APP_BUTTONS_NUM             (2UL)	//-最多5个按键
     #define APP_BUTTONS_BUTTON_1        (8)
 #if (APP_BUTTONS_NUM > 1)	
-    #define APP_BUTTONS_BUTTON_SW4        (11)
+    #define APP_BUTTONS_BUTTON_SW4        (1)
 #else
 	#define APP_BUTTONS_BUTTON_SW4        (APP_BUTTONS_BUTTON_1)
 #endif

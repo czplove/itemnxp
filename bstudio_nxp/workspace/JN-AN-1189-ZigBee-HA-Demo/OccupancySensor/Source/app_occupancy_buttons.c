@@ -46,6 +46,8 @@
 #include "pwrm.h"
 #include "app_occupancy_buttons.h"
 #include "app_sensor_state_machine.h"
+#include "E93196.h"
+
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
@@ -149,14 +151,17 @@ PUBLIC void APP_bButtonInitialise(void)
 #ifndef RTOS
 OS_ISR(vISR_SystemController)
 {
-    //-uint32 u32IOStatus=u32AHI_DioInterruptStatus();
+    uint32 u32IOStatus;
+	uint32 u32DioInput = 0;
 
 
     ZPS_eAplZdoPoll();
 
     /* clear pending DIO changed bits by reading register */
     uint8 u8WakeInt = u8AHI_WakeTimerFiredStatus();
-    u32DioInterrupts|=u32AHI_DioInterruptStatus();	//-读一次会清楚状态
+	u32IOStatus = u32AHI_DioInterruptStatus();
+    u32DioInterrupts|=u32IOStatus;	//-读一次会清除状态
+    u32DioInput = u32AHI_DioReadInput();
 
     if (u8WakeInt & E_AHI_WAKE_TIMER_MASK_0)
     {
@@ -201,15 +206,17 @@ OS_ISR(vISR_SystemController)
         OS_ePostMessage(APP_msgEvents, &sButtonEvent);
     }
 
-	//-if( u32IOStatus & (1<<17) )
-	//-{
+	if(( u32IOStatus & PIR_DOCI_PIN ) && ((u32DioInput & PIR_DOCI_PIN) == 0))
+	{
 		/* disable edge detection until scan complete */
 		//-vAHI_DioInterruptEnable(0, APP_BUTTONS_DIO_MASK);
 		//-OS_eStartSWTimer(APP_ButtonsScanTimer, APP_TIME_MS(10), NULL);
 		//-eInterruptType = E_INTERRUPT_BUTTON;
-		//-DBG_vPrintf(TRUE, "\nAPP E93196 Sensor Task: App Event ALEARM");
-		//-OS_eStartSWTimer(APP_AlarmClearTimer, APP_TIME_MS(5000), NULL);
-	//-}
+		vAHI_DioInterruptEnable(0, PIR_DOCI_PIN);
+		u32AHI_DioInterruptStatus();
+		DBG_vPrintf(TRUE, "\nAPP E93196 Sensor Task: App Event ALARM");
+		OS_eStartSWTimer(APP_AlarmClearTimer, APP_TIME_MS(5000), NULL);
+	}
 
 #ifdef CHECK_VBO_FOR_OTA_ACTIVITY
     uint32 u32BOStatus = u32AHI_BrownOutPoll();

@@ -148,7 +148,7 @@ PUBLIC void APP_vInitialiseNode(void)
      */
 
     APP_bButtonInitialise();
-	//-PIR_SetDefence();
+	PIR_SetDefence();	//-初始化人体传感器
 
     /* We need to get the previous state out off NVM and save it*/
     sSensor.sOccupancySensingServerCluster.u8Occupancy = bGetPreSleepOccupancyState();
@@ -279,8 +279,9 @@ OS_TASK(APP_ZHA_Sensor_Task)
 	if(OS_eGetSWTimerStatus(APP_AlarmClearTimer) == OS_E_SWTIMER_EXPIRED)
 	{
 	  OS_eStopSWTimer(APP_AlarmClearTimer);
-	  //-ProcessDOCIInterrupt();	  
-	  DBG_vPrintf(TRACE_SENSOR_NODE, "\nAPP E93196 Sensor Task: App Event CLEAN");
+	  //-ProcessDOCIInterrupt();
+	  vAHI_DioInterruptEnable(PIR_DOCI_PIN, 0);
+	  DBG_vPrintf(TRUE, "\nAPP E93196 Sensor Task: App Event CLEAN");
 	}
 
 	if(OS_eGetSWTimerStatus(APP_ButtonDelayTimer) == OS_E_SWTIMER_EXPIRED)

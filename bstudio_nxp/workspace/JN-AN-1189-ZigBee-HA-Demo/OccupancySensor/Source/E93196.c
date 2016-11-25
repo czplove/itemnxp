@@ -77,7 +77,7 @@ void InitE93196Interrupt(void)
 
     DOCI_INIT_IN(); 
     vAHI_DioSetPullup(PIR_DOCI_PIN,0);
-	vAHI_DioWakeEdge(PIR_DOCI_PIN,0);
+	vAHI_DioWakeEdge(0,PIR_DOCI_PIN);	//-测试使用下降沿触发
 	vAHI_DioWakeEnable(PIR_DOCI_PIN,0);
 }
 
@@ -354,17 +354,17 @@ void PIR_ClearDefence(void)
 
 void PIR_SetDefence(void)
 {
-  InitE93196_IO();
+  //-InitE93196_IO();
   /* 初始化E931.96报警中断，不使能P0.4/INT_DOCI引脚中断*/
   InitE93196Interrupt();
 
   /* 设置工作模式*/
-  ConfigE93196Cfg(&E93196DefaultCmd);
+  //-ConfigE93196Cfg(&E93196DefaultCmd);
 
   //DOCI_ENABLE_INTERRUPT();
   vAHI_DioInterruptEnable(PIR_DOCI_PIN,0);
   /*清除不确定中断状态*/
-  ClearE93196Interrupt();
+  //-ClearE93196Interrupt();
 }
 /**
   * @}

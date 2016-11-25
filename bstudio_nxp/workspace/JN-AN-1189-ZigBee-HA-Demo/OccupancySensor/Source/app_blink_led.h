@@ -43,11 +43,26 @@
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
-#define APP_LEDS_NUM         (4UL)
-#define BOARDLED0_pin            (16)
-#define BOARDLED1_pin            (13)
+#define APP_LEDS_NUM         (2UL)
+#if APP_LEDS_NUM > 0
+#define BOARDLED0_pin            (4)	//-RedLED
+#endif
+#if APP_LEDS_NUM > 1
+#define BOARDLED1_pin            (12)	//-GreenLED
+#else
+#define BOARDLED1_pin            (BOARDLED0_pin)
+#endif
+#if APP_LEDS_NUM > 2
 #define BOARDLED2_pin            (0)
+#else
+#define BOARDLED2_pin            (BOARDLED0_pin)
+#endif
+#if APP_LEDS_NUM > 3
 #define BOARDLED3_pin            (16)
+#else
+#define BOARDLED3_pin            (BOARDLED0_pin)
+#endif
+
 
 
 #define BOARDLED0            (1 << BOARDLED0_pin)
