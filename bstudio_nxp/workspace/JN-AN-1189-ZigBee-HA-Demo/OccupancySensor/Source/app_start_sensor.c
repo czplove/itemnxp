@@ -170,6 +170,7 @@ PUBLIC void vAppMain(void)
         vAHI_HighPowerModuleEnable(TRUE, TRUE);
     #endif
 
+    vAHI_TickTimerConfigure(E_AHI_TICK_TIMER_CONT);
     /* start the RTOS */
     OS_vStart(vInitialiseApp, vUnclaimedInterrupt, vOSError);
     DBG_vPrintf(TRACE_START, "OS started\n");

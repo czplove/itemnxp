@@ -82,6 +82,38 @@ extern const uint8 u8MyEndpoint;
 /****************************************************************************/
 /***        Exported Functions                                            ***/
 /****************************************************************************/
+/**
+  * @brief
+  * @param
+  * @retval None
+  */
+static void Delay (uint32 u32DelayUs)
+{
+/*
+  while (usec--){
+    asm("nop");asm("nop");asm("nop");asm("nop");asm("nop");
+    asm("nop");asm("nop");asm("nop");asm("nop");asm("nop");
+    asm("nop");asm("nop");asm("nop");asm("nop");asm("nop");
+    asm("nop");asm("nop");asm("nop");asm("nop");asm("nop");
+    asm("nop");asm("nop");asm("nop");asm("nop");asm("nop");
+    asm("nop");asm("nop");asm("nop");asm("nop");asm("nop");
+    asm("nop");asm("nop");
+  }
+  */
+  uint32 start_tick,curr_tick, tick_delta, target_delta;
+
+  target_delta = u32DelayUs * 16;
+  start_tick = u32AHI_TickTimerRead();
+  do
+  {
+    vAHI_WatchdogRestart();
+    curr_tick = u32AHI_TickTimerRead();
+    if (curr_tick > start_tick)
+      tick_delta = curr_tick - start_tick;
+    else
+      tick_delta =  4294967296 - start_tick + curr_tick;
+  } while (tick_delta < target_delta);
+}
 /****************************************************************************
  *
  * NAME: vDioEventHandler
@@ -111,12 +143,15 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
             break;
 
         case SW1_PRESSED:
-        case SW3_PRESSED:
+        case SW3_PRESSED:	//-正转
             //-vHandleFallingEdgeEvent();
+        	Delay(500*1000);
         	if(bDIO3State == FALSE)
-        		vAHI_DioSetOutput(0x0008,0);	//-DIO3输出高
+        		vAHI_DioSetOutput(0x0008,0);	//-DIO3输出高	---控制电源
         	else
         		vAHI_DioSetOutput(0,0x0008);	//-DIO3输出低
+
+        	vAHI_DioSetOutput(0x0004,0);
         	bDIO3State = !bDIO3State;
             break;
 
@@ -127,10 +162,13 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
         case SW2_PRESSED:
         case SW4_PRESSED:
             //-vStartPersistantPolling();
+        	Delay(500*1000);
         	if(bDIO2State == FALSE)
-        		vAHI_DioSetOutput(0x0004,0);	//-DIO2输出高
+        		vAHI_DioSetOutput(0x0008,0);	//-DIO2输出高	---正反转
         	else
-        		vAHI_DioSetOutput(0,0x0004);	//-DIO2输出低
+        		vAHI_DioSetOutput(0,0x0008);	//-DIO2输出低
+
+        	vAHI_DioSetOutput(0,0x0004);
         	bDIO2State = !bDIO2State;
             break;
         //-case SW3_PRESSED:
