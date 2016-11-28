@@ -142,7 +142,7 @@ PRIVATE void vToggleLED(void)
 {
     DBG_vPrintf(TRACE_BLINK_LED, "\nAPP Blink LED: Toggle LED to %b", !bDIO1State);
     bDIO1State = !bDIO1State;
-    vGenericLEDSetOutput(BLINK_LED, bDIO1State);
+    //-vGenericLEDSetOutput(BLINK_LED, bDIO1State);
 }
 /****************************************************************************/
 /***        END OF FILE                                                   ***/

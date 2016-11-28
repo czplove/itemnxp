@@ -61,7 +61,8 @@
 /****************************************************************************/
 /***        Type Definitions                                              ***/
 /****************************************************************************/
-
+PRIVATE bool_t bDIO2State = FALSE;
+PRIVATE bool_t bDIO3State = FALSE;
 /****************************************************************************/
 /***        Local Function Prototypes                                     ***/
 /****************************************************************************/
@@ -102,15 +103,21 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
     {
         /* Fall through for the button presses as there will be a delayed action*/
         case COMM_BUTTON_PRESSED:
-            vEventStartFindAndBind();
+            //-vEventStartFindAndBind();
             break;
 
         case COMM_BUTTON_RELEASED:
-            vEventStopFindAndBind();
+            //-vEventStopFindAndBind();
             break;
 
         case SW1_PRESSED:
-            vHandleFallingEdgeEvent();
+        case SW3_PRESSED:
+            //-vHandleFallingEdgeEvent();
+        	if(bDIO3State == FALSE)
+        		vAHI_DioSetOutput(0x0008,0);	//-DIO3输出高
+        	else
+        		vAHI_DioSetOutput(0,0x0008);	//-DIO3输出低
+        	bDIO3State = !bDIO3State;
             break;
 
         case SW1_RELEASED:
@@ -118,15 +125,21 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
             break;
 
         case SW2_PRESSED:
-            vStartPersistantPolling();
+        case SW4_PRESSED:
+            //-vStartPersistantPolling();
+        	if(bDIO2State == FALSE)
+        		vAHI_DioSetOutput(0x0004,0);	//-DIO2输出高
+        	else
+        		vAHI_DioSetOutput(0,0x0004);	//-DIO2输出低
+        	bDIO2State = !bDIO2State;
             break;
-        case SW3_PRESSED:
-            vStopPersistantPolling();
-            break;
+        //-case SW3_PRESSED:
+        //-    vStopPersistantPolling();
+        //-    break;
         case SW2_RELEASED:
         case SW3_RELEASED:
         case SW4_RELEASED:
-        case SW4_PRESSED:
+        //-case SW4_PRESSED:
             vAttemptToSleep();
             break;
         default:
