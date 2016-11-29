@@ -23,6 +23,7 @@
           <SWTimers xmi:type="oscfg:SWTimer" xmi:id="_JN7nAMxkEeKAgelT3PSGOA" name="APP_JoinTimer" Activates="_x9JOoDrUEd6X1p7n01EMHA"/>
           <SWTimers xmi:type="oscfg:SWTimer" xmi:id="_-QefkIzBEeOT0_bJAiIvRw" name="APP_BackOffTimer" Activates="_x9JOoDrUEd6X1p7n01EMHA"/>
           <SWTimers xmi:type="oscfg:SWTimer" xmi:id="_pY4d8NKDEeOQFMzSmJcTYg" name="APP_IndicatorTimer" Activates="_sDJr0NKDEeOQFMzSmJcTYg"/>
+          <SWTimers xmi:type="oscfg:SWTimer" xmi:id="_-_nUoLYoEeaMIOXewI2orA" name="APP_AlarmClearTimer" Activates="_5Q3-8LJJEd6awJvEGNtQBw"/>
         </HWCounters>
         <Callbacks xmi:type="oscfg:CallbackFunction" xmi:id="_Y9qlUTuwEd6x482rWS0aIQ" name="APP_cbEnableTickTimer"/>
         <Callbacks xmi:type="oscfg:CallbackFunction" xmi:id="_gJsHIDuwEd6x482rWS0aIQ" name="APP_cbDisableTickTimer"/>
@@ -137,6 +138,11 @@
                 <children xmi:type="notation:Node" xmi:id="_pY7hQNKDEeOQFMzSmJcTYg" visible="true" type="3006" element="_pY4d8NKDEeOQFMzSmJcTYg">
                   <children xmi:type="notation:Node" xmi:id="_pY8IUdKDEeOQFMzSmJcTYg" visible="true" type="5005"/>
                   <layoutConstraint xmi:type="notation:Bounds" xmi:id="_pY8IUNKDEeOQFMzSmJcTYg" x="58" y="318" width="-1" height="-1"/>
+                </children>
+                <children xmi:type="notation:Node" xmi:id="_-_wekLYoEeaMIOXewI2orA" visible="true" type="3006" element="_-_nUoLYoEeaMIOXewI2orA">
+                  <children xmi:type="notation:DecorationNode" xmi:id="_-_wek7YoEeaMIOXewI2orA" visible="true" type="5005"/>
+                  <styles xmi:type="notation:DescriptionStyle" xmi:id="_-_wekbYoEeaMIOXewI2orA" description=""/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-_wekrYoEeaMIOXewI2orA" x="23" y="81" width="266" height="21"/>
                 </children>
                 <styles xmi:type="notation:TitleStyle" xmi:id="_lHpu5jpQEd6X1p7n01EMHA" showTitle="true"/>
                 <styles xmi:type="notation:SortingStyle" xmi:id="_lHpu5zpQEd6X1p7n01EMHA" sorting="None"/>
@@ -966,6 +972,16 @@
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_NU4sYxMpEeS_U8ViXwe0Iw" points="[-27, 0, 454, -3]$[-477, 3, 4, 0]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_NU7vsBMpEeS_U8ViXwe0Iw" id="(0.1904762,0.375)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_NU8WwBMpEeS_U8ViXwe0Iw" id="(0.95384616,0.6)"/>
+    </edges>
+    <edges xmi:type="notation:Edge" xmi:id="_KrUt0LYpEeaMIOXewI2orA" visible="true" type="4004" source="_-_wekLYoEeaMIOXewI2orA" target="_5Q3-8bJJEd6awJvEGNtQBw">
+      <children xmi:type="notation:DecorationNode" xmi:id="_KrUt07YpEeaMIOXewI2orA" visible="true" type="6005">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_KrUt1LYpEeaMIOXewI2orA" x="0" y="40"/>
+      </children>
+      <styles xmi:type="notation:RoutingStyle" xmi:id="_KrUt0bYpEeaMIOXewI2orA" roundedBendpointsRadius="0" routing="Manual" smoothness="None" avoidObstructions="false" closestDistance="false" jumpLinkStatus="None" jumpLinkType="Semicircle" jumpLinksReverse="false"/>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_KrUt0rYpEeaMIOXewI2orA" points="[0, 21, -578, -146]$[0, 60, -578, -107]$[301, 60, -277, -107]$[301, 145, -277, -22]$[586, 145, 8, -22]$[586, 165, 8, -2]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_KrUt1bYpEeaMIOXewI2orA" id="(0.16541353383458646,0.0)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_KrUt1rYpEeaMIOXewI2orA" id="(0.41228070175438597,0.031746031746031744)"/>
     </edges>
   </notation:Diagram>
 </xmi:XMI>

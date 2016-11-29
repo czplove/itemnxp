@@ -198,6 +198,15 @@ OS_TASK(ZCL_Task)
         vZCL_EventHandler(&sCallBackEvent);
     }
 
+	/* check the Alarm clear timer */
+	if(OS_eGetSWTimerStatus(APP_AlarmClearTimer) == OS_E_SWTIMER_EXPIRED)
+	{
+	  OS_eStopSWTimer(APP_AlarmClearTimer);
+	  //-ProcessDOCIInterrupt();	  
+	  IASZONE_STATUS_MASK_RESET_fun();
+	  DBG_vPrintf(TRUE, "\nAPP E93196 Sensor Task: App Event CLEAN");
+	}
+
 }
 /****************************************************************************/
 /***        Local Functions                                               ***/

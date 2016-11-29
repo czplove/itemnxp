@@ -45,6 +45,8 @@
 #include "app_timer_driver.h"
 #include "pwrm.h"
 #include "app_buttons.h"
+#include "GenericBoard.h"
+#include "driver/E93196.h"
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
@@ -164,7 +166,9 @@ OS_ISR(vISR_SystemController)
 
 	if( u32IOStatus & PIR_DOCI_PIN )
 	{
-
+		IASZONE_STATUS_MASK_SET_fun();
+		DBG_vPrintf(TRUE, "\nAPP E93196 Sensor Task: App Event ALARM");
+		OS_eStartSWTimer(APP_AlarmClearTimer, APP_TIME_MS(5000), NULL);
 	}
 
     if (u8WakeInt & E_AHI_WAKE_TIMER_MASK_1)

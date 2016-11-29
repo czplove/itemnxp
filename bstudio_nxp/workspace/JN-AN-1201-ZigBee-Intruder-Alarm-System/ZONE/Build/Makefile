@@ -125,6 +125,7 @@ SDK_BASE_DIR        = $(abspath ../../../../sdk/$(JENNIC_SDK))
 APP_BASE            = $(abspath ../..)
 DEV_BLD_DIR         = $(APP_BASE)/$(TARGET)/Build
 DEV_SRC_DIR         = $(APP_BASE)/$(TARGET)/Source
+//-DEV_SRC_DIR         += $(APP_BASE)/$(TARGET)/Source/driver
 
 APP_COMMON_SRC_DIR  = $(APP_BASE)/Common/Source
 

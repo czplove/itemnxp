@@ -79,7 +79,7 @@
 #include "PingParent.h"
 #ifdef MS
 #include "GenericBoard.h"
-#include "E93196.h"
+#include "driver/E93196.h"
 #endif
 
 #ifdef VMS
@@ -296,7 +296,7 @@ OS_TASK(APP_ZHA_Switch_Task)
             break;
 
         case E_RUNNING:
-            DBG_vPrintf(TRACE_ZONE_NODE, "E_RUNNING\r\n");
+            //-DBG_vPrintf(TRACE_ZONE_NODE, "E_RUNNING\r\n");
             if (sStackEvent.eType == ZPS_EVENT_NWK_FAILED_TO_JOIN)
             {
                 DBG_vPrintf(TRACE_ZONE_NODE, "Start join failed tmr 1000\n");
@@ -458,6 +458,28 @@ PRIVATE void vDeletePDMOnButtonPress(uint8 u8ButtonDIO)
         DBG_vPrintf(TRACE_ZONE_NODE,"Deleting the PDM\n");
         PDM_vDeleteAllDataRecords();
     }
+}
+
+void IASZONE_STATUS_MASK_SET_fun(void)
+{
+	vGenericLEDSetOutput(GEN_BOARD_LED_D1_VAL,TRUE);
+	                        DBG_vPrintf(TRACE_ZONE_NODE,"CLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_SET\n ");
+	                        app_vUpdateZoneStatusAttribute (
+	                                                        ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/
+	                                                        CLD_IASZONE_STATUS_MASK_ALARM1,/*uint16                            u16StatusBitMask,*/
+	                                                        CLD_IASZONE_STATUS_MASK_SET    /*bool_t                            bStatusState);*/
+	                                                        );
+}
+
+void IASZONE_STATUS_MASK_RESET_fun(void)
+{
+	vGenericLEDSetOutput(GEN_BOARD_LED_D1_VAL,FALSE);
+	                        DBG_vPrintf(TRACE_ZONE_NODE,"CLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_RESET\n ");
+	                        app_vUpdateZoneStatusAttribute (
+	                                                        ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/
+	                                                        CLD_IASZONE_STATUS_MASK_ALARM1,/*uint16                            u16StatusBitMask,*/
+	                                                        CLD_IASZONE_STATUS_MASK_RESET  /*bool_t                            bStatusState);*/
+	                                                        );
 }
 
 /****************************************************************************

@@ -12,7 +12,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include <jendefs.h>
 #include "AppHardwareApi_JN516x.h"
-#include "E93196.h"
+#include "driver/E93196.h"
 //#include "osal_memory.h"
 //#include "hal_board.h"
 //#include "hal_led.h"
@@ -359,12 +359,12 @@ void PIR_SetDefence(void)
   InitE93196Interrupt();
 
   /* 设置工作模式*/
-  ConfigE93196Cfg(&E93196DefaultCmd);
+  //-ConfigE93196Cfg(&E93196DefaultCmd);
 
   //DOCI_ENABLE_INTERRUPT();
   vAHI_DioInterruptEnable(PIR_DOCI_PIN,0);
   /*清除不确定中断状态*/
-  ClearE93196Interrupt();
+  //-ClearE93196Interrupt();
 }
 /**
   * @}
