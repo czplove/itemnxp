@@ -162,6 +162,11 @@ OS_ISR(vISR_SystemController)
         OS_eStartSWTimer(APP_ButtonsScanTimer, APP_TIME_MS(10), NULL);
     }
 
+	if( u32IOStatus & PIR_DOCI_PIN )
+	{
+
+	}
+
     if (u8WakeInt & E_AHI_WAKE_TIMER_MASK_1)
     {
         /* wake timer interrupt got us here */

@@ -79,6 +79,7 @@
 #include "PingParent.h"
 #ifdef MS
 #include "GenericBoard.h"
+#include "E93196.h"
 #endif
 
 #ifdef VMS
@@ -171,6 +172,7 @@ PUBLIC void APP_vInitialiseNode(void)
      * context from flash
      */
     APP_bButtonInitialise();
+	PIR_SetDefence();	//-这个初始化必须保证中断已经准备好了,否则中断错过会导致传感器失效
 
     /*In case of a deep sleep device any button wake up would cause a PDM delete , only check for DIO8
      * pressed for deleting the context */

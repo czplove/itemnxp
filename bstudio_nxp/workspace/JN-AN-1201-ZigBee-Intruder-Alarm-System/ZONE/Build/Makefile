@@ -164,6 +164,9 @@ APPSRC += app_zcl_ZONE_task.c
 APPSRC += app_buttons.c
 APPSRC += haEzJoin.c
 APPSRC += PingParent.c
+
+APPSRC += E93196.c
+
 APP_ZPSCFG = app.zpscfg
 
 BIN_SUFFIX=_$(DR)_$(ZONE_TYPE)
