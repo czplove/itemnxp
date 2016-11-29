@@ -77,7 +77,7 @@
 #include "app_ias_save.h"
 #include "app_sleep_functions.h"
 #include "PingParent.h"
-#ifdef CSW
+#ifdef MS
 #include "GenericBoard.h"
 #endif
 
@@ -480,7 +480,7 @@ PRIVATE void vHandleAppEvent( APP_tsEvent sAppEvent )
                     case APP_E_BUTTONS_BUTTON_1:
                         vSendEnrollReq(ZONE_ZONE_ENDPOINT);
                     break;
-                    #ifdef CSW
+                    #ifdef MS
                     case APP_E_BUTTONS_BUTTON_SW3:
                     {
                         vGenericLEDSetOutput(GEN_BOARD_LED_D1_VAL,TRUE);

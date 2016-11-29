@@ -62,7 +62,7 @@
 #include "LightingBoard.h"
 #include "app_ias_indicator.h"
 #endif
-#ifdef CSW
+#ifdef MS
 #include "GenericBoard.h"
 #endif
 /****************************************************************************/
@@ -195,7 +195,7 @@ PUBLIC void vAppMain(void)
          */
         PWRM_vManagePower();
 
-        DBG_vPrintf(TRACE_START, ".");
+        //-DBG_vPrintf(TRACE_START, ".");
     }
 }
 
@@ -286,7 +286,7 @@ PRIVATE void vSetUpWakeUpConditions(void)
    /*
     * Set the DIO with the right edges for wake up
     * */
-#ifdef CSW
+#ifdef MS
     /*Set the LED to inputs to reduce power consumption */
     /*the following pins are connected to LEDs hence drive them low*/
     vGenericLEDSetOutput(1, 0);

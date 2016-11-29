@@ -66,7 +66,7 @@
 #include "zha_ZONE_node.h"
 #include "ahi_aes.h"
 #include "app_events.h"
-#ifdef CSW
+#ifdef MS
 #include "GenericBoard.h"
 #endif
 #include "ha.h"
@@ -425,7 +425,7 @@ PRIVATE void vAPP_ZCL_DeviceSpecific_Init(void)
 #ifdef VMS
     memcpy(sDevice.sBasicServerCluster.au8ModelIdentifier, "ZHA-VMS", CLD_BAS_MODEL_ID_SIZE);
 #endif
-#ifdef CSW
+#ifdef MS
     memcpy(sDevice.sBasicServerCluster.au8ModelIdentifier, "ZHA-CSW", CLD_BAS_MODEL_ID_SIZE);
 #endif
     memcpy(sDevice.sBasicServerCluster.au8DateCode, "20150112", CLD_BAS_DATE_SIZE);
@@ -434,7 +434,7 @@ PRIVATE void vAPP_ZCL_DeviceSpecific_Init(void)
 #ifdef VMS
         eZCL_Status = eCLD_IASZoneUpdateZoneType(ZONE_ZONE_ENDPOINT,E_CLD_IASZONE_TYPE_VIBRATION_MOVEMENT_SENSOR);
 #endif
-#ifdef CSW
+#ifdef MS
         eZCL_Status = eCLD_IASZoneUpdateZoneType(ZONE_ZONE_ENDPOINT,E_CLD_IASZONE_TYPE_CONTACT_SWITCH);
 #endif
 
