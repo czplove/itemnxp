@@ -78,7 +78,7 @@ void InitE93196Interrupt(void)
     DOCI_INIT_IN(); 
     vAHI_DioSetPullup(PIR_DOCI_PIN,0);
 	vAHI_DioWakeEdge(PIR_DOCI_PIN,0);
-	vAHI_DioWakeEnable(PIR_DOCI_PIN,0);
+	//-vAHI_DioWakeEnable(PIR_DOCI_PIN,0);
 }
 
 void ClearE93196Interrupt(void)
