@@ -119,6 +119,8 @@ PRIVATE void app_vUpdateZoneStatusAttribute(  uint8     u8SourceEndPoint,
 
 PUBLIC  tsDeviceDesc           sDeviceDesc;
 uint16 u16GroupId;
+uint16 consecutiveButtonPressCount = 0;
+uint32 BUTTON_start_tick;
 /****************************************************************************/
 /***        Local Variables                                               ***/
 /****************************************************************************/
@@ -261,7 +263,7 @@ OS_TASK(APP_ZHA_Switch_Task)
 
     /*Collect the application events*/
     if (OS_eCollectMessage(APP_msgEvents, &sAppEvent) == OS_E_OK)
-    {
+    {//-sAppEvent内会存储传送过来的消息
 
     }
     /*Collect stack Events */
@@ -502,7 +504,10 @@ PRIVATE void vHandleAppEvent( APP_tsEvent sAppEvent )
                 switch(sAppEvent.uEvent.sButton.u8Button)
                 {
                     case APP_E_BUTTONS_BUTTON_1:
-                        vSendEnrollReq(ZONE_ZONE_ENDPOINT);
+                        //-vSendEnrollReq(ZONE_ZONE_ENDPOINT);	//-这里可能是按键触发的,注册,需要注意
+                        BUTTON_start_tick = u32AHI_TickTimerRead();
+						if(OS_eGetSWTimerStatus(APP_ButtonDelayTimer) != OS_E_SWTIMER_STOPPED)
+            				OS_eStopSWTimer(APP_ButtonDelayTimer);
                     break;
                     #ifdef MS
                     case APP_E_BUTTONS_BUTTON_SW3:
@@ -555,6 +560,16 @@ PRIVATE void vHandleAppEvent( APP_tsEvent sAppEvent )
                 }
         break;
         }
+		case APP_E_EVENT_BUTTON_UP:
+				switch(sAppEvent.uEvent.sButton.u8Button)
+                {
+                    case APP_E_BUTTONS_BUTTON_1:
+						consecutiveButtonPressCount++;
+						if(OS_eGetSWTimerStatus(APP_ButtonDelayTimer) != OS_E_SWTIMER_RUNNING)
+			    			OS_eStartSWTimer(APP_ButtonDelayTimer, APP_TIME_MS(1000), NULL);
+						break;
+				}
+			break;
         default:
             break;
     }

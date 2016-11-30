@@ -175,6 +175,7 @@ PUBLIC void vAppMain(void)
         u32AppApiInit(NULL, NULL, NULL, NULL, NULL, NULL);
     #endif
 
+    vAHI_TickTimerIntEnable(TRUE);
     /* start the RTOS */
     OS_vStart(vInitialiseApp, vUnclaimedInterrupt, vOSError);
     DBG_vPrintf(TRACE_START, "OS started\n");
