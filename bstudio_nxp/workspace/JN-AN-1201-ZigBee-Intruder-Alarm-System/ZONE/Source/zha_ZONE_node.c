@@ -471,7 +471,7 @@ void IASZONE_STATUS_MASK_SET_fun(void)
 {
 	//-vGenericLEDSetOutput(GEN_BOARD_LED_D2_VAL,TRUE);
 	vAHI_DioSetOutput(0,1<<0);
-	                        DBG_vPrintf(TRACE_ZONE_NODE,"\nCLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_SET\n ");
+	                        //-DBG_vPrintf(TRACE_ZONE_NODE,"\nCLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_SET\n ");
 	                        app_vUpdateZoneStatusAttribute (
 	                                                        ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/
 	                                                        CLD_IASZONE_STATUS_MASK_ALARM1,/*uint16                            u16StatusBitMask,*/
@@ -483,7 +483,7 @@ void IASZONE_STATUS_MASK_RESET_fun(void)
 {
 	//-vGenericLEDSetOutput(GEN_BOARD_LED_D2_VAL,FALSE);
 	vAHI_DioSetOutput(1<<0,0);
-	                        DBG_vPrintf(TRACE_ZONE_NODE,"\nCLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_RESET\n ");
+	                        //-DBG_vPrintf(TRACE_ZONE_NODE,"\nCLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_RESET\n ");
 	                        app_vUpdateZoneStatusAttribute (
 	                                                        ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/
 	                                                        CLD_IASZONE_STATUS_MASK_ALARM1,/*uint16                            u16StatusBitMask,*/

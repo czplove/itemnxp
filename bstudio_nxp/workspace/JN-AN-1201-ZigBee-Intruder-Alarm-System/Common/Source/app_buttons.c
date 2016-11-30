@@ -169,6 +169,7 @@ OS_ISR(vISR_SystemController)
 	//-if( u32IOStatus & PIR_DOCI_PIN )
 	{
 		vAHI_DioInterruptEnable(0,PIR_DOCI_PIN);
+		u32AHI_DioInterruptStatus();
 		IASZONE_STATUS_MASK_SET_fun();
 		DBG_vPrintf(TRUE, "\nAPP E93196 Sensor Task: App Event ALARM\n");
 		OS_eStartSWTimer(APP_AlarmClearTimer, APP_TIME_MS(5000), NULL);
