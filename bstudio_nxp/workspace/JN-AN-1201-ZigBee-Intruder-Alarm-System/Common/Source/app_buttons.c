@@ -165,9 +165,10 @@ OS_ISR(vISR_SystemController)
         OS_eStartSWTimer(APP_ButtonsScanTimer, APP_TIME_MS(10), NULL);
     }
 
-	//-if(( u32IOStatus & PIR_DOCI_PIN ) && (u32DIOState_data  & PIR_DOCI_PIN))	//-需要考虑反复进入的问题,去抖
-	if( u32IOStatus & PIR_DOCI_PIN )
+	if(( u32IOStatus & PIR_DOCI_PIN ) && (u32DIOState_data  & PIR_DOCI_PIN))	//-需要考虑反复进入的问题,去抖
+	//-if( u32IOStatus & PIR_DOCI_PIN )
 	{
+		vAHI_DioInterruptEnable(0,PIR_DOCI_PIN);
 		IASZONE_STATUS_MASK_SET_fun();
 		DBG_vPrintf(TRUE, "\nAPP E93196 Sensor Task: App Event ALARM\n");
 		OS_eStartSWTimer(APP_AlarmClearTimer, APP_TIME_MS(5000), NULL);

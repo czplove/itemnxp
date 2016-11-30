@@ -68,6 +68,7 @@
 #include "app_events.h"
 #ifdef MS
 #include "GenericBoard.h"
+#include "driver/E93196.h"
 #endif
 #include "ha.h"
 
@@ -207,6 +208,7 @@ OS_TASK(ZCL_Task)
 	  ProcessDOCIInterrupt();	  
 	  IASZONE_STATUS_MASK_RESET_fun();
 	  DBG_vPrintf(TRUE, "\nAPP E93196 Sensor Task: App Event CLEAN");
+	  vAHI_DioInterruptEnable(PIR_DOCI_PIN,0);
 	}
 
 	/* check Button times */

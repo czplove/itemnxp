@@ -470,7 +470,7 @@ PRIVATE void vDeletePDMOnButtonPress(uint8 u8ButtonDIO)
 void IASZONE_STATUS_MASK_SET_fun(void)
 {
 	//-vGenericLEDSetOutput(GEN_BOARD_LED_D2_VAL,TRUE);
-	vAHI_DioSetOutput(1<<0,0);
+	vAHI_DioSetOutput(0,1<<0);
 	                        DBG_vPrintf(TRACE_ZONE_NODE,"\nCLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_SET\n ");
 	                        app_vUpdateZoneStatusAttribute (
 	                                                        ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/
@@ -482,7 +482,7 @@ void IASZONE_STATUS_MASK_SET_fun(void)
 void IASZONE_STATUS_MASK_RESET_fun(void)
 {
 	//-vGenericLEDSetOutput(GEN_BOARD_LED_D2_VAL,FALSE);
-	vAHI_DioSetOutput(0,1<<0);
+	vAHI_DioSetOutput(1<<0,0);
 	                        DBG_vPrintf(TRACE_ZONE_NODE,"\nCLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_RESET\n ");
 	                        app_vUpdateZoneStatusAttribute (
 	                                                        ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/
