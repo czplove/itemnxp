@@ -224,7 +224,8 @@ PRIVATE void vLED_Off(void)
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1175 Off\n");
 #elif defined DR1199
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1199 Off\n");
-    vGenericLEDSetOutput(GEN_BOARD_LED_D3_VAL,FALSE);
+    //-vGenericLEDSetOutput(GEN_BOARD_LED_D3_VAL,FALSE);
+    vAHI_DioSetOutput(0,1<<12);
 #elif defined DR1159
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1159 Off\n");
     APP_vSetLeds(0);
@@ -249,7 +250,8 @@ PRIVATE void vLED_On(void)
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1175 On\n");
 #elif defined DR1199
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1199 On\n");
-    vGenericLEDSetOutput(GEN_BOARD_LED_D3_VAL,TRUE);
+    //-vGenericLEDSetOutput(GEN_BOARD_LED_D3_VAL,TRUE);
+    vAHI_DioSetOutput(1<<12,0);
 #elif defined DR1159
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1159 On\n");
     APP_vSetLeds(1);
