@@ -359,7 +359,7 @@ void PIR_SetDefence(void)
   InitE93196Interrupt();
 
   /* 设置工作模式*/
-  //-ConfigE93196Cfg(&E93196DefaultCmd);
+  ConfigE93196Cfg(&E93196DefaultCmd);
 
   //DOCI_ENABLE_INTERRUPT();
   vAHI_DioInterruptEnable(PIR_DOCI_PIN,0);
