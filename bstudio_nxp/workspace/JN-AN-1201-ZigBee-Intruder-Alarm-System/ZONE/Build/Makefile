@@ -104,7 +104,7 @@ endif
 ###############################################################################
 
 #CFLAGS += -DNXP_HARDWARE
-#CFLAGS += -DDEBUG_EZMODE
+CFLAGS += -DDEBUG_EZMODE
 #CFLAGS += -DDEBUG_ZCL
 #CFLAGS += -DDEBUG_CLD_ONOFF
 #CFLAGS += -DDEBUG_APP_BUTTON

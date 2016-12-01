@@ -155,7 +155,7 @@ OS_ISR(vISR_SystemController)
     /* clear pending DIO changed bits by reading register */
     uint8 u8WakeInt = u8AHI_WakeTimerFiredStatus();
     uint32 u32IOStatus=u32AHI_DioInterruptStatus();
-    uint32 u32DIOState_data = u32AHI_DioReadInput();
+    uint32 u32DIOInput = u32AHI_DioReadInput();
 
     if( u32IOStatus & APP_BUTTONS_DIO_MASK )
     {
@@ -165,7 +165,7 @@ OS_ISR(vISR_SystemController)
         OS_eStartSWTimer(APP_ButtonsScanTimer, APP_TIME_MS(10), NULL);
     }
 
-	if(( u32IOStatus & PIR_DOCI_PIN ) && (u32DIOState_data  & PIR_DOCI_PIN))	//-需要考虑反复进入的问题,去抖
+	if(( u32IOStatus & PIR_DOCI_PIN ) && (u32DIOInput  & PIR_DOCI_PIN))	//-需要考虑反复进入的问题,去抖
 	//-if( u32IOStatus & PIR_DOCI_PIN )
 	{
 		vAHI_DioInterruptEnable(0,PIR_DOCI_PIN);

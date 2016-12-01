@@ -224,7 +224,7 @@ PUBLIC void APP_vInitialiseNode(void)
     /* If the device state has been restored from flash, re-start the stack
      * and set the application running again.
      */
-    if (sDeviceDesc.eNodeState == E_RUNNING)
+    if (sDeviceDesc.eNodeState == E_RUNNING)	//-这里跟上电自动搜网有关系
     {
         app_vRestartNode();
     }
@@ -258,7 +258,7 @@ PUBLIC void APP_vInitialiseNode(void)
  * void
  *
  ****************************************************************************/
-OS_TASK(APP_ZHA_Switch_Task)
+OS_TASK(APP_ZHA_Switch_Task)	//-系统中很多配置的事件会触发这个任务
 {
     APP_tsEvent sAppEvent;
     ZPS_tsAfEvent sStackEvent;
@@ -291,7 +291,7 @@ OS_TASK(APP_ZHA_Switch_Task)
     switch (sDeviceDesc.eNodeState)
     {
         case E_STARTUP:
-            vHandleJoinAndRejoinNWK(&sStackEvent,E_EZ_JOIN);
+            vHandleJoinAndRejoinNWK(&sStackEvent,E_EZ_JOIN);	//-此函数里面就触发了加网行为
             break;
 
         case E_REJOINING:
@@ -323,6 +323,11 @@ OS_TASK(APP_ZHA_Switch_Task)
                 vResetPingTime();
             }
 
+			if(ZPS_EVENT_NWK_LEAVE_INDICATION == sStackEvent.eType)
+			{//-里面实现退网,但是还不确定是指令退网或按键退网 或退网之后会不会再次加网
+
+			}
+
             if((ZPS_EVENT_APS_DATA_INDICATION == sStackEvent.eType) &&
                 (0 == sStackEvent.uEvent.sApsDataIndEvent.u8DstEndpoint))
             {
@@ -352,6 +357,7 @@ OS_TASK(APP_ZHA_Switch_Task)
             vHandleAppEvent( sAppEvent );
             break;
         default:
+			vHandleAppEvent( sAppEvent );	//-为了退网后仍然可以加网增加
             break;
     }
 
@@ -388,7 +394,7 @@ PRIVATE void vHandleJoinAndRejoinNWK( ZPS_tsAfEvent *pZPSevent,teEZ_JoinAction e
     }
 
     /*Call The EZ mode Handler passing the events*/
-    vEZ_EZModeNWKJoinHandler(pZPSevent,eJoinAction);
+    vEZ_EZModeNWKJoinHandler(pZPSevent,eJoinAction);	//-加网下步处理
     ezState = eEZ_GetJoinState();
     DBG_vPrintf(TRACE_ZONE_NODE, "EZ_STATE\%x r\n", ezState);
 
@@ -472,11 +478,11 @@ void IASZONE_STATUS_MASK_SET_fun(void)
 	//-vGenericLEDSetOutput(GEN_BOARD_LED_D2_VAL,TRUE);
 	vAHI_DioSetOutput(0,1<<0);
 	                        //-DBG_vPrintf(TRACE_ZONE_NODE,"\nCLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_SET\n ");
-	                        app_vUpdateZoneStatusAttribute (
-	                                                        ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/
-	                                                        CLD_IASZONE_STATUS_MASK_ALARM1,/*uint16                            u16StatusBitMask,*/
-	                                                        CLD_IASZONE_STATUS_MASK_SET    /*bool_t                            bStatusState);*/
-	                                                        );
+	app_vUpdateZoneStatusAttribute (
+	                                ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/
+	                                CLD_IASZONE_STATUS_MASK_ALARM1,/*uint16                            u16StatusBitMask,*/
+	                                CLD_IASZONE_STATUS_MASK_SET    /*bool_t                            bStatusState);*/
+	                                );
 }
 
 void IASZONE_STATUS_MASK_RESET_fun(void)

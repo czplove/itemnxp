@@ -207,7 +207,7 @@ OS_TASK(ZCL_Task)
 	  OS_eStopSWTimer(APP_AlarmClearTimer);
 	  ProcessDOCIInterrupt();	  
 	  IASZONE_STATUS_MASK_RESET_fun();
-	  DBG_vPrintf(TRUE, "\nAPP E93196 Sensor Task: App Event CLEAN");
+	  DBG_vPrintf(TRUE, "\nAPP E93196 Sensor Task: App Event CLEAN\n");
 	  vAHI_DioInterruptEnable(PIR_DOCI_PIN,0);
 	}
 
@@ -225,7 +225,7 @@ OS_TASK(ZCL_Task)
 /****************************************************************************/
 void consecutiveButtonPress_Handler()
 {
-	uint32 curr_tick, tick_delta, target_delta;
+	uint32 curr_tick, tick_delta, target_delta, target_delta_s;
 	//-te_TransitionCode eTransitionCode=NUMBER_OF_TRANSITION_CODE;
 
 	curr_tick = u32AHI_TickTimerRead();
@@ -234,11 +234,24 @@ void consecutiveButtonPress_Handler()
 		else
 		  tick_delta =	4294967296 - BUTTON_start_tick + curr_tick;
 
+	target_delta_s = tick_delta/(16*1000000);
+
 	DBG_vPrintf(TRUE, "\nAPP Process Buttons: Button press nums = %d",consecutiveButtonPressCount);
-	DBG_vPrintf(TRUE, "\nAPP Process Buttons: Button press time = %dS",tick_delta/(16*1000000));
+	DBG_vPrintf(TRUE, "\nAPP Process Buttons: Button press time = %dS",target_delta_s);
 
 	//-eTransitionCode=COMM_BUTTON_PRESSED;
 	//-vDioEventHandler(eTransitionCode);
+	if(target_delta_s >= 6)
+	{//-长按6S退网不再自动加网
+
+		ZPS_eAplZdoLeaveNetwork(0,TRUE,TRUE);
+		sDeviceDesc.eNodeState = E_LEAVE_WAIT;
+	}
+	else
+	{
+		DBG_vPrintf(TRUE, "\nLEAVE REJOIN \n");
+		sDeviceDesc.eNodeState = E_REJOINING;	//-其它的情况都加网处理
+	}
 	consecutiveButtonPressCount = 0;
 }
 

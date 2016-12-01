@@ -231,7 +231,7 @@ PUBLIC void vEZ_EZModeNWKJoinHandler(ZPS_tsAfEvent *pZPSevent,teEZ_JoinAction eJ
 		{
 			case E_EZ_START:
 			{
-				vSetUpStart();
+				vSetUpStart();	//-里面是有加网的
 				break;
 			}
 			case E_EZ_WAIT_DISCOVERY_TIMEOUT:
