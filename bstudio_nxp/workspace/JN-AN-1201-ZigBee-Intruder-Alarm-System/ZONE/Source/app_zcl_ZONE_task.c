@@ -205,10 +205,11 @@ OS_TASK(ZCL_Task)
 	if(OS_eGetSWTimerStatus(APP_AlarmClearTimer) == OS_E_SWTIMER_EXPIRED)
 	{
 	  OS_eStopSWTimer(APP_AlarmClearTimer);
+	  vAHI_DioInterruptEnable(PIR_DOCI_PIN,0);
 	  ProcessDOCIInterrupt();	  
 	  IASZONE_STATUS_MASK_RESET_fun();
 	  DBG_vPrintf(TRUE, "\nAPP E93196 Sensor Task: App Event CLEAN\n");
-	  vAHI_DioInterruptEnable(PIR_DOCI_PIN,0);
+	  
 	}
 
 	/* check Button times */

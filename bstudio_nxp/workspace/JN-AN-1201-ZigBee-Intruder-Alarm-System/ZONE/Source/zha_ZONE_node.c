@@ -175,6 +175,8 @@ PUBLIC void APP_vInitialiseNode(void)
      */
     APP_bButtonInitialise();
 	PIR_SetDefence();	//-这个初始化必须保证中断已经准备好了,否则中断错过会导致传感器失效
+	ProcessDOCIInterrupt();
+	vAHI_DioInterruptEnable(PIR_DOCI_PIN,0);
 
     /*In case of a deep sleep device any button wake up would cause a PDM delete , only check for DIO8
      * pressed for deleting the context */
@@ -656,7 +658,7 @@ OS_TASK(APP_PollTask)
     u8PStatus = ZPS_eAplZdoPoll();
     if( u8PStatus )
     {
-        DBG_vPrintf(TRACE_ZONE_NODE, "\nPoll Failed \n", u8PStatus );
+        DBG_vPrintf(TRACE_ZONE_NODE, "\nPoll Failed \n", u8PStatus );	//-当退网之后会周期性的打印这句
     }
 
     OS_eStopSWTimer(APP_PollTimer);

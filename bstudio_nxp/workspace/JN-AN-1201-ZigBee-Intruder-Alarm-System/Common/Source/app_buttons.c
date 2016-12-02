@@ -165,8 +165,8 @@ OS_ISR(vISR_SystemController)
         OS_eStartSWTimer(APP_ButtonsScanTimer, APP_TIME_MS(10), NULL);
     }
 
-	if(( u32IOStatus & PIR_DOCI_PIN ) && (u32DIOInput  & PIR_DOCI_PIN))	//-需要考虑反复进入的问题,去抖
-	//-if( u32IOStatus & PIR_DOCI_PIN )
+	//-if(( u32IOStatus & PIR_DOCI_PIN ) && (u32DIOInput  & PIR_DOCI_PIN))	//-需要考虑反复进入的问题,去抖
+	if( u32IOStatus & PIR_DOCI_PIN )
 	{
 		vAHI_DioInterruptEnable(0,PIR_DOCI_PIN);
 		u32AHI_DioInterruptStatus();
