@@ -81,6 +81,9 @@
 #include "app_ias_unenroll_req.h"
 #include "app_ias_save.h"
 #include "PingParent.h"
+
+#include "haEzJoin.h"
+
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
@@ -245,13 +248,19 @@ void consecutiveButtonPress_Handler()
 	if(target_delta_s >= 6)
 	{//-长按6S退网不再自动加网
 
-		ZPS_eAplZdoLeaveNetwork(0,TRUE,TRUE);
+		ZPS_eAplZdoLeaveNetwork(0,FALSE,FALSE);
 		sDeviceDesc.eNodeState = E_LEAVE_WAIT;
 	}
 	else
 	{
 		DBG_vPrintf(TRUE, "\nLEAVE REJOIN \n");
-		sDeviceDesc.eNodeState = E_REJOINING;	//-其它的情况都加网处理
+		//-sDeviceDesc.eNodeState = E_REJOINING;	//-其它的情况都加网处理
+		//-app_vStartNodeFactoryNew();
+		eEZ_UpdateEZState(E_EZ_START);
+
+	    /* Stay awake for joining */
+	    DBG_vPrintf(TRUE, "\nFactory New Start");
+	    vStartStopTimer( APP_JoinTimer, APP_TIME_MS(1000),(uint8*)&(sDeviceDesc.eNodeState),E_STARTUP );
 	}
 	consecutiveButtonPressCount = 0;
 }
