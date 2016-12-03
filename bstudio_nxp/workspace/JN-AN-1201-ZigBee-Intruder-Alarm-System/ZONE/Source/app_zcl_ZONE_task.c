@@ -256,11 +256,14 @@ void consecutiveButtonPress_Handler()
 		DBG_vPrintf(TRUE, "\nLEAVE REJOIN \n");
 		//-sDeviceDesc.eNodeState = E_REJOINING;	//-其它的情况都加网处理
 		//-app_vStartNodeFactoryNew();
+		if(sDeviceDesc.eNodeState != E_RUNNING)
+		{
 		eEZ_UpdateEZState(E_EZ_START);
 
 	    /* Stay awake for joining */
 	    DBG_vPrintf(TRUE, "\nFactory New Start");
 	    vStartStopTimer( APP_JoinTimer, APP_TIME_MS(1000),(uint8*)&(sDeviceDesc.eNodeState),E_STARTUP );
+		}
 	}
 	consecutiveButtonPressCount = 0;
 }
