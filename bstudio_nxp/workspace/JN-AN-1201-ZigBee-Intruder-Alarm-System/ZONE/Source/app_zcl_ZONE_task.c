@@ -251,15 +251,6 @@ void consecutiveButtonPress_Handler()
 	    DBG_vPrintf(TRUE, "\nFactory New Start");
 	    vStartStopTimer( APP_JoinTimer, APP_TIME_MS(1000),(uint8*)&(sDeviceDesc.eNodeState),E_STARTUP );
 		}
-		//-2a¨º?¡ä??D?¡Â¦Ì?¨®|¨®?2?
-		if(consecutiveButtonPressCount == 2)
-		{
-			vAHI_DioInterruptEnable(0,PIR_DOCI_PIN);
-			u32AHI_DioInterruptStatus();
-			IASZONE_STATUS_MASK_SET_fun();
-			DBG_vPrintf(TRUE, "\nAPP E93196 Sensor Task: App Event ALARM\n");
-			OS_eStartSWTimer(APP_AlarmClearTimer, APP_TIME_MS(5000), NULL);
-		}
 	}
 	consecutiveButtonPressCount = 0;
 }
