@@ -175,6 +175,8 @@ PUBLIC void vAppMain(void)
         u32AppApiInit(NULL, NULL, NULL, NULL, NULL, NULL);
     #endif
 
+    //-vAHI_TickTimerIntEnable(TRUE);
+    vAHI_TickTimerConfigure(E_AHI_TICK_TIMER_CONT);
     /* start the RTOS */
     OS_vStart(vInitialiseApp, vUnclaimedInterrupt, vOSError);
     DBG_vPrintf(TRACE_START, "OS started\n");
@@ -195,7 +197,7 @@ PUBLIC void vAppMain(void)
          */
         PWRM_vManagePower();
 
-        DBG_vPrintf(TRACE_START, ".");
+        //-DBG_vPrintf(TRACE_START, ".");
     }
 }
 

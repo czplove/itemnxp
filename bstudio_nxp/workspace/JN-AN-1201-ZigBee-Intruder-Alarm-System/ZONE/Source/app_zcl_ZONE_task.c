@@ -80,6 +80,9 @@
 #include "app_ias_unenroll_req.h"
 #include "app_ias_save.h"
 #include "PingParent.h"
+
+#include "haEzJoin.h"
+
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
@@ -112,6 +115,8 @@ PRIVATE void vAPP_ZCL_DeviceSpecific_Init(void);
 /****************************************************************************/
 extern tsDeviceDesc sDeviceDesc;
 extern uint16 u16GroupId;
+extern uint16 consecutiveButtonPressCount;
+extern uint32 BUTTON_start_tick;
 /****************************************************************************/
 /***        Local Variables                                               ***/
 /****************************************************************************/
@@ -198,10 +203,66 @@ OS_TASK(ZCL_Task)
         vZCL_EventHandler(&sCallBackEvent);
     }
 
+/* check Button times */
+	if(OS_eGetSWTimerStatus(APP_ButtonDelayTimer) == OS_E_SWTIMER_EXPIRED)
+	{
+	  OS_eStopSWTimer(APP_ButtonDelayTimer);
+	  consecutiveButtonPress_Handler();
+	  DBG_vPrintf(TRUE, "\nAPP COMM BUTTON Task: Button Event");
+	}
 }
 /****************************************************************************/
 /***        Local Functions                                               ***/
 /****************************************************************************/
+void consecutiveButtonPress_Handler()
+{
+	uint32 curr_tick, tick_delta, target_delta, target_delta_s;
+	//-te_TransitionCode eTransitionCode=NUMBER_OF_TRANSITION_CODE;
+
+	curr_tick = u32AHI_TickTimerRead();
+		if (curr_tick > BUTTON_start_tick)
+		  tick_delta = curr_tick - BUTTON_start_tick;
+		else
+		  tick_delta =	4294967296 - BUTTON_start_tick + curr_tick;
+
+	target_delta_s = tick_delta/(16*1000000);
+
+	DBG_vPrintf(TRUE, "\nAPP Process Buttons: Button press nums = %d",consecutiveButtonPressCount);
+	DBG_vPrintf(TRUE, "\nAPP Process Buttons: Button press time = %dS",target_delta_s);
+
+	//-eTransitionCode=COMM_BUTTON_PRESSED;
+	//-vDioEventHandler(eTransitionCode);
+	if(target_delta_s >= 6)
+	{//-3¡è¡ã¡ä6S¨ª?¨ª?2??¨´¡Á??¡¥?¨®¨ª?
+
+		ZPS_eAplZdoLeaveNetwork(0,FALSE,FALSE);
+		sDeviceDesc.eNodeState = E_LEAVE_WAIT;
+	}
+	else
+	{
+		DBG_vPrintf(TRUE, "\nLEAVE REJOIN \n");
+		//-sDeviceDesc.eNodeState = E_REJOINING;	//-???¨¹¦Ì??¨¦?????¨®¨ª?¡ä|¨¤¨ª
+		//-app_vStartNodeFactoryNew();
+		if(sDeviceDesc.eNodeState != E_RUNNING)
+		{
+		eEZ_UpdateEZState(E_EZ_START);
+
+	    /* Stay awake for joining */
+	    DBG_vPrintf(TRUE, "\nFactory New Start");
+	    vStartStopTimer( APP_JoinTimer, APP_TIME_MS(1000),(uint8*)&(sDeviceDesc.eNodeState),E_STARTUP );
+		}
+		//-2a¨º?¡ä??D?¡Â¦Ì?¨®|¨®?2?
+		if(consecutiveButtonPressCount == 2)
+		{
+			vAHI_DioInterruptEnable(0,PIR_DOCI_PIN);
+			u32AHI_DioInterruptStatus();
+			IASZONE_STATUS_MASK_SET_fun();
+			DBG_vPrintf(TRUE, "\nAPP E93196 Sensor Task: App Event ALARM\n");
+			OS_eStartSWTimer(APP_AlarmClearTimer, APP_TIME_MS(5000), NULL);
+		}
+	}
+	consecutiveButtonPressCount = 0;
+}
 
 /****************************************************************************
  *

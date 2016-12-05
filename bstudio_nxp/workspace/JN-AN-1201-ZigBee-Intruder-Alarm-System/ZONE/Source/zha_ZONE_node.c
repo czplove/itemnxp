@@ -118,6 +118,8 @@ PRIVATE void app_vUpdateZoneStatusAttribute(  uint8     u8SourceEndPoint,
 
 PUBLIC  tsDeviceDesc           sDeviceDesc;
 uint16 u16GroupId;
+uint16 consecutiveButtonPressCount = 0;
+uint32 BUTTON_start_tick;
 /****************************************************************************/
 /***        Local Variables                                               ***/
 /****************************************************************************/
@@ -228,7 +230,12 @@ PUBLIC void APP_vInitialiseNode(void)
     {
         app_vStartNodeFactoryNew();
     }
-    vInitIndicationLEDs();
+    //-vInitIndicationLEDs();	//-?a??2?3?¨º??¡¥??¨º?¦Ì??¨ª¨º¡ìD¡ì¨¢?
+    vAHI_DioSetDirection(0,1<<0);	//-¨¦¨¨???a¨º?3?,¨º1¨®??a???¨ª?¨¦¨°?¡ä¨²¨¬?¨¦???o¡¥¨ºy¦Ì?1|?¨¹
+    vAHI_DioSetDirection(0,1<<12);
+
+    vAHI_DioSetOutput(1<<0,0);	//-1?¦Ì?
+    vAHI_DioSetOutput(1<<12,0);
 
 #ifdef VMS
     bool_t bStatus= bTSL2550_Init();
@@ -343,6 +350,7 @@ OS_TASK(APP_ZHA_Switch_Task)
             vHandleAppEvent( sAppEvent );
             break;
         default:
+			vHandleAppEvent( sAppEvent );	//-?a¨¢?¨ª?¨ª?o¨®¨¨?¨¨??¨¦¨°??¨®¨ª????¨®
             break;
     }
 
@@ -478,7 +486,10 @@ PRIVATE void vHandleAppEvent( APP_tsEvent sAppEvent )
                 switch(sAppEvent.uEvent.sButton.u8Button)
                 {
                     case APP_E_BUTTONS_BUTTON_1:
-                        vSendEnrollReq(ZONE_ZONE_ENDPOINT);
+                        //-vSendEnrollReq(ZONE_ZONE_ENDPOINT);	//-?a¨¤??¨¦?¨¹¨º?¡ã¡ä?¨¹¡ä£¤¡¤¡é¦Ì?,¡Á¡é2¨¢,D¨¨¨°a¡Á¡é¨°a
+                        BUTTON_start_tick = u32AHI_TickTimerRead();
+						if(OS_eGetSWTimerStatus(APP_ButtonDelayTimer) != OS_E_SWTIMER_STOPPED)
+            				OS_eStopSWTimer(APP_ButtonDelayTimer);
                     break;
                     #ifdef CSW
                     case APP_E_BUTTONS_BUTTON_SW3:
@@ -531,6 +542,16 @@ PRIVATE void vHandleAppEvent( APP_tsEvent sAppEvent )
                 }
         break;
         }
+		case APP_E_EVENT_BUTTON_UP:
+				switch(sAppEvent.uEvent.sButton.u8Button)
+                {
+                    case APP_E_BUTTONS_BUTTON_1:
+						consecutiveButtonPressCount++;
+						if(OS_eGetSWTimerStatus(APP_ButtonDelayTimer) != OS_E_SWTIMER_RUNNING)
+			    			OS_eStartSWTimer(APP_ButtonDelayTimer, APP_TIME_MS(1000), NULL);
+						break;
+				}
+			break;
         default:
             break;
     }
