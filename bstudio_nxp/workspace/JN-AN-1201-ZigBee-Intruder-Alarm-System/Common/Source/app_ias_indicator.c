@@ -48,7 +48,9 @@
 #include "LightingBoard.h"
 
 #elif defined DR1199
+#include "AppHardwareApi.h"
 #include "GenericBoard.h"
+#include "driver/E93196.h"
 #endif
 
 #if defined DR1159
@@ -187,6 +189,10 @@ teIASDeviceState eGetIASDeviceState(void)
 void vSetIASDeviceState(teIASDeviceState eDeviceState)
 {
     eIASDeviceState=eDeviceState;
+	//-增加传感器的初始化,但成功注册之后
+	PIR_SetDefence();
+    ProcessDOCIInterrupt();
+	vAHI_DioInterruptEnable(PIR_DOCI_PIN,0);
 }
 /****************************************************************************
  *

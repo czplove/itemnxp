@@ -241,10 +241,10 @@ typedef enum{
 #define SERIN_OFF()                     {vAHI_DioSetOutput(0,PIR_SERIN_PIN);}      /*!< SERINÊä³öµÍµçÆ½ */
 
 
-#define WAIT_FOR_4_5US                  1
-#define WAIT_FOR_100US                  40
-#define WAIT_FOR_150US                  60
-#define WAIT_FOR_600US                  240
+#define WAIT_FOR_4_5US                  4
+#define WAIT_FOR_100US                  100
+#define WAIT_FOR_150US                  150
+#define WAIT_FOR_600US                  600
 /* Exported variables --------------------------------------------------------*/
 
 /* Exported functions --------------------------------------------------------*/
