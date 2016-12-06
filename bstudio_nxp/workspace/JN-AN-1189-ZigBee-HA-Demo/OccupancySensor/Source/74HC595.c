@@ -73,8 +73,10 @@ void HC595IO_Init(void)
 {
 	/* Set DIO lines to outputs with buttons connected */
 	    vAHI_DioSetDirection(0, STCP | SHCP_CLK | DS_DIO);
+	    bAHI_DoEnableOutputs(1);
 	/* Turn on pull-ups for DIO lines with buttons connected */
 	    vAHI_DioSetPullup(STCP | SHCP_CLK | DS_DIO, 0);
+	    //-vAHI_DoSetPullup();
 }
 
 
@@ -87,15 +89,37 @@ void HC595SendData(unsigned char SendVal)
 			vAHI_DioSetOutput(DS_DIO,0);
 		else 
 			vAHI_DioSetOutput(0,DS_DIO);
-		vAHI_DioSetOutput(0,SHCP_CLK);
-		j++;
-		j++;
-		vAHI_DioSetOutput(SHCP_CLK,0);
+		//-vAHI_DioSetOutput(0,SHCP_CLK);
+		//-vAHI_DioSetOutput(SHCP_CLK,0);
+		vAHI_DoSetDataOut(0,SHCP_CLK);
+		j = 2;
+		while(j)
+		j--;
+		//-vAHI_DioSetOutput(SHCP_CLK,0);
+		//-vAHI_DioSetOutput(0,SHCP_CLK);
+		vAHI_DoSetDataOut(SHCP_CLK,0);
 	}
 	vAHI_DioSetOutput(0,STCP);
-	j++;
-	j++;
+	j = 2;
+			while(j)
+			j--;
 	vAHI_DioSetOutput(STCP,0);
+}
+
+void HC595SendData0(unsigned char SendVal)
+{
+	vAHI_DioSetOutput(0,STCP);
+	vAHI_DioSetOutput(0,DS_DIO);
+	vAHI_DioSetOutput(0,SHCP_CLK);
+	vAHI_DoSetDataOut(0,SHCP_CLK);
+}
+
+void HC595SendData1(unsigned char SendVal)
+{
+	vAHI_DioSetOutput(STCP,0);
+	vAHI_DioSetOutput(DS_DIO,0);
+	vAHI_DioSetOutput(SHCP_CLK,0);
+	vAHI_DoSetDataOut(SHCP_CLK,0);
 }
 
 /****************************************************************************/
