@@ -163,30 +163,20 @@ OS_ISR(vISR_SystemController)
         OS_eStartSWTimer(APP_ButtonsScanTimer, APP_TIME_MS(10), NULL);
     }
 
-	DBG_vPrintf(TRUE,"CLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_SET\n ");
+	//-DBG_vPrintf(TRUE,"CLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_SET\n ");
 
     if(u32IOStatus & APP_Switch_DIO_MASK)
     {
     	if(u32DIOINdata)
     	{
     		//-vGenericLEDSetOutput(GEN_BOARD_LED_D1_VAL,TRUE);
-    		DBG_vPrintf(TRUE,"CLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_SET\n ");
-    		                        //-app_vUpdateZoneStatusAttribute (
-    		                        //-                                ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/
-    		                        //-                                CLD_IASZONE_STATUS_MASK_ALARM1,/*uint16                            u16StatusBitMask,*/
-    		                        //-                                CLD_IASZONE_STATUS_MASK_SET    /*bool_t                            bStatusState);*/
-    		                        //-                                );
+    		IASZONE_STATUS_MASK_RESET_fun();
     		vAHI_DioInterruptEdge(0, APP_Switch_DIO_MASK);
     	}
     	else
     	{
     		//-vGenericLEDSetOutput(GEN_BOARD_LED_D1_VAL,FALSE);
-    		DBG_vPrintf(TRUE,"CLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_RESET\n ");
-    		                        //-app_vUpdateZoneStatusAttribute (
-    		                        //-                                ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/
-    		                        //-                                CLD_IASZONE_STATUS_MASK_ALARM1,/*uint16                            u16StatusBitMask,*/
-    		                        //-                                CLD_IASZONE_STATUS_MASK_RESET  /*bool_t                            bStatusState);*/
-    		                        //-                                );
+    		IASZONE_STATUS_MASK_SET_fun();    		
     		vAHI_DioInterruptEdge(APP_Switch_DIO_MASK, 0);
     	}
 
