@@ -208,6 +208,8 @@ APPSRC += app_nwk_event_handler.c
 APPSRC += app_event_handler.c
 #APPSRC += app_PIR_events.c
 
+APPSRC += 74HC595.c
+
 ifeq ($(PIR_SENSOR_TYPE), PIR_TYPE_OPEN_COLLECTOR)
 APPSRC += app_PIR_OpenCollector_events.c
 else
