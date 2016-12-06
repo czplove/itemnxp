@@ -55,11 +55,11 @@
     } APP_teButtons;
 
     #define APP_BUTTONS_NUM             (3UL)
-    #define APP_BUTTONS_BUTTON_1        (8)
-    #define APP_BUTTONS_BUTTON_SW4        (9)	//-KC1
-    #define APP_BUTTONS_BUTTON_SW3        (10)	//-kC2
-    #define APP_BUTTONS_BUTTON_SW2        (12)
-    #define APP_BUTTONS_BUTTON_SW1        (11)
+    #define APP_BUTTONS_BUTTON_1        (10)
+    #define APP_BUTTONS_BUTTON_SW4        (11)	//-KC1
+    #define APP_BUTTONS_BUTTON_SW3        (8)	//-kC2
+    #define APP_BUTTONS_BUTTON_SW2        (11)
+    #define APP_BUTTONS_BUTTON_SW1        (8)
     #define APP_BUTTONS_DIO_MASK        ((1 << APP_BUTTONS_BUTTON_1)|(1 << APP_BUTTONS_BUTTON_SW4) | (1 << APP_BUTTONS_BUTTON_SW3) | (1 << APP_BUTTONS_BUTTON_SW2) | (1 << APP_BUTTONS_BUTTON_SW1))
     #define APP_BUTTONS_DIO_MASK_FOR_DEEP_SLEEP        ((1 << APP_BUTTONS_BUTTON_SW4) | (1 << APP_BUTTONS_BUTTON_SW3) | (1 << APP_BUTTONS_BUTTON_SW2) | (1 << APP_BUTTONS_BUTTON_SW1))
 

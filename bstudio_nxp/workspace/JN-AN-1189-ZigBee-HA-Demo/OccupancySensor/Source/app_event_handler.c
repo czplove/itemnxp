@@ -50,6 +50,13 @@
 #include "app_blink_led.h"
 #include "AppHardwareApi.h"
 #include "app_nwk_event_handler.h"
+
+#include "74HC595.h"
+//-#define OUT_AB   		0x04	//-(0b00000100)
+//-#define OUT_EF   		0x10	//-(0b00010000)
+//-#define OUT_CD   		0x40	//-(0b01000000)
+
+
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
@@ -82,6 +89,8 @@ extern const uint8 u8MyEndpoint;
 /****************************************************************************/
 /***        Exported Functions                                            ***/
 /****************************************************************************/
+extern void HC595SendData(unsigned char SendVal);
+
 /**
   * @brief
   * @param
@@ -147,11 +156,11 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
             //-vHandleFallingEdgeEvent();
         	Delay(500*1000);
         	if(bDIO3State == FALSE)
-        		vAHI_DioSetOutput(0x0008,0);	//-DIO3输出高	---控制电源
+        		HC595SendData(OUT_CD);	//-DIO3输出高	---控制电源
         	else
-        		vAHI_DioSetOutput(0,0x0008);	//-DIO3输出低
+        		HC595SendData(OUT_CD);	//-DIO3输出低
 
-        	vAHI_DioSetOutput(0x0004,0);
+        	//-vAHI_DioSetOutput(0x0004,0);
         	bDIO3State = !bDIO3State;
             break;
 
@@ -164,11 +173,11 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
             //-vStartPersistantPolling();
         	Delay(500*1000);
         	if(bDIO2State == FALSE)
-        		vAHI_DioSetOutput(0x0008,0);	//-DIO2输出高	---正反转
+        		HC595SendData(OUT_AB);	//-DIO2输出高	---正反转
         	else
-        		vAHI_DioSetOutput(0,0x0008);	//-DIO2输出低
+        		HC595SendData(OUT_AB);	//-DIO2输出低
 
-        	vAHI_DioSetOutput(0,0x0004);
+        	//-vAHI_DioSetOutput(0,0x0004);
         	bDIO2State = !bDIO2State;
             break;
         //-case SW3_PRESSED:

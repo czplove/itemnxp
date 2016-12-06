@@ -46,6 +46,7 @@
 #include "pwrm.h"
 #include "app_occupancy_buttons.h"
 #include "app_sensor_state_machine.h"
+#include "74HC595.h"
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
