@@ -202,7 +202,7 @@
 					<folderInfo id="0.876190861.1781733102.485851044.1302459370.696696721." name="/" resourcePath="">
 						<toolChain id="com.beyondsemi.toolchain.gnu.ba.elf.base.1929878425" name="BA ELF GNU toolchain" superClass="com.beyondsemi.toolchain.gnu.ba.elf.base">
 							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="com.beyondsemi.target.gnu.platform.ba.elf.1214027847" superClass="com.beyondsemi.target.gnu.platform.ba.elf"/>
-							<builder arguments="ZONE_TYPE=CSW DR=DR1199" autoBuildTarget="all" buildPath="${ProjDirPath}/Zone/Build/ " cleanBuildTarget="clean" command="make" enableAutoBuild="false" enableCleanBuild="true" enabledIncrementalBuild="true" id="com.beyondsemi.builder.cdt.gnu.1342540379" incrementalBuildTarget="all" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" parallelBuildOn="false" superClass="com.beyondsemi.builder.cdt.gnu"/>
+							<builder arguments="ZONE_TYPE=CSW DR=DR1199 JENNIC_CHIP=JN5169" autoBuildTarget="all" buildPath="${ProjDirPath}/Zone/Build/ " cleanBuildTarget="clean" command="make" enableAutoBuild="false" enableCleanBuild="true" enabledIncrementalBuild="true" id="com.beyondsemi.builder.cdt.gnu.1342540379" incrementalBuildTarget="all" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" parallelBuildOn="false" superClass="com.beyondsemi.builder.cdt.gnu"/>
 							<tool id="com.beyondsemi.tool.gnu.ba.elf.compiler.c.base.124649093" name="BA ELF GNU C compiler" superClass="com.beyondsemi.tool.gnu.ba.elf.compiler.c.base">
 								<inputType id="com.beyondsemi.base.ba.elf.c.compiler.input.1731745166" superClass="com.beyondsemi.base.ba.elf.c.compiler.input"/>
 								<inputType id="com.beyondsemi.assembler.macro.input.1147080241" superClass="com.beyondsemi.assembler.macro.input"/>
@@ -282,6 +282,7 @@
 		<project id="ZSL-Test-App-Switch.null.301096766" name="ZSL-Test-App-Switch"/>
 	</storageModule>
 	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Release"/>
 		<configuration configurationName="ACE">
 			<resource resourceType="PROJECT" workspacePath="/ZSL-Test-App"/>
 		</configuration>
