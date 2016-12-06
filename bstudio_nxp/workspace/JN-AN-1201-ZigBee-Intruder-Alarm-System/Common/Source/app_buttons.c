@@ -153,6 +153,7 @@ OS_ISR(vISR_SystemController)
     /* clear pending DIO changed bits by reading register */
     uint8 u8WakeInt = u8AHI_WakeTimerFiredStatus();
     uint32 u32IOStatus=u32AHI_DioInterruptStatus();
+    uint32 u32DIOINdata = u32AHI_DioReadInput() & APP_Switch_SW1;
 
     if( u32IOStatus & APP_BUTTONS_DIO_MASK )
     {
@@ -160,6 +161,33 @@ OS_ISR(vISR_SystemController)
         /* disable edge detection until scan complete */
         vAHI_DioInterruptEnable(0, APP_BUTTONS_DIO_MASK);
         OS_eStartSWTimer(APP_ButtonsScanTimer, APP_TIME_MS(10), NULL);
+    }
+
+    if(u32IOStatus & APP_Switch_SW1)
+    {
+    	if(u32DIOINdata)
+    	{
+    		vGenericLEDSetOutput(GEN_BOARD_LED_D1_VAL,TRUE);
+    		DBG_vPrintf(TRUE,"CLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_SET\n ");
+    		                        app_vUpdateZoneStatusAttribute (
+    		                                                        ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/
+    		                                                        CLD_IASZONE_STATUS_MASK_ALARM1,/*uint16                            u16StatusBitMask,*/
+    		                                                        CLD_IASZONE_STATUS_MASK_SET    /*bool_t                            bStatusState);*/
+    		                                                        );
+    		vAHI_DioInterruptEdge(0, APP_Switch_SW1);
+    	}
+    	else
+    	{
+    		vGenericLEDSetOutput(GEN_BOARD_LED_D1_VAL,FALSE);
+    		DBG_vPrintf(TRUE,"CLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_RESET\n ");
+    		                        app_vUpdateZoneStatusAttribute (
+    		                                                        ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/
+    		                                                        CLD_IASZONE_STATUS_MASK_ALARM1,/*uint16                            u16StatusBitMask,*/
+    		                                                        CLD_IASZONE_STATUS_MASK_RESET  /*bool_t                            bStatusState);*/
+    		                                                        );
+    		vAHI_DioInterruptEdge(APP_Switch_SW1, 0);
+    	}
+
     }
 
     if (u8WakeInt & E_AHI_WAKE_TIMER_MASK_1)

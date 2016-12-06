@@ -64,6 +64,9 @@
 	#define APP_BUTTONS_DIO_MASK        ( 1 << APP_BUTTONS_BUTTON_1 )
 	//-#define APP_BUTTONS_DIO_MASK_FOR_DEEP_SLEEP        ((1 << APP_BUTTONS_BUTTON_SW4) | (1 << APP_BUTTONS_BUTTON_SW3) | (1 << APP_BUTTONS_BUTTON_SW2) | (1 << APP_BUTTONS_BUTTON_SW1))
 
+    //-ÃÅ´ÅÔ¤¶¨Òå
+	#define APP_Switch_SW1        (17)
+
 #elif (defined BUTTON_MAP_DR1175)
 
     typedef enum {

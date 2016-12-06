@@ -174,6 +174,20 @@ PUBLIC void APP_vInitialiseNode(void)
      */
     APP_bButtonInitialise();
 
+    //-≥ı ºªØ√≈¥≈
+    /* Set DIO lines to inputs with buttons connected */
+        vAHI_DioSetDirection(APP_Switch_SW1, 0);
+
+        /* Turn on pull-ups for DIO lines with buttons connected */
+        vAHI_DioSetPullup(APP_Switch_SW1, 0);
+
+        /* Set the edge detection for falling edges */
+        vAHI_DioInterruptEdge(0, APP_Switch_SW1);
+
+        /* Enable interrupts to occur on selected edge */
+        vAHI_DioInterruptEnable(APP_Switch_SW1, 0);
+    //-end
+
     /*In case of a deep sleep device any button wake up would cause a PDM delete , only check for DIO8
      * pressed for deleting the context */
     vDeletePDMOnButtonPress(APP_BUTTONS_BUTTON_1);
