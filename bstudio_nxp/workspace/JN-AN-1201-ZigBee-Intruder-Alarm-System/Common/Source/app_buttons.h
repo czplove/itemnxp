@@ -66,6 +66,7 @@
 
     //-??¡ä??¡è?¡§¨°?
 	#define APP_Switch_SW1        (17)
+	#define APP_Switch_DIO_MASK        ( 1 << APP_Switch_SW1 )
 
 #elif (defined BUTTON_MAP_DR1175)
 

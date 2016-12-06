@@ -153,7 +153,7 @@ OS_ISR(vISR_SystemController)
     /* clear pending DIO changed bits by reading register */
     uint8 u8WakeInt = u8AHI_WakeTimerFiredStatus();
     uint32 u32IOStatus=u32AHI_DioInterruptStatus();
-    uint32 u32DIOINdata = u32AHI_DioReadInput() & APP_Switch_SW1;
+    uint32 u32DIOINdata = u32AHI_DioReadInput() & APP_Switch_DIO_MASK;
 
     if( u32IOStatus & APP_BUTTONS_DIO_MASK )
     {
@@ -165,7 +165,7 @@ OS_ISR(vISR_SystemController)
 
 	DBG_vPrintf(TRUE,"CLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_SET\n ");
 
-    if(u32IOStatus & APP_Switch_SW1)
+    if(u32IOStatus & APP_Switch_DIO_MASK)
     {
     	if(u32DIOINdata)
     	{
@@ -176,7 +176,7 @@ OS_ISR(vISR_SystemController)
     		                        //-                                CLD_IASZONE_STATUS_MASK_ALARM1,/*uint16                            u16StatusBitMask,*/
     		                        //-                                CLD_IASZONE_STATUS_MASK_SET    /*bool_t                            bStatusState);*/
     		                        //-                                );
-    		vAHI_DioInterruptEdge(0, APP_Switch_SW1);
+    		vAHI_DioInterruptEdge(0, APP_Switch_DIO_MASK);
     	}
     	else
     	{
@@ -187,7 +187,7 @@ OS_ISR(vISR_SystemController)
     		                        //-                                CLD_IASZONE_STATUS_MASK_ALARM1,/*uint16                            u16StatusBitMask,*/
     		                        //-                                CLD_IASZONE_STATUS_MASK_RESET  /*bool_t                            bStatusState);*/
     		                        //-                                );
-    		vAHI_DioInterruptEdge(APP_Switch_SW1, 0);
+    		vAHI_DioInterruptEdge(APP_Switch_DIO_MASK, 0);
     	}
 
     }
