@@ -174,6 +174,20 @@ PUBLIC void APP_vInitialiseNode(void)
      */
     APP_bButtonInitialise();
 
+    //-≥ı ºªØ√≈¥≈
+    /* Set DIO lines to inputs with buttons connected */
+        vAHI_DioSetDirection(APP_Switch_SW1, 0);
+
+        /* Turn on pull-ups for DIO lines with buttons connected */
+        vAHI_DioSetPullup(APP_Switch_SW1, 0);
+
+        /* Set the edge detection for falling edges */
+        vAHI_DioInterruptEdge(0, APP_Switch_SW1);
+
+        /* Enable interrupts to occur on selected edge */
+        vAHI_DioInterruptEnable(APP_Switch_SW1, 0);
+    //-end
+
     /*In case of a deep sleep device any button wake up would cause a PDM delete , only check for DIO8
      * pressed for deleting the context */
     vDeletePDMOnButtonPress(APP_BUTTONS_BUTTON_1);
@@ -230,7 +244,12 @@ PUBLIC void APP_vInitialiseNode(void)
     {
         app_vStartNodeFactoryNew();
     }
-    vInitIndicationLEDs();
+    //-vInitIndicationLEDs();	//-?a??2?3?®∫??°•??®∫?¶Ã??®™®∫°ÏD°Ï®¢?
+    vAHI_DioSetDirection(0,1<<0);	//-®¶®®???a®∫?3?,®∫1®Æ??a???®™?®¶®∞?°‰®≤®¨?®¶???o°•®∫y¶Ã?1|?®π
+    vAHI_DioSetDirection(0,1<<12);
+
+    vAHI_DioSetOutput(1<<0,0);	//-1?¶Ã?
+    vAHI_DioSetOutput(1<<12,0);
 
 #ifdef VMS
     bool_t bStatus= bTSL2550_Init();

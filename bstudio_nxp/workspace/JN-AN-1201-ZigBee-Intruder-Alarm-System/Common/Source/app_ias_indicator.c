@@ -107,7 +107,7 @@ PUBLIC void vInitIndicationLEDs(void)
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1175\n");
 #elif defined DR1199
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1199\n");
-    vGenericLEDInit();
+    //-vGenericLEDInit();
 #elif defined DR1159
     APP_vInitLeds();
 #endif
@@ -141,7 +141,8 @@ OS_TASK(vDeviceStateIndicatorTask)
         break;
     case E_IAS_DEV_STATE_JOINED:
         /*50% dutycycle , 1Hz  => OnTime = 0.5 Sec and Offtime = 0.5 sec*/
-        OS_eStartSWTimer(APP_IndicatorTimer,APP_TIME_MS(500) , NULL);
+        //-OS_eStartSWTimer(APP_IndicatorTimer,APP_TIME_MS(500) , NULL);
+        vLED_Off();	//-：：?：a?o：?1??┐???：o?|━?
         /**/
         break;
     case E_IAS_DEV_STATE_READY_TO_ENROLL:
@@ -224,7 +225,8 @@ PRIVATE void vLED_Off(void)
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1175 Off\n");
 #elif defined DR1199
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1199 Off\n");
-    vGenericLEDSetOutput(GEN_BOARD_LED_D3_VAL,FALSE);
+    //-vGenericLEDSetOutput(GEN_BOARD_LED_D3_VAL,FALSE);
+    vAHI_DioSetOutput(1<<12,0);
 #elif defined DR1159
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1159 Off\n");
     APP_vSetLeds(0);
@@ -249,7 +251,8 @@ PRIVATE void vLED_On(void)
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1175 On\n");
 #elif defined DR1199
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1199 On\n");
-    vGenericLEDSetOutput(GEN_BOARD_LED_D3_VAL,TRUE);
+    //-vGenericLEDSetOutput(GEN_BOARD_LED_D3_VAL,TRUE);
+    vAHI_DioSetOutput(0,1<<12);
 #elif defined DR1159
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1159 On\n");
     APP_vSetLeds(1);
