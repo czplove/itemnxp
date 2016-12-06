@@ -69,6 +69,15 @@
 /****************************************************************************/
 /***        Local Functions                                               ***/
 /****************************************************************************/
+void HC595IO_Init(void)
+{
+	/* Set DIO lines to outputs with buttons connected */
+	    vAHI_DioSetDirection(0, STCP | SHCP_CLK | DS_DIO);
+	/* Turn on pull-ups for DIO lines with buttons connected */
+	    vAHI_DioSetPullup(STCP | SHCP_CLK | DS_DIO, 0);
+}
+
+
 void HC595SendData(unsigned char SendVal)
 {
 	unsigned char i,j;

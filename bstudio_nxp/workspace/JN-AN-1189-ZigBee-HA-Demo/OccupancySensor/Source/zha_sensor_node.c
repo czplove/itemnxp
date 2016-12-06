@@ -146,6 +146,7 @@ PUBLIC void APP_vInitialiseNode(void)
      */
 
     APP_bButtonInitialise();
+    HC595IO_Init();
 
     /* We need to get the previous state out off NVM and save it*/
     sSensor.sOccupancySensingServerCluster.u8Occupancy = bGetPreSleepOccupancyState();

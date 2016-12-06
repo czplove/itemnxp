@@ -156,11 +156,19 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
             //-vHandleFallingEdgeEvent();
         	Delay(500*1000);
         	if(bDIO3State == FALSE)
-        		HC595SendData(OUT_CD);	//-DIO3输出高	---控制电源
+        	{
+        		//-HC595SendData(OUT_E | OUT_A);	//-DIO3输出高	---控制电源
+        		HC595SendData(OUT_0);
+        		DBG_vPrintf(TRUE, "\nAPP OUT_0");
+        	}
         	else
-        		HC595SendData(OUT_CD);	//-DIO3输出低
+        	{
+        		//-HC595SendData(OUT_0 | OUT_A);	//-DIO3输出低
+        		HC595SendData(OUT_1);
+        		DBG_vPrintf(TRUE, "\nAPP OUT_1");
+        	}
 
-        	//-vAHI_DioSetOutput(0x0004,0);
+        	//-HC595SendData(OUT_A);
         	bDIO3State = !bDIO3State;
             break;
 
@@ -173,11 +181,11 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
             //-vStartPersistantPolling();
         	Delay(500*1000);
         	if(bDIO2State == FALSE)
-        		HC595SendData(OUT_AB);	//-DIO2输出高	---正反转
+        		HC595SendData(OUT_E | OUT_0);	//-DIO2输出高	---正反转
         	else
-        		HC595SendData(OUT_AB);	//-DIO2输出低
+        		HC595SendData(OUT_0 | OUT_0);	//-DIO2输出低
 
-        	//-vAHI_DioSetOutput(0,0x0004);
+        	//-HC595SendData(OUT_0);
         	bDIO2State = !bDIO2State;
             break;
         //-case SW3_PRESSED:
