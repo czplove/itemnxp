@@ -489,7 +489,7 @@ PUBLIC void vStobeIndication(bool_t bStrobe,uint8 u8Level)
  ****************************************************************************/
 
 PUBLIC void vWarning(uint8 u8Mode, uint16 u16Duration,uint8 u8Strobe,uint8 u8StrobeLevel, uint8 u8StobeDutyCycle )
-{
+{//-这里处理产生频闪警告 同样这里也是我们实际应用中需要替代的应用层,来输出自己需要的警告
     APP_tsStartWarning sWarning ={0};
     uint16 T =0;
 
@@ -528,7 +528,7 @@ PUBLIC void vWarning(uint8 u8Mode, uint16 u16Duration,uint8 u8Strobe,uint8 u8Str
         }
     }
 
-    vStartWarn(sWarning);
+    vStartWarn(sWarning);	//-上面得到了参数,这根据参数驱动输出
 
 }
 

@@ -88,7 +88,7 @@ PRIVATE bool_t bON;
  * void
  *
  ****************************************************************************/
-PUBLIC void vStartWarn(APP_tsStartWarning sStartWarning)
+PUBLIC void vStartWarn(APP_tsStartWarning sStartWarning)	//-实际开始输出告警驱动
 {
 	if(OS_E_SWTIMER_STOPPED != OS_eGetSWTimerStatus(APP_WD_GenTimer))
 		OS_eStopSWTimer(APP_WD_GenTimer);
@@ -148,7 +148,7 @@ OS_SWTIMER_CALLBACK(APP_RunWarning,ptr)
     }
 
     if(sWarning.u16Duration)
-    {
+    {//-周期性的进入,直到计时结束
         OS_eStartSWTimer(APP_WD_GenTimer, APP_TIME_MS(u16Time),NULL );
     }
     else

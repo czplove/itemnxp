@@ -276,6 +276,8 @@ PRIVATE void APP_ZCL_cbEndpointCallback(tsZCL_CallBackEvent *psEvent)
 
     DBG_vPrintf(TRACE_ZCL, "\nEntering cbZCL_EndpointCallback");
 
+	DBG_vPrintf(TRACE_ZCL, "\nEventType:%d", psEvent->eEventType);
+
     switch (psEvent->eEventType)
     {
 
