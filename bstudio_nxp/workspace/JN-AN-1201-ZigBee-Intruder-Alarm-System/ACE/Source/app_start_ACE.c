@@ -137,7 +137,7 @@ PWRM_CALLBACK(PreSleep)
      * else not required as the entry point will init everything*/
     if( !bDeepSleep)
     {
-       eTouchSleep();
+       //-eTouchSleep();
        vAppApiSaveMacSettings();
     }
     /* Disable UART */
@@ -182,7 +182,7 @@ PWRM_CALLBACK(Wakeup)
     vLowBatIndicationInit( (LHS_LED_DIO | RHS_LED_DIO), E_BO_TRIP_2V4 );
 
     /*Wake up the touch interface */
-    eTouchWake();
+    //-eTouchWake();
 
     /* Don't use RTS/CTS pins on UART0 as they are used for buttons */
     vAHI_UartSetRTSCTS(E_AHI_UART_0, FALSE);

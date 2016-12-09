@@ -924,7 +924,7 @@ OS_TASK(APP_SleepTask)
     /* Restart the keyboard scanning timer as we've come up through */
     /* warm start via the Power Manager if we get here              */
 
-    vConfigureScanTimer();
+    //-vConfigureScanTimer();
 
     DBG_vPrintf(TRACE_SLEEP, "SleepTask: start poll timer\n");
     vIncrementPingTime(1);
