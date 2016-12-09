@@ -41,7 +41,7 @@
           <CooperativeTasks xmi:type="oscfg:Task" xmi:id="_gMG-4NRQEeO9oPKOFDFlAw" name="vDeviceStateIndicatorTask" EnterExitMutex="_98PuEDpJEd6X1p7n01EMHA _DhAXIDpKEd6X1p7n01EMHA _F6f-EDpKEd6X1p7n01EMHA" autostarted="false" priority="456"/>
           <CooperativeTasks xmi:type="oscfg:Task" xmi:id="_K13xcBMXEeSgd_NN6Vg3gA" name="APP_PingTimerTask" EnterExitMutex="_98PuEDpJEd6X1p7n01EMHA _DhAXIDpKEd6X1p7n01EMHA _F6f-EDpKEd6X1p7n01EMHA" autostarted="false" priority="2"/>
           <CooperativeTasks xmi:type="oscfg:Task" xmi:id="_YstYMAWfEeSRkIGqxG6Ebw" name="APP_SleepJoinFailed" EnterExitMutex="_98PuEDpJEd6X1p7n01EMHA _DhAXIDpKEd6X1p7n01EMHA _F6f-EDpKEd6X1p7n01EMHA" autostarted="false" priority="1"/>
-          <CooperativeTasks xmi:type="oscfg:Task" xmi:id="_y_8cAL3bEeaHYfiGFqSuXg" name="APP_ButtonsScanTask" CollectMessage="_5GqlEFtMEd6qH6QyWDvQeQ" autostarted="false" priority="300"/>
+          <CooperativeTasks xmi:type="oscfg:Task" xmi:id="_y_8cAL3bEeaHYfiGFqSuXg" name="APP_ButtonsScanTask" PostMessage="_5GqlEFtMEd6qH6QyWDvQeQ" autostarted="false" priority="300"/>
         </CooperativeTaskGroups>
       </Modules>
       <Modules xmi:type="oscfg:Module" xmi:id="_KdQVET4PEd65Mrxtsaf9rQ" name="Exceptions">
@@ -977,15 +977,14 @@
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_baUZEL3cEeaHYfiGFqSuXg" id="(0.13409961685823754,1.0)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_baVAIL3cEeaHYfiGFqSuXg" id="(0.03515625,0.8837209302325582)"/>
     </edges>
-    <edges xmi:type="notation:Edge" xmi:id="_kAHKML3cEeaHYfiGFqSuXg" visible="true" type="4001" source="_y_-RML3bEeaHYfiGFqSuXg" target="_5GqlEVtMEd6qH6QyWDvQeQ">
-      <children xmi:type="notation:DecorationNode" xmi:id="_kAHKM73cEeaHYfiGFqSuXg" visible="true" type="6002">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_kAHxQL3cEeaHYfiGFqSuXg" x="7" y="9"/>
+    <edges xmi:type="notation:Edge" xmi:id="_5aW2gL3iEeaokuzJXJYj5A" visible="true" type="4012" source="_y_-RML3bEeaHYfiGFqSuXg" target="_5GqlEVtMEd6qH6QyWDvQeQ">
+      <children xmi:type="notation:DecorationNode" xmi:id="_5aXdkL3iEeaokuzJXJYj5A" visible="true" type="6012">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_5aYEoL3iEeaokuzJXJYj5A" x="30" y="22"/>
       </children>
-      <styles xmi:type="notation:RoutingStyle" xmi:id="_kAHKMb3cEeaHYfiGFqSuXg" roundedBendpointsRadius="0" routing="Manual" smoothness="None" avoidObstructions="false" closestDistance="false" jumpLinkStatus="None" jumpLinkType="Semicircle" jumpLinksReverse="false"/>
+      <styles xmi:type="notation:RoutingStyle" xmi:id="_5aW2gb3iEeaokuzJXJYj5A" roundedBendpointsRadius="0" routing="Manual" smoothness="None" avoidObstructions="false" closestDistance="false" jumpLinkStatus="None" jumpLinkType="Semicircle" jumpLinksReverse="false"/>
       <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_kAHKMr3cEeaHYfiGFqSuXg" points="[0, 9, 51, -436]$[0, 276, 51, -169]$[-49, 437, 2, -8]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_kAK0kL3cEeaHYfiGFqSuXg" id="(0.078125,0.8953488372093024)"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_kAK0kb3cEeaHYfiGFqSuXg" id="(0.8272251308900523,0.36363636363636365)"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_5aW2gr3iEeaokuzJXJYj5A" points="[0, 0, 159, -461]$[0, 297, 159, -164]$[-127, 428, 32, -33]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_5abvAL3iEeaokuzJXJYj5A" id="(0.22265625,1.0)"/>
     </edges>
   </notation:Diagram>
 </xmi:XMI>
