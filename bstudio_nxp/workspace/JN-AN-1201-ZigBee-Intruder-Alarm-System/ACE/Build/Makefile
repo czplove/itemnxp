@@ -58,7 +58,8 @@ JENNIC_CHIP_FAMILY ?= JN516x
 # Default DK2 development kit target hardware
 
 # Remote control hardware
-JENNIC_PCB ?= DEVKIT2
+#JENNIC_PCB ?= DEVKIT2
+JENNIC_PCB ?= DEVKIT4
 
 DR ?= DR1159
 
