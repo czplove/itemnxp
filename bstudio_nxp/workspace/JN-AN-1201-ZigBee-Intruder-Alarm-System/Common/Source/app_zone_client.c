@@ -220,7 +220,7 @@ PUBLIC void vHandleZDPReqResForZone(ZPS_tsAfZdpEvent  * psAfZdpEvent)
  *
  ****************************************************************************/
 PUBLIC void vHandleAppZoneClient(tsCLD_IASZoneCallBackMessage *psCallBackMessage,uint16 u16ShortAddress)
-{
+{//-这里是处理zone客户端发来的事件的起点,下面才有可能启动报警命令发出
       DBG_vPrintf(TRACE_APP_ZONE,"\nIAS Zone Command Id = %d\n",psCallBackMessage->u8CommandId);
 
       switch (psCallBackMessage->u8CommandId)

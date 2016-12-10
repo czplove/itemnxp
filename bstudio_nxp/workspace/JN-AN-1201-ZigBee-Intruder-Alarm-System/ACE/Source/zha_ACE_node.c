@@ -288,7 +288,7 @@ PUBLIC void vStartFastPolling(uint8 u8Seconds)
  * void
  *
  ****************************************************************************/
-OS_TASK(APP_ZHA_ACE_Task)
+OS_TASK(APP_ZHA_ACE_Task)	//-系统有很多东西会激活这个任务,在配置函数里面有
 {
     APP_tsEvent sAppEvent;
     ZPS_tsAfEvent sStackEvent;
@@ -397,7 +397,7 @@ OS_TASK(APP_ZHA_ACE_Task)
                     }
                 }
             #endif
-            vHandleAppEvent( sAppEvent );
+            vHandleAppEvent( sAppEvent );	//-如果已经入网了,按键会执行到这
             break;
         default:
             break;
@@ -687,13 +687,14 @@ PRIVATE void vHandleAppEvent( APP_tsEvent sAppEvent )
  *
  ****************************************************************************/
 PRIVATE void APP_vHandleKeyPress(teUserKeyCodes eKeyCode)
-{
+{//-通过传递过来的按键值,这里就可以启动发送了
+	DBG_vPrintf(TRUE,"\nteUserKeyCodes = %d\n",eKeyCode);
     switch (eKeyCode)
     {
         case KEY_1: if(eCommandState == E_CMD_STATE_START_ERASE_PDM)
                         eCommandState = E_CMD_STATE_ERASE_PDM;
                     else
-                        APP_ZCL_vSendEmergency();
+                        APP_ZCL_vSendEmergency();	//-不同的按键发送不同的命令
                     break;
         case KEY_2: /* Zone ID 0 selected */
                     if(eCommandState == E_CMD_BYPASS_STATE_SELECT_ZONES){
@@ -967,7 +968,7 @@ OS_TASK(APP_SleepTask)
  *
  ****************************************************************************/
 PUBLIC void vWakeCallBack(void)
-{
+{//-这里的函数貌似实现了下面函数的功能,在其他程序里面用的是下面函数,这个需要后面考虑
     DBG_vPrintf(TRACE_ACE_NODE, "vWakeCallBack\n");
 }
 
