@@ -169,7 +169,7 @@ OS_ISR(vISR_SystemController)
         PWRM_vWakeInterruptCallback();
     }
 #ifdef SLEEP_ENABLE
-    vManageWakeUponSysControlISR();
+    //-vManageWakeUponSysControlISR();
 #endif
 }
 

@@ -970,6 +970,29 @@ PUBLIC void vWakeCallBack(void)
 {
     DBG_vPrintf(TRACE_ACE_NODE, "vWakeCallBack\n");
 }
+
+/****************************************************************************
+ *
+ * NAME: vManageWakeUponSysControlISR
+ *
+ * DESCRIPTION:
+ * Called from SysControl ISR to process the wake up conditions
+ *
+ * RETURNS:
+ * void
+ *
+ ****************************************************************************/
+PUBLIC void vManageWakeUponSysControlISR(void)
+{
+    DBG_vPrintf(TRACE_ACE_NODE, "vManageWakeUponSysControlISR\n");
+
+        /*In any case this could be a wake up from timer interrupt or from buttons
+         * press
+         * */
+            /*Only called if the module is comming out of sleep */
+    vAppWakeCallBack();
+
+}
 #endif
 
 /****************************************************************************

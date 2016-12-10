@@ -136,6 +136,7 @@ CFLAGS += -DDEBUG_SCAN
 CFLAGS += -DDEBUG_JOIN
 CFLAGS += -DDEBUG_COMMISSION
 CFLAGS += -DDEBUG_SWITCH_STATE
+CFLAGS += -DTRACE_APP_BUTTON
 
 ###############################################################################
 # Path definitions
