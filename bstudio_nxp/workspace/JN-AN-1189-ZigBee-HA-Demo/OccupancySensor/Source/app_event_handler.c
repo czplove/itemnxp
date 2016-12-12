@@ -217,7 +217,9 @@ PUBLIC void vAppHandleAppEvent(APP_tsEvent sButton)
             {
             	//-读触摸数据
             	uint8 u8RecData = I2C_ReadState();
+            	DBG_vPrintf(TRACE_EVENT_HANDLER,"\nAPP Process Touch Buttons: read = %d -> ",u8RecData);
             	eTransitionCode = I2C_CheckState(u8RecData);	//-校验数据的正确性
+            	DBG_vPrintf(TRACE_EVENT_HANDLER,"\nAPP Process Touch Buttons: resualt = %d -> ",eTransitionCode);
             	vDioEventHandler(eTransitionCode);
             }
 

@@ -183,7 +183,7 @@ PUBLIC void vAppMain(void)
          * that at least one task / ISR has executed with in the watchdog period
          * otherwise the system will be reset.
          */
-        DBG_vPrintf(TRACE_START, "#");
+        //-DBG_vPrintf(TRACE_START, "#");
         vAHI_WatchdogRestart();
 
         /*
@@ -191,7 +191,7 @@ PUBLIC void vAppMain(void)
          * sleep if there are no activities in progress
          */
         PWRM_vManagePower();
-        DBG_vPrintf(TRACE_START, "?");
+        //-DBG_vPrintf(TRACE_START, "?");
     }
 }
 
