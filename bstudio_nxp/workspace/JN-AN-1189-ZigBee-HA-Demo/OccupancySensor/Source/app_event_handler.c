@@ -75,6 +75,7 @@ PRIVATE void vStopPersistantPolling(void);
 /***        Exported Variables                                            ***/
 /****************************************************************************/
 extern const uint8 u8MyEndpoint;
+extern uint8 LoadState;
 /****************************************************************************/
 /***        Local Variables                                               ***/
 /****************************************************************************/
@@ -87,7 +88,7 @@ extern const uint8 u8MyEndpoint;
   * @param
   * @retval None
   */
-static void Delay (uint32 u32DelayUs)
+void Delay (uint32 u32DelayUs)
 {
 /*
   while (usec--){
@@ -183,6 +184,9 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
         default:
             break;
     }
+
+    //-正确接收到触摸数据后切换LED灯状态
+    I2C_SendState(LoadState);
 }
 
 /****************************************************************************
@@ -209,7 +213,14 @@ PUBLIC void vAppHandleAppEvent(APP_tsEvent sButton)
             DBG_vPrintf(TRACE_EVENT_HANDLER, "\nAPP Process Buttons: Transition Code = %d",eTransitionCode);
 
             eTransitionCode=sButton.uEvent.sButton.u8Button;
-            vDioEventHandler(eTransitionCode);
+            if((eTransitionCode == SW1_PRESSED) || (eTransitionCode == SW3_PRESSED))
+            {
+            	//-读触摸数据
+            	uint8 u8RecData = I2C_ReadState();
+            	eTransitionCode = I2C_CheckState(u8RecData);	//-校验数据的正确性
+            	vDioEventHandler(eTransitionCode);
+            }
+
             break;
 
         case APP_E_EVENT_BUTTON_UP:

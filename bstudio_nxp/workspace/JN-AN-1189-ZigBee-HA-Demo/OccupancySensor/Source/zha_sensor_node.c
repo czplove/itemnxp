@@ -74,6 +74,8 @@
 #include "app_nwk_event_handler.h"
 #include "app_blink_led.h"
 
+#include "Atmel_SAMD10A14C.h"
+
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
@@ -145,6 +147,8 @@ PUBLIC void APP_vInitialiseNode(void)
      * context from flash
      */
 
+    //-³õÊ¼»¯´¥Ãþ
+    I2C_Init();
     APP_bButtonInitialise();
 
     /* We need to get the previous state out off NVM and save it*/
