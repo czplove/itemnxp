@@ -78,7 +78,7 @@
 #include "app_sleep_functions.h"
 #include "PingParent.h"
 #ifdef MS
-#include "GenericBoard.h"
+//-#include "GenericBoard.h"
 #include "driver/E93196.h"
 #endif
 
@@ -305,7 +305,8 @@ OS_TASK(APP_ZHA_Switch_Task)	//-系统中很多配置的事件会触发这个任务
             break;
 
         case E_RUNNING:
-            //-DBG_vPrintf(TRACE_ZONE_NODE, "E_RUNNING\r\n");
+            DBG_vPrintf(TRACE_ZONE_NODE, "E_RUNNING\r\n");
+			DBG_vPrintf(TRACE_ZONE_NODE,"sStackEvent.eType = %d\n",sStackEvent.eType);
             if (sStackEvent.eType == ZPS_EVENT_NWK_FAILED_TO_JOIN)
             {
                 DBG_vPrintf(TRACE_ZONE_NODE, "Start join failed tmr 1000\n");
@@ -479,6 +480,7 @@ void IASZONE_STATUS_MASK_SET_fun(void)
 {
 	//-vGenericLEDSetOutput(GEN_BOARD_LED_D2_VAL,TRUE);
 	vAHI_DioSetOutput(0,1<<0);
+	//-vAHI_DioSetOutput(1<<0,0);
 	                        //-DBG_vPrintf(TRACE_ZONE_NODE,"\nCLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_SET\n ");
 	app_vUpdateZoneStatusAttribute (
 	                                ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/
@@ -527,7 +529,7 @@ PRIVATE void vHandleAppEvent( APP_tsEvent sAppEvent )
                     #ifdef MS
                     case APP_E_BUTTONS_BUTTON_SW3:
                     {
-                        vGenericLEDSetOutput(GEN_BOARD_LED_D1_VAL,TRUE);
+                        //-vGenericLEDSetOutput(GEN_BOARD_LED_D1_VAL,TRUE);
                         DBG_vPrintf(TRACE_ZONE_NODE,"CLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_SET\n ");
                         app_vUpdateZoneStatusAttribute (
                                                         ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/
@@ -539,7 +541,7 @@ PRIVATE void vHandleAppEvent( APP_tsEvent sAppEvent )
                     break;
                     case APP_E_BUTTONS_BUTTON_SW2:
                     {
-                        vGenericLEDSetOutput(GEN_BOARD_LED_D1_VAL,FALSE);
+                        //-vGenericLEDSetOutput(GEN_BOARD_LED_D1_VAL,FALSE);
                         DBG_vPrintf(TRACE_ZONE_NODE,"CLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_RESET\n ");
                         app_vUpdateZoneStatusAttribute (
                                                         ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/
@@ -550,7 +552,7 @@ PRIVATE void vHandleAppEvent( APP_tsEvent sAppEvent )
                     break;
                     case APP_E_BUTTONS_BUTTON_SW1:
                     {
-                        vGenericLEDSetOutput(GEN_BOARD_LED_D2_VAL,TRUE);
+                        //-vGenericLEDSetOutput(GEN_BOARD_LED_D2_VAL,TRUE);
                         DBG_vPrintf(TRACE_ZONE_NODE,"CLD_IASZONE_STATUS_MASK_ALARM2,CLD_IASZONE_STATUS_MASK_SET\n ");
                         app_vUpdateZoneStatusAttribute (
                                                         ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/
@@ -561,7 +563,7 @@ PRIVATE void vHandleAppEvent( APP_tsEvent sAppEvent )
                     break;
                     case APP_E_BUTTONS_BUTTON_SW4:
                     {
-                        vGenericLEDSetOutput(GEN_BOARD_LED_D2_VAL,FALSE);
+                        //-vGenericLEDSetOutput(GEN_BOARD_LED_D2_VAL,FALSE);
                         DBG_vPrintf(TRACE_ZONE_NODE,"CLD_IASZONE_STATUS_MASK_ALARM2,CLD_IASZONE_STATUS_MASK_RESET\n ");
                         app_vUpdateZoneStatusAttribute (
                                                         ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/

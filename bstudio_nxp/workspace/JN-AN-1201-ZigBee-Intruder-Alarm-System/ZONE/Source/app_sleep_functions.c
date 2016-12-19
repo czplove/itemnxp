@@ -128,6 +128,16 @@ PRIVATE void vStopSWTimers (void)
         OS_eStopSWTimer(APP_IndicatorTimer);
     }
 
+	if (OS_eGetSWTimerStatus(APP_AlarmClearTimer) != OS_E_SWTIMER_STOPPED)
+    {
+        OS_eStopSWTimer(APP_AlarmClearTimer);
+    }
+
+	if (OS_eGetSWTimerStatus(APP_ButtonDelayTimer) != OS_E_SWTIMER_STOPPED)
+    {
+        OS_eStopSWTimer(APP_ButtonDelayTimer);
+    }
+
 }
 
 /****************************************************************************
@@ -269,6 +279,7 @@ PUBLIC void vCheckForSleep( uint8 * u8NoDataCount )
             }
         }
     }
+    //-vScheduleSleep();
     DBG_vPrintf(SLEEP_INFO, "\n");
 }
 

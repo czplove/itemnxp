@@ -117,6 +117,7 @@ CFLAGS += -DDEBUG_EZMODE
 #CFLAGS += -DDEBUG_SWITCH_STATE
 CFLAGS += -DDEBUG_ZONE_NODE
 CFLAGS += -DDEBUG_INDICATOR
+CFLAGS += -DDEBUG_SLEEP_INFO
 
 ###############################################################################
 # Path definitions

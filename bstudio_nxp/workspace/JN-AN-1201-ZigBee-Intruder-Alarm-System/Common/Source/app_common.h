@@ -62,7 +62,7 @@
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
 
-#define POLL_TIME               APP_TIME_MS(1000)
+#define POLL_TIME               APP_TIME_MS(1000*10)
 #define POLL_TIME_FAST          APP_TIME_MS(100)
 #define TEN_HZ_TICK_TIME        APP_TIME_MS(100)
 

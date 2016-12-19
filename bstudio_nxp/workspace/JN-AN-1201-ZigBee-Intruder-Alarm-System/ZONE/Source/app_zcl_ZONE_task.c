@@ -67,7 +67,7 @@
 #include "ahi_aes.h"
 #include "app_events.h"
 #ifdef MS
-#include "GenericBoard.h"
+//-#include "GenericBoard.h"
 #include "driver/E93196.h"
 #endif
 #include "ha.h"

@@ -63,7 +63,7 @@
 #include "app_ias_indicator.h"
 #endif
 #ifdef MS
-#include "GenericBoard.h"
+//-#include "GenericBoard.h"
 #endif
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
@@ -291,9 +291,17 @@ PRIVATE void vSetUpWakeUpConditions(void)
 #ifdef MS
     /*Set the LED to inputs to reduce power consumption */
     /*the following pins are connected to LEDs hence drive them low*/
-    vGenericLEDSetOutput(1, 0);
-    vGenericLEDSetOutput(2, 0);
-    vGenericLEDSetOutput(4, 0);
+    //-vGenericLEDSetOutput(1, 0);
+    //-vGenericLEDSetOutput(2, 0);
+    //-vGenericLEDSetOutput(4, 0);
+    //-vAHI_DioSetDirection(1<<0,0);	//-ºìµÆ
+    vAHI_DioSetPullup(1<<0,0);
+
+	//-vAHI_DioSetDirection(12<<0,0);	//-ÂÌµÆ
+    vAHI_DioSetPullup(12<<0,0);
+
+	//-vAHI_DioSetDirection(11<<0,0);	//-SERIN
+    //-vAHI_DioSetPullup(11<<0,0);
 #endif
 
     vAHI_DioSetDirection(APP_BUTTONS_DIO_MASK,0);    /* Set as Power Button(DIO0) as Input */
@@ -332,6 +340,8 @@ PWRM_CALLBACK(PreSleep)
 #ifdef VMS
     bRGB_LED_Off();
 #endif
+	//-vAHI_DioSetOutput(1<<0,0);
+	//-vAHI_DioSetOutput(0,1<<0);
     /* Set up wake up input */
     vSetUpWakeUpConditions();
 
