@@ -84,6 +84,8 @@
 
 #include "haEzJoin.h"
 
+#include "app_manage_lv.h"
+
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
@@ -264,6 +266,8 @@ void consecutiveButtonPress_Handler()
 	    DBG_vPrintf(TRUE, "\nFactory New Start");
 	    vStartStopTimer( APP_JoinTimer, APP_TIME_MS(1000),(uint8*)&(sDeviceDesc.eNodeState),E_STARTUP );
 		}
+		//-测试读电压值
+		APP_vManageLVGetVoltage();
 		//-测试传感器的应用层
 		if(consecutiveButtonPressCount == 2)
 		{

@@ -178,6 +178,8 @@ PUBLIC void APP_vInitialiseNode(void)
 	ProcessDOCIInterrupt();
 	vAHI_DioInterruptEnable(PIR_DOCI_PIN,0);
 
+	APP_vManagelvInit();	//-≥ı ºªØADC
+
     /*In case of a deep sleep device any button wake up would cause a PDM delete , only check for DIO8
      * pressed for deleting the context */
     vDeletePDMOnButtonPress(APP_BUTTONS_BUTTON_1);

@@ -118,6 +118,7 @@ CFLAGS += -DDEBUG_EZMODE
 CFLAGS += -DDEBUG_ZONE_NODE
 CFLAGS += -DDEBUG_INDICATOR
 CFLAGS += -DDEBUG_SLEEP_INFO
+CFLAGS += -DDEBUG_LV
 
 ###############################################################################
 # Path definitions
@@ -169,6 +170,7 @@ APPSRC += haEzJoin.c
 APPSRC += PingParent.c
 
 APPSRC += E93196.c
+APPSRC += app_manage_lv.c
 
 APP_ZPSCFG = app.zpscfg
 
