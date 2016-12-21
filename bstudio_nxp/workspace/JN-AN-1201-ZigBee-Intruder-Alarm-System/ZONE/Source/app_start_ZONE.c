@@ -195,7 +195,7 @@ PUBLIC void vAppMain(void)
          */
         PWRM_vManagePower();
 
-        DBG_vPrintf(TRACE_START, ".");
+        //-DBG_vPrintf(TRACE_START, ".");
     }
 }
 
