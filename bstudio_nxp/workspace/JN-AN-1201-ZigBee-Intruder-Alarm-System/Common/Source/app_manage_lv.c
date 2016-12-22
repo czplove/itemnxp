@@ -92,14 +92,16 @@ PUBLIC void APP_vManagelvInit(void)
 
     while (!bAHI_APRegulatorEnabled());   /* spin on reg not enabled */
     DBG_vPrintf(TRACE_APP_LV, "\nAPP: InitManageLV");
+    vAHI_AdcEnable(E_AHI_ADC_SINGLE_SHOT, E_AHI_AP_INPUT_RANGE_2, E_AHI_ADC_SRC_VOLT);
+    vAHI_AdcStartSample();
 }
 
 PUBLIC void APP_vManageLVGetVoltage(void)
 {
 		uint16 VddVoltage;
 	
-		vAHI_AdcEnable(E_AHI_ADC_SINGLE_SHOT, E_AHI_AP_INPUT_RANGE_2, E_AHI_ADC_SRC_VOLT);
-    vAHI_AdcStartSample();
+		APP_vManagelvInit();
+
     while(bAHI_AdcPoll())
 		vAHI_WatchdogRestart();	//-暂时等待的时候复位看门狗,防止程序重启,后期合理性需要考虑
     VddVoltage = u16AHI_AdcRead();

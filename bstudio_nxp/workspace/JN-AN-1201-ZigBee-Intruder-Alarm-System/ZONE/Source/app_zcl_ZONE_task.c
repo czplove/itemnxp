@@ -249,13 +249,13 @@ void consecutiveButtonPress_Handler()
 	//-vDioEventHandler(eTransitionCode);
 	if(target_delta_s >= 6)
 	{//-长按6S退网不再自动加网
-
+		DBG_vPrintf(TRUE, "\nLEAVE REJOIN \n");
 		ZPS_eAplZdoLeaveNetwork(0,FALSE,FALSE);
 		sDeviceDesc.eNodeState = E_LEAVE_WAIT;
 	}
 	else
 	{
-		DBG_vPrintf(TRUE, "\nLEAVE REJOIN \n");
+
 		//-sDeviceDesc.eNodeState = E_REJOINING;	//-其它的情况都加网处理
 		//-app_vStartNodeFactoryNew();
 		if(sDeviceDesc.eNodeState != E_RUNNING)
@@ -269,14 +269,14 @@ void consecutiveButtonPress_Handler()
 		//-测试读电压值
 		APP_vManageLVGetVoltage();
 		//-测试传感器的应用层
-		if(consecutiveButtonPressCount == 2)
-		{
-			vAHI_DioInterruptEnable(0,PIR_DOCI_PIN);
-			u32AHI_DioInterruptStatus();
-			IASZONE_STATUS_MASK_SET_fun();
-			DBG_vPrintf(TRUE, "\nAPP E93196 Sensor Task: App Event ALARM\n");
-			OS_eStartSWTimer(APP_AlarmClearTimer, APP_TIME_MS(5000), NULL);
-		}
+		//-if(consecutiveButtonPressCount == 2)
+		//-{
+		//-	vAHI_DioInterruptEnable(0,PIR_DOCI_PIN);
+		//-	u32AHI_DioInterruptStatus();
+		//-	IASZONE_STATUS_MASK_SET_fun();
+		//-	DBG_vPrintf(TRUE, "\nAPP E93196 Sensor Task: App Event ALARM\n");
+		//-	OS_eStartSWTimer(APP_AlarmClearTimer, APP_TIME_MS(5000), NULL);
+		//-}
 	}
 	consecutiveButtonPressCount = 0;
 }

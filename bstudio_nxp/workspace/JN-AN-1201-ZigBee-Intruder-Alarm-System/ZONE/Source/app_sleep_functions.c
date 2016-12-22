@@ -128,15 +128,17 @@ PRIVATE void vStopSWTimers (void)
         OS_eStopSWTimer(APP_IndicatorTimer);
     }
 
-	if (OS_eGetSWTimerStatus(APP_AlarmClearTimer) != OS_E_SWTIMER_STOPPED)
-    {
-        OS_eStopSWTimer(APP_AlarmClearTimer);
-    }
+	//-下面这个不能停止否则无法消警
+	//-if (OS_eGetSWTimerStatus(APP_AlarmClearTimer) != OS_E_SWTIMER_STOPPED)
+    //-{
+    //-    OS_eStopSWTimer(APP_AlarmClearTimer);
+    //-}
 
-	if (OS_eGetSWTimerStatus(APP_ButtonDelayTimer) != OS_E_SWTIMER_STOPPED)
-    {
-        OS_eStopSWTimer(APP_ButtonDelayTimer);
-    }
+    //-这个会使得睡眠时候无法正常实现多击功能
+	//-if (OS_eGetSWTimerStatus(APP_ButtonDelayTimer) != OS_E_SWTIMER_STOPPED)
+    //-{
+    //-    OS_eStopSWTimer(APP_ButtonDelayTimer);
+    //-}
 
 }
 

@@ -722,7 +722,7 @@
       <APDUs Id="ZONE->apduZDP" Name="apduZDP" Size="100" Instances="16"/>
       <APDUs Id="ZONE->apduZCL" Name="apduZCL" Size="100" Instances="15"/>
     </PDUConfiguration>
-    <ChannelMask Channel11="true" Channel12="true" Channel13="true" Channel14="true" Channel15="true" Channel16="true" Channel17="true" Channel18="true" Channel19="true" Channel20="true" Channel21="true" Channel22="true" Channel23="true" Channel24="true" Channel25="true" Channel26="true"/>
+    <ChannelMask Channel11="true" Channel12="false" Channel13="false" Channel14="false" Channel15="false" Channel16="false" Channel17="false" Channel18="false" Channel19="false" Channel20="false" Channel21="false" Channel22="true" Channel23="true" Channel24="true" Channel25="true" Channel26="false"/>
     <NodeDescriptor ManufacturerCode="4151" LogicalType="ZED" ComplexDescriptorAvailable="false" UserDescriptorAvailable="false" APSFlags="0" FrequencyBand="2.4GHz" AlternatePANCoordinator="false" DeviceType="false" PowerSource="false" RxOnWhenIdle="false" Security="false" AllocateAddress="true" MaximumBufferSize="127" MaximumIncomingTransferSize="100" MaximumOutgoingTransferSize="100" ExtendedActiveEndpointListAvailable="false" ExtendedSimpleDescriptorListAvailable="false" PrimaryTrustCenter="false" BackupTrustCenter="false" PrimaryBindingTableCache="false" BackupBindingTableCache="false" PrimaryDiscoveryCache="false" BackupDiscoveryCache="false" NetworkManager="false"/>
     <NodePowerDescriptor ConstantPower="false" RechargeableBattery="false" DisposableBattery="true" DefaultPowerSource="Disposable Battery" DefaultPowerMode="Synchronised with RxOnWhenIdle"/>
     <BindingTable Size="20"/>
