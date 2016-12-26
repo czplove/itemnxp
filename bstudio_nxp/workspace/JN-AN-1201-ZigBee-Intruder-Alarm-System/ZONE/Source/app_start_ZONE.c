@@ -295,10 +295,13 @@ PRIVATE void vSetUpWakeUpConditions(void)
     //-vGenericLEDSetOutput(2, 0);
     //-vGenericLEDSetOutput(4, 0);
     //-vAHI_DioSetDirection(1<<0,0);	//-ºìµÆ
-    vAHI_DioSetPullup(1<<0,0);
+	//-vAHI_DioSetPullup(1<<0,0);
 
 	//-vAHI_DioSetDirection(12<<0,0);	//-ÂÌµÆ
-    vAHI_DioSetPullup(12<<0,0);
+	//-vAHI_DioSetPullup(12<<0,0);
+
+    vAHI_DioSetOutput(1<<0,0);	//-¹ØµÆ
+    vAHI_DioSetOutput(1<<12,0);
 
 	//-vAHI_DioSetDirection(11<<0,0);	//-SERIN
     //-vAHI_DioSetPullup(11<<0,0);

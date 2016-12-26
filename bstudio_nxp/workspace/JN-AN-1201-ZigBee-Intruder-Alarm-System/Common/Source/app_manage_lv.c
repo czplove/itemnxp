@@ -46,6 +46,11 @@
 #include "DBG.h"
 //-#include "recal.h"
 
+#include "pdum_apl.h"
+#include "pdm.h"
+#include "zcl.h"
+#include "PowerConfiguration.h"
+
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
@@ -99,6 +104,9 @@ PUBLIC void APP_vManagelvInit(void)
 PUBLIC void APP_vManageLVGetVoltage(void)
 {
 		uint16 VddVoltage;
+		PDUM_thAPduInstance             hAPduInst;
+		tsZCL_Address sDestinationAddress;
+		teZCL_Status eStatus;
 	
 		APP_vManagelvInit();
 
@@ -108,6 +116,29 @@ PUBLIC void APP_vManageLVGetVoltage(void)
 		DBG_vPrintf(TRACE_APP_LV, "\nAPP GetVoltage: ADC = %d",VddVoltage);
 		VddVoltage = (45 * VddVoltage) / 128;	//-采集电压值扩大了100
 		DBG_vPrintf(TRACE_APP_LV, "\nAPP GetVoltage: VDD *100 = %dV",VddVoltage);
+
+		sDestinationAddress.eAddressMode = E_ZCL_AM_BOUND_NO_ACK;
+		sDestinationAddress.uAddress.u16DestinationAddress = 0;
+
+		/* allocate Apdu instance */
+		hAPduInst = hZCL_AllocateAPduInstance();
+		if(hAPduInst != NULL)
+		{
+			if((eStatus = eZCL_ReportAttribute(
+			                    &sDestinationAddress,
+			                    GENERAL_CLUSTER_ID_POWER_CONFIGURATION,
+			                    E_CLD_PWRCFG_ATTR_ID_BATTERY_VOLTAGE,
+			                    1,
+			                    1,
+			                    hAPduInst)) != E_ZCL_SUCCESS)
+			{
+			                /* Free hAPDU */
+			                PDUM_eAPduFreeAPduInstance(hAPduInst);
+			                DBG_vPrintf(TRACE_APP_LV, "\nAPP Send Voltage: status %dV",0);
+			}
+			else
+				DBG_vPrintf(TRACE_APP_LV, "\nAPP Send Voltage: status %dV",1);
+		}
 }
 
 
