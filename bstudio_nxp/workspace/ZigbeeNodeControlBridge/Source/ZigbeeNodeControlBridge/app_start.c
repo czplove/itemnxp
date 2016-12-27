@@ -81,7 +81,7 @@
 #endif
 
 #ifndef UART_DEBUG
-#define UART_DEBUG FALSE
+#define UART_DEBUG TRUE
 #endif
 
 #ifndef TRACE_APPSTART
@@ -220,6 +220,8 @@ PUBLIC void vAppMain(void)
         /* kick the watchdog timer */
         vAHI_WatchdogRestart();
         PWRM_vManagePower();
+        vLog_Printf(TRACE_EXC, LOG_INFO, "\n** Control Bridge Reset** ");	//-´®¿Ú0Êä³ö
+        vSL_WriteMessage(E_SL_MSG_NODE_FACTORY_NEW_RESTART, 1,(uint8*) &sDeviceDesc.eNodeState);
     }
 }
 

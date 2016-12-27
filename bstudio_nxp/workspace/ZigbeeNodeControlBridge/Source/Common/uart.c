@@ -65,7 +65,7 @@
 
 /* default to uart 0 */
 #ifndef UART
-#define UART E_AHI_UART_0
+#define UART E_AHI_UART_1
 #endif
 
 #if (UART != E_AHI_UART_0 && UART != E_AHI_UART_1)
@@ -279,9 +279,9 @@ PUBLIC void UART_vRtsStartFlow(void)
  ****************************************************************************/
 PUBLIC void UART_vTxChar(uint8 u8Char)
 {
-    while(!UART_bTxReady() && !(u8AHI_UartReadLineStatus(E_AHI_UART_0) & E_AHI_UART_LS_TEMT) );
+    while(!UART_bTxReady() && !(u8AHI_UartReadLineStatus(UART) & E_AHI_UART_LS_TEMT) );
     vAHI_UartWriteData(UART, u8Char);
-    while(!UART_bTxReady() && !(u8AHI_UartReadLineStatus(E_AHI_UART_0) & E_AHI_UART_LS_TEMT) );
+    while(!UART_bTxReady() && !(u8AHI_UartReadLineStatus(UART) & E_AHI_UART_LS_TEMT) );
 }
 
 /****************************************************************************
