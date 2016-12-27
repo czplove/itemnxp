@@ -177,6 +177,7 @@ PUBLIC void vAppMain(void)
 #endif
     UART_vInit();
     UART_vRtsStartFlow();
+    //-UART_vRtsStopFlow();
     vLog_Printf(TRACE_APPSTART,LOG_DEBUG, "\n\nInitialising \n");
 #ifdef PDM_NONE
     PDM_vWaitHost();
@@ -220,8 +221,8 @@ PUBLIC void vAppMain(void)
         /* kick the watchdog timer */
         vAHI_WatchdogRestart();
         PWRM_vManagePower();
-        vLog_Printf(TRACE_EXC, LOG_INFO, "\n** Control Bridge Reset** ");	//-串口0输出
-        vSL_WriteMessage(E_SL_MSG_NODE_FACTORY_NEW_RESTART, 1,(uint8*) &sDeviceDesc.eNodeState);
+        //-vLog_Printf(TRACE_EXC, LOG_INFO, "\n** Control Bridge Reset** ");	//-串口0输出
+        //-vSL_WriteMessage(E_SL_MSG_NODE_FACTORY_NEW_RESTART, 1,(uint8*) &sDeviceDesc.eNodeState);
     }
 }
 
