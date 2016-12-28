@@ -50,6 +50,7 @@
 #include "pdm.h"
 #include "zcl.h"
 #include "PowerConfiguration.h"
+#include "app_zcl_ZONE_task.h"
 
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
@@ -72,7 +73,7 @@
 /****************************************************************************/
 /***        Local Function Prototypes                                     ***/
 /****************************************************************************/
-
+//-extern tsHA_IASZoneDevice sDevice;
 
 
 /****************************************************************************/
@@ -114,10 +115,11 @@ PUBLIC void APP_vManageLVGetVoltage(void)
 		vAHI_WatchdogRestart();	//-暂时等待的时候复位看门狗,防止程序重启,后期合理性需要考虑
     VddVoltage = u16AHI_AdcRead();
 		DBG_vPrintf(TRACE_APP_LV, "\nAPP GetVoltage: ADC = %d",VddVoltage);
-		VddVoltage = (45 * VddVoltage) / 128;	//-采集电压值扩大了100
-		DBG_vPrintf(TRACE_APP_LV, "\nAPP GetVoltage: VDD *100 = %dV",VddVoltage);
+		VddVoltage = (9 * VddVoltage) / 256;	//-采集电压值扩大了10
+		DBG_vPrintf(TRACE_APP_LV, "\nAPP GetVoltage: VDD *10 = %dV",VddVoltage);
 
-		sDestinationAddress.eAddressMode = E_ZCL_AM_BOUND_NO_ACK;
+		sDevice.sPowerConfigServerCluster.u8BatteryVoltage = VddVoltage;
+		sDestinationAddress.eAddressMode = E_ZCL_AM_SHORT;
 		sDestinationAddress.uAddress.u16DestinationAddress = 0;
 
 		/* allocate Apdu instance */
@@ -134,10 +136,10 @@ PUBLIC void APP_vManageLVGetVoltage(void)
 			{
 			                /* Free hAPDU */
 			                PDUM_eAPduFreeAPduInstance(hAPduInst);
-			                DBG_vPrintf(TRACE_APP_LV, "\nAPP Send Voltage: status %dV",0);
+			                DBG_vPrintf(TRACE_APP_LV, "\nAPP Send Voltage: status %dV",eStatus);
 			}
 			else
-				DBG_vPrintf(TRACE_APP_LV, "\nAPP Send Voltage: status %dV",1);
+				DBG_vPrintf(TRACE_APP_LV, "\nAPP Send Voltage: status %dV",eStatus);
 		}
 }
 

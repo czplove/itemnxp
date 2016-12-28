@@ -67,6 +67,11 @@
 #define CLD_IASZONE
 #define IASZONE_SERVER
 
+//-
+#define CLD_POWER_CONFIGURATION
+#define POWER_CONFIGURATION_SERVER
+
+
 /* Disabling APS ACK for Bound transmission */
 #define CLD_IASZONE_BOUND_TX_WITH_APS_ACK_DISABLED
 

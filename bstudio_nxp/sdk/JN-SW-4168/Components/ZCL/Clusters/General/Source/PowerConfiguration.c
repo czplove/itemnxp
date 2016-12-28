@@ -105,7 +105,7 @@ const tsZCL_AttributeDefinition asCLD_PowerConfigurationClusterAttributeDefiniti
 
     /* Battery information attribute set attribute ID's (3.3.2.2.3) */
 #ifdef CLD_PWRCFG_ATTR_BATTERY_VOLTAGE
-    {E_CLD_PWRCFG_ATTR_ID_BATTERY_VOLTAGE,                  E_ZCL_AF_RD,                E_ZCL_UINT8,    (uint32)(&((tsCLD_PowerConfiguration*)(0))->u8BatteryVoltage), 0},
+    {E_CLD_PWRCFG_ATTR_ID_BATTERY_VOLTAGE,                  (E_ZCL_AF_RD|E_ZCL_AF_RP),                E_ZCL_UINT8,    (uint32)(&((tsCLD_PowerConfiguration*)(0))->u8BatteryVoltage), 0},
 #endif
 
 #ifdef CLD_PWRCFG_ATTR_BATTERY_PERCENTAGE_REMAINING
