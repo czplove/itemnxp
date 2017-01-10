@@ -68,6 +68,7 @@
 /****************************************************************************/
 /***        Type Definitions                                              ***/
 /****************************************************************************/
+PRIVATE bool_t bDIO1State = FALSE;
 PRIVATE bool_t bDIO2State = FALSE;
 PRIVATE bool_t bDIO3State = FALSE;
 /****************************************************************************/
@@ -151,38 +152,49 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
             //-vEventStopFindAndBind();
             break;
 
-        case SW1_PRESSED:
-        case SW3_PRESSED:	//-正转
+        case SW4_PRESSED:
+        //-case SW3_PRESSED:	//-正转
             //-vHandleFallingEdgeEvent();
-        	Delay(500*1000);
-        	if(bDIO3State == FALSE)
-        		HC595SendData(OUT_CD);	//-DIO3输出高	---控制电源
+        	//-Delay(100*1000);
+        	if(bDIO1State == FALSE)
+        		HC595SendData(OUT_EF1);	//-DIO3输出高	---控制电源
         	else
-        		HC595SendData(OUT_CD);	//-DIO3输出低
-
+        		HC595SendData(OUT_EF0);	//-DIO3输出低
+        	Delay(300*1000);
+        	HC595SendData(0);	//-DIO3输出低
         	//-vAHI_DioSetOutput(0x0004,0);
-        	bDIO3State = !bDIO3State;
+        	bDIO1State = !bDIO1State;
             break;
 
         case SW1_RELEASED:
             vHandleRisingEdgeEvent();
             break;
 
-        case SW2_PRESSED:
-        case SW4_PRESSED:
+        case SW3_PRESSED:
+        //-case SW4_PRESSED:
             //-vStartPersistantPolling();
-        	Delay(500*1000);
+        	//-Delay(100*1000);
         	if(bDIO2State == FALSE)
-        		HC595SendData(OUT_AB);	//-DIO2输出高	---正反转
+        		HC595SendData(OUT_CD1);	//-DIO2输出高	---正反转
         	else
-        		HC595SendData(OUT_AB);	//-DIO2输出低
-
+        		HC595SendData(OUT_CD0);	//-DIO2输出低
+        	Delay(300*1000);
+        	HC595SendData(0);	//-DIO3输出低
         	//-vAHI_DioSetOutput(0,0x0004);
         	bDIO2State = !bDIO2State;
             break;
-        //-case SW3_PRESSED:
+        case SW2_PRESSED:
         //-    vStopPersistantPolling();
-        //-    break;
+        	//-Delay(100*1000);
+        	if(bDIO3State == FALSE)
+        	    HC595SendData(OUT_AB1);	//-DIO2输出高	---正反转
+        	else
+        	    HC595SendData(OUT_AB0);	//-DIO2输出低
+        	Delay(300*1000);
+        	HC595SendData(0);	//-DIO3输出低
+        	//-vAHI_DioSetOutput(0,0x0004);
+        	bDIO3State = !bDIO3State;
+            break;
         case SW2_RELEASED:
         case SW3_RELEASED:
         case SW4_RELEASED:

@@ -49,9 +49,9 @@
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
-#define STCP   		(1<<15)			//-´æ´¢Æ÷Ëø´æÊ±ÖÓÏß
-#define SHCP_CLK   	(1<<0)				//-Êý¾ÝÊäÈëÊ±ÖÓÏß
-#define DS_DIO   	(1<<18)			//-´®ÐÐÊý¾ÝÊäÈë
+#define STCP   		(1<<15)			//-Â´Ã¦Â´Â¢Ã†Ã·Ã‹Ã¸Â´Ã¦ÃŠÂ±Ã–Ã“ÃÃŸ
+#define SHCP_CLK   	(1<<0)				//-ÃŠÃ½Â¾ÃÃŠÃ¤ÃˆÃ«ÃŠÂ±Ã–Ã“ÃÃŸ
+#define DS_DIO   	(1<<18)			//-Â´Â®ÃÃÃŠÃ½Â¾ÃÃŠÃ¤ÃˆÃ«
 
 /****************************************************************************/
 /***        Type Definitions                                              ***/
@@ -59,6 +59,38 @@
 /****************************************************************************/
 /***        Local Function Prototypes                                     ***/
 /****************************************************************************/
+/**
+  * @brief
+  * @param
+  * @retval None
+  */
+static void Delay (uint32 u32DelayUs)
+{
+/*
+  while (usec--){
+    asm("nop");asm("nop");asm("nop");asm("nop");asm("nop");
+    asm("nop");asm("nop");asm("nop");asm("nop");asm("nop");
+    asm("nop");asm("nop");asm("nop");asm("nop");asm("nop");
+    asm("nop");asm("nop");asm("nop");asm("nop");asm("nop");
+    asm("nop");asm("nop");asm("nop");asm("nop");asm("nop");
+    asm("nop");asm("nop");asm("nop");asm("nop");asm("nop");
+    asm("nop");asm("nop");
+  }
+  */
+  uint32 start_tick,curr_tick, tick_delta, target_delta;
+
+  target_delta = u32DelayUs * 16;
+  start_tick = u32AHI_TickTimerRead();
+  do
+  {
+    vAHI_WatchdogRestart();
+    curr_tick = u32AHI_TickTimerRead();
+    if (curr_tick > start_tick)
+      tick_delta = curr_tick - start_tick;
+    else
+      tick_delta =  4294967296 - start_tick + curr_tick;
+  } while (tick_delta < target_delta);
+}
 /****************************************************************************/
 /***        Exported Variables                                            ***/
 /****************************************************************************/
@@ -69,6 +101,20 @@
 /****************************************************************************/
 /***        Local Functions                                               ***/
 /****************************************************************************/
+void HC595IO_Init(void)
+{
+	/* Set DIO lines to outputs with buttons connected */
+	    vAHI_DioSetDirection(0, STCP | SHCP_CLK | DS_DIO);
+	    bAHI_DoEnableOutputs(1);
+	/* Turn on pull-ups for DIO lines with buttons connected */
+	    vAHI_DioSetPullup(STCP | SHCP_CLK | DS_DIO, 0);
+	    //-vAHI_DoSetPullup();
+	    HC595SendData(0x2A);	//-å‡ºå£ç»§ç”µå™¨è¾“å‡ºä¸º0
+	    Delay(100*1000);
+	    HC595SendData(0);	//-DIO3è¾“å‡ºä½Ž
+}
+
+
 void HC595SendData(unsigned char SendVal)
 {
 	unsigned char i,j;
@@ -78,15 +124,37 @@ void HC595SendData(unsigned char SendVal)
 			vAHI_DioSetOutput(DS_DIO,0);
 		else 
 			vAHI_DioSetOutput(0,DS_DIO);
-		vAHI_DioSetOutput(0,SHCP_CLK);
-		j++;
-		j++;
-		vAHI_DioSetOutput(SHCP_CLK,0);
+		//-vAHI_DioSetOutput(0,SHCP_CLK);
+		//-vAHI_DioSetOutput(SHCP_CLK,0);
+		vAHI_DoSetDataOut(0,SHCP_CLK);
+		j = 2;
+		while(j)
+		j--;
+		//-vAHI_DioSetOutput(SHCP_CLK,0);
+		//-vAHI_DioSetOutput(0,SHCP_CLK);
+		vAHI_DoSetDataOut(SHCP_CLK,0);
 	}
 	vAHI_DioSetOutput(0,STCP);
-	j++;
-	j++;
+	j = 2;
+			while(j)
+			j--;
 	vAHI_DioSetOutput(STCP,0);
+}
+
+void HC595SendData0(unsigned char SendVal)
+{
+	vAHI_DioSetOutput(0,STCP);
+	vAHI_DioSetOutput(0,DS_DIO);
+	vAHI_DioSetOutput(0,SHCP_CLK);
+	vAHI_DoSetDataOut(0,SHCP_CLK);
+}
+
+void HC595SendData1(unsigned char SendVal)
+{
+	vAHI_DioSetOutput(STCP,0);
+	vAHI_DioSetOutput(DS_DIO,0);
+	vAHI_DioSetOutput(SHCP_CLK,0);
+	vAHI_DoSetDataOut(SHCP_CLK,0);
 }
 
 /****************************************************************************/
