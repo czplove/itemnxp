@@ -1,0 +1,69 @@
+2017/1/9 星期一 下午 1:42:44
+成功加网后串口反复打印信息:
+E_RUNNING
+sStackEvent.eType = 15
+
+Poll Confirm, No DataCheck for sleep Enrrolled 0 
+长按退网后串口打印信息:
+Poll Failed 
+
+Poll Failed 
+
+Poll Failed 
+
+这样就成功退网了.
+
+单击加网
+Set Channel to 11
+Setting Filtes : sBeaconFilter.u8Lqi =30
+ sBeaconFilter.u8FilterMap = 44 
+
+Scan is over Channel 
+vAttemptDiscovery :- Discovery API Status =0
+EZ_STATE3 r
+
+Poll Failed 
+ZPS_EVENT_NWK_DISCOVERY_COMPLETE......NWK Found, Count = 1  
+vEZ_SortAndSaveNetworks 
+*Saving Open NWK ExPANID = 0x  124b000157003f
+vEZ_SortAndSaveNetworks sEZModeData.u8DiscoveredNwkCount = 1
+API failed in vEZ_JoinSavedNetwork 195
+Exhausted NWK Join
+
+
+EZ_STATE0 r
+
+DR1199 Off
+
+The IAS Device State = 0vEZ_ClearStateVariables
+eEZ_SetChannel
+
+
+
+Set Channel to 24
+enroll成功登记之后:
+AppWakeCallBack & Poll
+Poll req 00
+E_RUNNING
+sStackEvent.eType = 15
+
+Poll Confirm, No DataCheck for sleep Enrrolled 1 poll count 1
+
+No Data Polls Exceeded
+ Scheduling sleep point in 7 Seconds, status = 0
+
+
+ PWRM_CALLBACK(PreSleep)
+ Sleeping...
+ 
+在这种情况下再来长按退网:
+ 唤醒的电平错了,所以有些时候长按无效.比如按下的时候是醒着的,抬起的时候却是睡着的,这样就不能唤醒,而
+ 错误过一个按键事件.
+vSetUpWakeUpConditions
+
+?vCheckForSleep
+
+
+
+
+

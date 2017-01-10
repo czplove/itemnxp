@@ -98,10 +98,12 @@ PRIVATE pwrm_tsWakeTimerEvent   sWake;
  ****************************************************************************/
 PRIVATE void vStopSWTimers (void)
 {
-    if (OS_eGetSWTimerStatus(APP_ButtonsScanTimer) != OS_E_SWTIMER_STOPPED)
-    {
-        OS_eStopSWTimer(APP_ButtonsScanTimer);
-    }
+    //-下面的需要去掉,不能为了睡眠而关闭定时器,必须等待定时器自动关闭.
+    //-软件定时器必须关闭了才可以睡眠,否则不能睡眠
+    //-if (OS_eGetSWTimerStatus(APP_ButtonsScanTimer) != OS_E_SWTIMER_STOPPED)
+    //-{
+    //-    OS_eStopSWTimer(APP_ButtonsScanTimer);
+    //-}
 
     if (OS_eGetSWTimerStatus(APP_PollTimer) != OS_E_SWTIMER_STOPPED)
     {
@@ -188,7 +190,7 @@ PUBLIC void vScheduleSleep(void)
  ****************************************************************************/
 PUBLIC void vAppWakeCallBack(void)
 {
-    DBG_vPrintf(SLEEP_INFO, "vAppWakeCallBack & Poll\n");
+    DBG_vPrintf(SLEEP_INFO, "\nvAppWakeCallBack & Poll\n");
 
     /*Start the APP_TickTimer to continue the ZCL tasks */
     if (OS_eGetSWTimerStatus(APP_TickTimer) != OS_E_SWTIMER_RUNNING)

@@ -235,7 +235,7 @@ OS_TASK(APP_ButtonsScanTask)
         u8AllReleased &= s_u8ButtonDebounce[i];
 
         if (0 == s_u8ButtonDebounce[i] && !s_u8ButtonState[i])
-        {
+        {//-被按下,进入
             s_u8ButtonState[i] = TRUE;
 
             /*
@@ -250,9 +250,12 @@ OS_TASK(APP_ButtonsScanTask)
             DBG_vPrintf(TRACE_APP_BUTTON, "Button DN=%d\n", i);
 
             OS_ePostMessage(APP_msgEvents, &sButtonEvent);
+
+            //-//-一但测试到按键被按下,那么触发就变成了上升沿
+            //-vAHI_DioWakeEdge(APP_BUTTONS_DIO_MASK,0);       /* Set the wake up DIO Edge - Falling Edge */
         }
         else if (0xff == s_u8ButtonDebounce[i] && s_u8ButtonState[i] != FALSE)
-        {
+        {//-抬起来之后进入
             s_u8ButtonState[i] = FALSE;
 
             /*
@@ -277,6 +280,10 @@ OS_TASK(APP_ButtonsScanTask)
          */
         DBG_vPrintf(TRACE_APP_BUTTON, "ALL UP\n", i);
         vAHI_DioInterruptEnable(APP_BUTTONS_DIO_MASK, 0);
+        if (OS_eGetSWTimerStatus(APP_ButtonsScanTimer) != OS_E_SWTIMER_STOPPED)
+        {
+           OS_eStopSWTimer(APP_ButtonsScanTimer);
+        }
     }
     else
     {

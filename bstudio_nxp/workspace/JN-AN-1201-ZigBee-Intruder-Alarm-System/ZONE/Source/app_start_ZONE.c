@@ -307,8 +307,14 @@ PRIVATE void vSetUpWakeUpConditions(void)
     //-vAHI_DioSetPullup(11<<0,0);
 #endif
 
-    vAHI_DioSetDirection(APP_BUTTONS_DIO_MASK,0);    /* Set as Power Button(DIO0) as Input */
-    vAHI_DioWakeEdge(0,APP_BUTTONS_DIO_MASK);       /* Set the wake up DIO Edge - Falling Edge */
+	vAHI_DioSetDirection(APP_BUTTONS_DIO_MASK,0);    /* Set as Power Button(DIO0) as Input */
+	//-uint32 u32Buttons = u32AHI_DioReadInput() & APP_BUTTONS_DIO_MASK;
+	//-if (u32Buttons == APP_BUTTONS_DIO_MASK)
+	//-{
+		vAHI_DioWakeEdge(0,APP_BUTTONS_DIO_MASK);       /* Set the wake up DIO Edge - Falling Edge */
+	//-}
+	//-else
+    //-	vAHI_DioWakeEdge(APP_BUTTONS_DIO_MASK,0);       /* Set the wake up DIO Edge - Falling Edge */
     vAHI_DioWakeEnable(APP_BUTTONS_DIO_MASK,0);     /* Set the Wake up DIO Power Button */
 }
 

@@ -524,7 +524,8 @@ PRIVATE void vHandleAppEvent( APP_tsEvent sAppEvent )
                 {
                     case APP_E_BUTTONS_BUTTON_1:
                         //-vSendEnrollReq(ZONE_ZONE_ENDPOINT);	//-这里可能是按键触发的,注册,需要注意
-                        BUTTON_start_tick = u32AHI_TickTimerRead();
+						DBG_vPrintf(TRACE_ZONE_NODE,"test button down \n ");
+						BUTTON_start_tick = u32AHI_TickTimerRead();
 						if(OS_eGetSWTimerStatus(APP_ButtonDelayTimer) != OS_E_SWTIMER_STOPPED)
             				OS_eStopSWTimer(APP_ButtonDelayTimer);
                     break;
@@ -584,6 +585,7 @@ PRIVATE void vHandleAppEvent( APP_tsEvent sAppEvent )
                 {
                     case APP_E_BUTTONS_BUTTON_1:
 						consecutiveButtonPressCount++;
+						DBG_vPrintf(TRACE_ZONE_NODE,"test button up \n ");
 						if(OS_eGetSWTimerStatus(APP_ButtonDelayTimer) != OS_E_SWTIMER_RUNNING)
 			    			OS_eStartSWTimer(APP_ButtonDelayTimer, APP_TIME_MS(1000), NULL);
 						break;
