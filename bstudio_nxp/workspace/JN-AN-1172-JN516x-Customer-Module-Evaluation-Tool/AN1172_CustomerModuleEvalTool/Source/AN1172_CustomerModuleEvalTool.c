@@ -519,6 +519,63 @@ PUBLIC void AppColdStart(void)
 
 #endif
 
+#ifdef RXCHANNELADJUST_SUPPORT
+    /* Get RX channel Adust */
+    while(!bExitLoop){
+    	uint8 u8MenuCtr=97;   // ASCII 'a'
+    	u8LPKey = 0;
+    	u8HPKey = 0;
+
+        vPrintf("\n*********************************************"
+                "\n*           RX Channel select Level         *"
+                "\n*********************************************\n");
+       // vPrintf("RadioMode:%x",u32JPT_RadioModes);
+        	
+        	vPrintf("\n%c) Module RX low Channel (ch11-ch13)",u8MenuCtr++);
+        	vPrintf("\n%c) Module RX high Channel (ch14-ch26)",u8MenuCtr++);        	
+        	vPrintf("\n%c) Module RX all Channel (ch11-ch26)",u8MenuCtr++);
+        vPrintf("\n\nPlease choose an option > ");
+
+        acCommand = acGetC();
+        if (acCommand != 0){
+         vPutC(acCommand);
+
+         switch(acCommand) {
+
+            case 'a':                               /* ch11-ch13 */
+            case 'A':
+                /* Set DIO 8 9 10 as outputs and 1 0 0 */
+                vAHI_DioSetOutput(0x100, 0x600);
+                vAHI_DioSetDirection(0, 0x700);
+                //-vAHI_DioSetPullup(0, 0x700);
+                bExitLoop = TRUE;
+                break;
+
+
+            case 'b':                               /* ch14-ch26 */
+            case 'B':
+				/* Set DIO 8 9 10 as outputs and 0 1 0 */
+                vAHI_DioSetOutput(0x200, 0x500);
+                vAHI_DioSetDirection(0, 0x700);
+                bExitLoop = TRUE;
+                break;
+                
+            case 'c':                               /* ch11-ch26 */
+            case 'C':
+                /* Set DIO 8 9 10 as outputs and 0 0 1 */
+                vAHI_DioSetOutput(0x400, 0x300);
+                vAHI_DioSetDirection(0, 0x700);
+                bExitLoop = TRUE;
+                break;    
+
+        }
+      }
+    }
+
+    bExitLoop = FALSE;
+
+#endif
+
 
 #if 0
     /* Get module type, low or high power */
