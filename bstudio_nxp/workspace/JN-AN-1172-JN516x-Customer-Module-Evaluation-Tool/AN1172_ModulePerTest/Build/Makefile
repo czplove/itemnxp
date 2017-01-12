@@ -45,7 +45,7 @@ JENNIC_CHIP ?= JN5168
 ##############################################################################
 # Default SDK is the IEEE802.15.4 SDK
 
-JENNIC_SDK ?= JN-SW-4163
+JENNIC_SDK ?= JN-SW-4168
 
 ##############################################################################
 # Default DK2 development kit target hardware

@@ -104,7 +104,7 @@ ifeq ($(JENNIC_STACK), JIP)
 LDLIBS  += PDM_EEPROM_$(JENNIC_CHIP_FAMILY)
 endif
 ifneq ($(findstring $(JENNIC_STACK),MAC None),)
-LDLIBS  += PDM_EEPROM_$(JENNIC_CHIP_FAMILY)_NO_RTOS
+#-LDLIBS  += PDM_EEPROM_$(JENNIC_CHIP_FAMILY)_NO_RTOS
 endif
 
 # Export linker command file if building patch library

@@ -247,7 +247,8 @@ PUBLIC void AppColdStart(void)
 
     u32JPT_Ver = u32JPT_Init();                 /* initialise production test API */
 #if (defined JENNIC_CHIP_JN5169)
-    vJPT_GetRadioConfig(&u32RadioParamVersion, &u8WifiMode);
+    //-vJPT_GetRadioConfig(&u32RadioParamVersion, &u8WifiMode);
+    vJPT_GetRadioConfig(&u32RadioParamVersion);
 #endif
 
     u32JPT_RadioModes = u32JPT_RadioModesAvailable(); /* Get the Modes supported by this device */
