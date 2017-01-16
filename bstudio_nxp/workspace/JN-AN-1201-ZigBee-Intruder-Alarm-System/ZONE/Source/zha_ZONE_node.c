@@ -201,6 +201,21 @@ PUBLIC void APP_vInitialiseNode(void)
     /* Initialize ZBPro stack */
     ZPS_eAplAfInit();
 
+	//-Swap DIO from DIO12 and 13 to DIO0 and 1.(JN5169 Only) 
+	vAHI_AntennaDiversitySetPinLocation(TRUE);
+	//-Individually enable/disable both DIO outputs
+	vAHI_AntennaDiversityOutputEnable(TRUE, TRUE);
+	
+	//-Returns antenna used for last Tx, last Rx and the currently selected antenna.
+	u8AHI_AntennaDiversityStatus();
+	//-Adjust the Receive diversity RSSI and Correlation thresholds
+	vAHI_AntennaDiversityControl(25, 25);
+	//-Manually switch between antennas (not normally required).
+	//-vAHI_AntennaDiversitySwitch();
+
+	//-Enables RxDiversity AND/OR TxDiversity
+	vAHI_AntennaDiversityEnable(TRUE, TRUE);
+
     DBG_vPrintf(TRACE_ZONE_NODE, "ZPS_eAplAfInit\n");
 
     /*Set Save default channel mask as it is going to be manipulated */
