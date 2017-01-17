@@ -205,6 +205,36 @@ PUBLIC void vDebug(char *pcMessage)
     }
 }
 
+//////////////////////////////////////////////////////////////////////////////
+//-为射频前端增加模块函数
+PUBLIC void TX_CHALL(void)	/* ch11-ch26 */
+{
+	/* Set DIO 8 9 10 as outputs and 0 0 0 */
+	vAHI_DioSetOutput(0x00, 0x700);
+	vAHI_DioSetDirection(0, 0x700);
+}
+
+PUBLIC void RX_CHLOW(void)	/* ch11-ch13 */
+{
+	/* Set DIO 8 9 10 as outputs and 1 0 0 */
+	vAHI_DioSetOutput(0x100, 0x600);
+	vAHI_DioSetDirection(0, 0x700);
+}
+
+PUBLIC void RX_CHHI(void)	/* ch14-ch26 */
+{
+	/* Set DIO 8 9 10 as outputs and 0 1 0 */
+	vAHI_DioSetOutput(0x200, 0x500);
+	vAHI_DioSetDirection(0, 0x700);
+}
+
+PUBLIC void RX_CHALL(void)	/* ch11-ch26 */
+{
+	/* Set DIO 8 9 10 as outputs and 0 0 1 */
+	vAHI_DioSetOutput(0x400, 0x300);
+	vAHI_DioSetDirection(0, 0x700);
+}
+
 /****************************************************************************/
 /***        Exported Functions                                            ***/
 /****************************************************************************/
@@ -544,9 +574,7 @@ PUBLIC void AppColdStart(void)
 
             case 'a':                               /* ch11-ch13 */
             case 'A':
-                /* Set DIO 8 9 10 as outputs and 1 0 0 */
-                vAHI_DioSetOutput(0x100, 0x600);
-                vAHI_DioSetDirection(0, 0x700);
+            	RX_CHLOW();
                 //-vAHI_DioSetPullup(0, 0x700);
                 bExitLoop = TRUE;
                 break;
@@ -554,17 +582,13 @@ PUBLIC void AppColdStart(void)
 
             case 'b':                               /* ch14-ch26 */
             case 'B':
-				/* Set DIO 8 9 10 as outputs and 0 1 0 */
-                vAHI_DioSetOutput(0x200, 0x500);
-                vAHI_DioSetDirection(0, 0x700);
+            	RX_CHHI();
                 bExitLoop = TRUE;
                 break;
                 
             case 'c':                               /* ch11-ch26 */
             case 'C':
-                /* Set DIO 8 9 10 as outputs and 0 0 1 */
-                vAHI_DioSetOutput(0x400, 0x300);
-                vAHI_DioSetDirection(0, 0x700);
+            	RX_CHALL();
                 bExitLoop = TRUE;
                 break;    
 
@@ -647,12 +671,14 @@ PUBLIC void AppColdStart(void)
 
             case 'a':                               /* CW Power Test */
             case 'A':
+            	TX_CHALL();
                 vDoPowerTestSubMenu(E_JPT_TXPT_RUN_CW);
                 break;
 
 
             case 'b':                               /* Modulated Power Test */
             case 'B':
+            	TX_CHALL();
                 vDoPowerTestSubMenu(E_JPT_TXPT_RUN_PRBS);
                 break;
 
@@ -701,6 +727,7 @@ PUBLIC void AppColdStart(void)
 
             case 'i':                               /* Transmit packet test */
             case 'I':
+            	TX_CHALL();
                 vDoTransmitPacketsTest();
                 break;
 
