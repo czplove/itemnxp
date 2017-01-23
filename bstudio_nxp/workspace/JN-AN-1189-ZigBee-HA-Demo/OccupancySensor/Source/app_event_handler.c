@@ -152,14 +152,14 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
             //-vEventStopFindAndBind();
             break;
 
-        case SW4_PRESSED:
+        case SW4_PRESSED:	//-K1
         //-case SW3_PRESSED:	//-正转
             //-vHandleFallingEdgeEvent();
         	//-Delay(100*1000);
         	if(bDIO1State == FALSE)
-        		HC595SendData(OUT_EF1);	//-DIO3输出高	---控制电源
+        		HC595SendData(OUT_CD1);	//-OUT_EF1
         	else
-        		HC595SendData(OUT_EF0);	//-DIO3输出低
+        		HC595SendData(OUT_CD0);	//-OUT_EF0
         	Delay(300*1000);
         	HC595SendData(0);	//-DIO3输出低
         	//-vAHI_DioSetOutput(0x0004,0);
@@ -170,14 +170,14 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
             vHandleRisingEdgeEvent();
             break;
 
-        case SW3_PRESSED:
+        case SW3_PRESSED:	//-K2
         //-case SW4_PRESSED:
             //-vStartPersistantPolling();
         	//-Delay(100*1000);
         	if(bDIO2State == FALSE)
-        		HC595SendData(OUT_CD1);	//-DIO2输出高	---正反转
+        		HC595SendData(OUT_AB1);	//-OUT_CD1
         	else
-        		HC595SendData(OUT_CD0);	//-DIO2输出低
+        		HC595SendData(OUT_AB0);	//-OUT_CD0
         	Delay(300*1000);
         	HC595SendData(0);	//-DIO3输出低
         	//-vAHI_DioSetOutput(0,0x0004);
@@ -187,9 +187,9 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
         //-    vStopPersistantPolling();
         	//-Delay(100*1000);
         	if(bDIO3State == FALSE)
-        	    HC595SendData(OUT_AB1);	//-DIO2输出高	---正反转
+        	    HC595SendData(OUT_EF1);	//-OUT_AB1
         	else
-        	    HC595SendData(OUT_AB0);	//-DIO2输出低
+        	    HC595SendData(OUT_EF0);	//-OUT_AB0
         	Delay(300*1000);
         	HC595SendData(0);	//-DIO3输出低
         	//-vAHI_DioSetOutput(0,0x0004);
