@@ -139,7 +139,7 @@ PUBLIC void APP_vInitialiseNode(void)
     DBG_vPrintf(TRACE_SENSOR_NODE, "\nAPP Sensor Node: APP_vInitialiseNode*");
 
     //-vGenericLEDInit();
-    vAHI_DioSetDirection(0, 0xC00C);
+    vAHI_DioSetDirection(0, 0x3C00C);
     OUT_init();
     /*Initialise the application buttons*/
     /* Initialise buttons; if a button is held down as the device is reset, delete the device
