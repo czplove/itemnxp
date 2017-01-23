@@ -147,12 +147,12 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
             //-vHandleFallingEdgeEvent();
         	//-Delay(500*1000);
         	if(bDIO3State == FALSE)
-        		vAHI_DioSetOutput(0x8000,0x4000);	//-DIO3输出高	---控制电源
+        		vAHI_DioSetOutput(0x0004,0x0008);	//-DIO3输出低
         	else
-        		vAHI_DioSetOutput(0x4000,0x8000);	//-DIO3输出低
+        		vAHI_DioSetOutput(0x0008,0x0004);	//-DIO3输出高	---控制电源
 
         	Delay(50*1000);
-        	vAHI_DioSetOutput(0,0xc000);
+        	vAHI_DioSetOutput(0,0x000C);
         	bDIO3State = !bDIO3State;
             break;
 
@@ -165,12 +165,12 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
             //-vStartPersistantPolling();
         	//-Delay(500*1000);
         	if(bDIO2State == FALSE)
-        		vAHI_DioSetOutput(0x0008,0x0004);	//-DIO2输出高	---正反转
+        		vAHI_DioSetOutput(0x4000,0x8000);	//-DIO2输出低
         	else
-        		vAHI_DioSetOutput(0x0004,0x0008);	//-DIO2输出低
+        		vAHI_DioSetOutput(0x8000,0x4000);	//-DIO2输出高	---正反转
 
         	Delay(50*1000);
-        	vAHI_DioSetOutput(0,0x000C);
+        	vAHI_DioSetOutput(0,0xC000);
         	bDIO2State = !bDIO2State;
             break;
         //-case SW3_PRESSED:
@@ -189,8 +189,8 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
 
 void OUT_init(void)
 {
-	vAHI_DioSetOutput(0x4000,0x8000);
-	vAHI_DioSetOutput(0x0004,0x0008);
+	vAHI_DioSetOutput(0x8000,0x4000);
+	vAHI_DioSetOutput(0x0008,0x0004);
 
 	Delay(50*1000);
 	vAHI_DioSetOutput(0,0xC00C);
