@@ -143,7 +143,7 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
             //-vEventStopFindAndBind();
             break;
 
-        case SW2_PRESSED:	//-3 K3
+/*        case SW2_PRESSED:	//-3 K3
         //-case SW3_PRESSED:	//-正转
             //-vHandleFallingEdgeEvent();
         	//-Delay(500*1000);
@@ -156,13 +156,13 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
         	vAHI_DioSetOutput(0,0x30000);
         	bDIO3State = !bDIO3State;
             break;
-
+*/
         case SW1_RELEASED:
             vHandleRisingEdgeEvent();
             break;
 
         //-case SW2_PRESSED:
-        case SW4_PRESSED:	//-1	K1
+/*        case SW4_PRESSED:	//-1	K1
             //-vStartPersistantPolling();
         	//-Delay(500*1000);
         	if(bDIO2State == FALSE)
@@ -174,6 +174,7 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
         	vAHI_DioSetOutput(0,0x000C);
         	bDIO2State = !bDIO2State;
             break;
+*/
         case SW3_PRESSED:	//-2	K2
         	if(bDIO1State == FALSE)
         	    vAHI_DioSetOutput(0x8000,0x4000);	//-DIO3输出高	---控制电源
