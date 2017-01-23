@@ -145,7 +145,7 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
         case SW1_PRESSED:
         case SW3_PRESSED:	//-正转
             //-vHandleFallingEdgeEvent();
-        	Delay(500*1000);
+        	//-Delay(500*1000);
         	if(bDIO3State == FALSE)
         		vAHI_DioSetOutput(0x0008,0x0004);	//-DIO3输出高	---控制电源
         	else
