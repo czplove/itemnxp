@@ -147,11 +147,12 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
             //-vHandleFallingEdgeEvent();
         	Delay(500*1000);
         	if(bDIO3State == FALSE)
-        		vAHI_DioSetOutput(0x0800,0);	//-DIO3输出高	---控制电源
+        		vAHI_DioSetOutput(0x0008,0x0004);	//-DIO3输出高	---控制电源
         	else
-        		vAHI_DioSetOutput(0,0x0800);	//-DIO3输出低
+        		vAHI_DioSetOutput(0x0004,0x0008);	//-DIO3输出低
 
-        	vAHI_DioSetOutput(0x1000,0);
+        	Delay(50*1000);
+        	vAHI_DioSetOutput(0,0x000C);
         	bDIO3State = !bDIO3State;
             break;
 
@@ -162,7 +163,7 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
         case SW2_PRESSED:
         case SW4_PRESSED:
             //-vStartPersistantPolling();
-        	Delay(500*1000);
+        	//-Delay(500*1000);
         	if(bDIO2State == FALSE)
         		vAHI_DioSetOutput(0x0800,0);	//-DIO2输出高	---正反转
         	else
@@ -185,6 +186,16 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
     }
 }
 
+void OUT_init(void)	//-上电复位
+{
+
+	//-vAHI_DioSetOutput(0x0008,0x0004);	//-DIO3输出高	---控制电源
+
+	vAHI_DioSetOutput(0x0004,0x0008);	//-DIO3输出低
+
+	Delay(50*1000);
+	vAHI_DioSetOutput(0,0x000C);
+}
 /****************************************************************************
  *
  * NAME: vAppHandleAppEvent
