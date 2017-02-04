@@ -119,10 +119,10 @@ void Delay (uint32 u32DelayUs)
 
 void OUT_init(void)
 {
-	vAHI_DioSetOutput(0x0805,0x11400);	//-
+	vAHI_DioSetOutput(0x1002, 0x0A00);	//-
 
 	Delay(50*1000);
-	vAHI_DioSetOutput(0x0000,0x11C05);	//-DIO3 12
+	vAHI_DioSetOutput(0x0000,0x1A02);	//-DIO3 12
 }
 /****************************************************************************
  *
@@ -159,12 +159,12 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
     		//-I2C_SendState(LoadState);
         	//-Delay(500*1000);
         	if(bDIO2State == FALSE)
-        		vAHI_DioSetOutput(0x0800,0x0400);	//-DIO10 11
+        		vAHI_DioSetOutput(0x0002,0x0200);	//-DIO1 9
         	else
-        		vAHI_DioSetOutput(0x0400,0x0800);	//-
+        		vAHI_DioSetOutput(0x0200,0x0002);	//-
 
 			Delay(50*1000);
-        	vAHI_DioSetOutput(0x0000,0x0C00);	//-DIO10 11
+        	vAHI_DioSetOutput(0x0000,0x0202);	//-DIO1 9
         	bDIO2State = !bDIO2State;
             break;
 
@@ -179,26 +179,26 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
     		//-I2C_SendState(LoadState);
         	//-Delay(500*1000);
         	if(bDIO1State == FALSE)
-        		vAHI_DioSetOutput(0x0001,0x10000);	//-DIO0 16
+        		vAHI_DioSetOutput(0x1000,0x0800);	//-DIO11 12
         	else
-        		vAHI_DioSetOutput(0x10000,0x0001);	//-
+        		vAHI_DioSetOutput(0x0800,0x1000);	//-
 
 			Delay(50*1000);
-        	vAHI_DioSetOutput(0x0000,0x10001);	//-DIO0 16
+        	vAHI_DioSetOutput(0x0000,0x1800);	//-DIO0 16
         	bDIO1State = !bDIO1State;
             break;
         case SW2_PRESSED:	//-Touch3
         	//-正确接收到触摸数据后切换LED灯状态
     		//-I2C_SendState(LoadState);
             //-vStopPersistantPolling();
-            if(bDIO3State == FALSE)
-        		vAHI_DioSetOutput(0x0004,0x1000);	//-DIO2 12
-        	else
-        		vAHI_DioSetOutput(0x1000,0x0004);	//-
-
-			Delay(50*1000);
-        	vAHI_DioSetOutput(0x0000,0x1004);	//-DIO3 12
-        	bDIO3State = !bDIO3State;
+            //-if(bDIO3State == FALSE)
+        	//-	vAHI_DioSetOutput(0x0004,0x1000);	//-DIO2 12
+        	//-else
+        	//-	vAHI_DioSetOutput(0x1000,0x0004);	//-
+			//-
+			//-Delay(50*1000);
+        	//-vAHI_DioSetOutput(0x0000,0x1004);	//-DIO3 12
+        	//-bDIO3State = !bDIO3State;
             break;
         case SW2_RELEASED:
         case SW3_RELEASED:

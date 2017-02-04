@@ -146,7 +146,7 @@ endif
 #CFLAGS += -DDEBUG_REPORT
 #CFLAGS += -DDEBUG_NWK_EVENT_HANDLER
 #CFLAGS += -DDEBUG_PIR_EVENTS
-#CFLAGS += -DDEBUG_EVENT_HANDLER
+CFLAGS += -DDEBUG_EVENT_HANDLER
 #CFLAGS += -DDEBUG_APP_BUTTON
 
 ###############################################################################

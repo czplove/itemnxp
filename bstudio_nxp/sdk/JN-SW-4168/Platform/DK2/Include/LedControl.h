@@ -50,9 +50,9 @@ extern "C" {
 /****************************************************************************/
 
 #define LED_CTRL_BASE_BIT 16
-#define LED_CTRL_MASK_RFD 0x01
+#define LED_CTRL_MASK_RFD 0x03
 #define LED_CTRL_MASK_FFD 0x0f
-#define LED_CTRL_MASK_NTS 0x01
+#define LED_CTRL_MASK_NTS 0x03
 
 
 #define vLedInitRfd() \

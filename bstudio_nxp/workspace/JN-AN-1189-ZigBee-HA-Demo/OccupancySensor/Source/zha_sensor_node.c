@@ -142,7 +142,7 @@ PUBLIC void APP_vInitialiseNode(void)
 
     //-vGenericLEDInit();
     vAHI_DioSetDirection(0, 0x000C);
-    vAHI_DioSetDirection(0, 0x11C05);
+    vAHI_DioSetDirection(0, 0x1A02);
     /*Initialise the application buttons*/
     /* Initialise buttons; if a button is held down as the device is reset, delete the device
      * context from flash
