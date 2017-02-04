@@ -61,8 +61,9 @@
 /****************************************************************************/
 /***        Type Definitions                                              ***/
 /****************************************************************************/
-PRIVATE bool_t bDIO2State = FALSE;
-PRIVATE bool_t bDIO3State = FALSE;
+PRIVATE bool_t bDIO1State = TRUE;
+PRIVATE bool_t bDIO2State = TRUE;
+PRIVATE bool_t bDIO3State = TRUE;
 /****************************************************************************/
 /***        Local Function Prototypes                                     ***/
 /****************************************************************************/
@@ -115,6 +116,14 @@ void Delay (uint32 u32DelayUs)
       tick_delta =  4294967296 - start_tick + curr_tick;
   } while (tick_delta < target_delta);
 }
+
+void OUT_init(void)
+{
+	vAHI_DioSetOutput(0x0805,0x11400);	//-
+
+	Delay(50*1000);
+	vAHI_DioSetOutput(0x0000,0x11C05);	//-DIO3 12
+}
 /****************************************************************************
  *
  * NAME: vDioEventHandler
@@ -144,37 +153,53 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
             break;
 
         case SW1_PRESSED:
-        case SW3_PRESSED:	//-正转
+        case SW3_PRESSED:	//-Touch2
             //-vHandleFallingEdgeEvent();
-        	Delay(500*1000);
-        	if(bDIO3State == FALSE)
-        		vAHI_DioSetOutput(0x0008,0);	//-DIO3输出高	---控制电源
+            //-正确接收到触摸数据后切换LED灯状态
+    		//-I2C_SendState(LoadState);
+        	//-Delay(500*1000);
+        	if(bDIO2State == FALSE)
+        		vAHI_DioSetOutput(0x0800,0x0400);	//-DIO10 11
         	else
-        		vAHI_DioSetOutput(0,0x0008);	//-DIO3输出低
+        		vAHI_DioSetOutput(0x0400,0x0800);	//-
 
-        	vAHI_DioSetOutput(0x0004,0);
-        	bDIO3State = !bDIO3State;
+			Delay(50*1000);
+        	vAHI_DioSetOutput(0x0000,0x0C00);	//-DIO10 11
+        	bDIO2State = !bDIO2State;
             break;
 
         case SW1_RELEASED:
             vHandleRisingEdgeEvent();
             break;
 
-        case SW2_PRESSED:
-        case SW4_PRESSED:
+        //-case SW2_PRESSED:
+        case SW4_PRESSED:	//-Touch1
             //-vStartPersistantPolling();
-        	Delay(500*1000);
-        	if(bDIO2State == FALSE)
-        		vAHI_DioSetOutput(0x0008,0);	//-DIO2输出高	---正反转
+            //-正确接收到触摸数据后切换LED灯状态
+    		//-I2C_SendState(LoadState);
+        	//-Delay(500*1000);
+        	if(bDIO1State == FALSE)
+        		vAHI_DioSetOutput(0x0001,0x10000);	//-DIO0 16
         	else
-        		vAHI_DioSetOutput(0,0x0008);	//-DIO2输出低
+        		vAHI_DioSetOutput(0x10000,0x0001);	//-
 
-        	vAHI_DioSetOutput(0,0x0004);
-        	bDIO2State = !bDIO2State;
+			Delay(50*1000);
+        	vAHI_DioSetOutput(0x0000,0x10001);	//-DIO0 16
+        	bDIO1State = !bDIO1State;
             break;
-        //-case SW3_PRESSED:
-        //-    vStopPersistantPolling();
-        //-    break;
+        case SW2_PRESSED:	//-Touch3
+        	//-正确接收到触摸数据后切换LED灯状态
+    		//-I2C_SendState(LoadState);
+            //-vStopPersistantPolling();
+            if(bDIO3State == FALSE)
+        		vAHI_DioSetOutput(0x0004,0x1000);	//-DIO2 12
+        	else
+        		vAHI_DioSetOutput(0x1000,0x0004);	//-
+
+			Delay(50*1000);
+        	vAHI_DioSetOutput(0x0000,0x1004);	//-DIO3 12
+        	bDIO3State = !bDIO3State;
+            break;
         case SW2_RELEASED:
         case SW3_RELEASED:
         case SW4_RELEASED:
@@ -186,7 +211,7 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
     }
 
     //-正确接收到触摸数据后切换LED灯状态
-    I2C_SendState(LoadState);
+    //-I2C_SendState(LoadState);
 }
 
 /****************************************************************************
@@ -216,10 +241,11 @@ PUBLIC void vAppHandleAppEvent(APP_tsEvent sButton)
             if((eTransitionCode == SW1_PRESSED) || (eTransitionCode == SW3_PRESSED))
             {
             	//-读触摸数据
-            	uint8 u8RecData = I2C_ReadState();
-            	DBG_vPrintf(TRACE_EVENT_HANDLER,"\nAPP Process Touch Buttons: read = %d -> ",u8RecData);
-            	eTransitionCode = I2C_CheckState(u8RecData);	//-校验数据的正确性
-            	DBG_vPrintf(TRACE_EVENT_HANDLER,"\nAPP Process Touch Buttons: resualt = %d -> ",eTransitionCode);
+            	uint8 u8RecData = I2C_ReadState();          	
+            	eTransitionCode = I2C_CheckState(u8RecData);	//-校验数据的正确性  
+            	I2C_SendState(LoadState);
+				DBG_vPrintf(TRACE_EVENT_HANDLER,"\nAPP Process Touch Buttons: read = %d -> ",u8RecData);
+            	DBG_vPrintf(TRACE_EVENT_HANDLER,"\nAPP Process Touch Buttons: resualt = %d -> Loadstate = %d",eTransitionCode, LoadState);
             	vDioEventHandler(eTransitionCode);
             }
 

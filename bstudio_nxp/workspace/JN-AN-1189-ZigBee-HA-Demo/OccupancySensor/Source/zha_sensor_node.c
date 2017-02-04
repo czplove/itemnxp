@@ -142,6 +142,7 @@ PUBLIC void APP_vInitialiseNode(void)
 
     //-vGenericLEDInit();
     vAHI_DioSetDirection(0, 0x000C);
+    vAHI_DioSetDirection(0, 0x11C05);
     /*Initialise the application buttons*/
     /* Initialise buttons; if a button is held down as the device is reset, delete the device
      * context from flash
@@ -150,6 +151,8 @@ PUBLIC void APP_vInitialiseNode(void)
     //-³õÊ¼»¯´¥Ãþ
     I2C_Init();
     APP_bButtonInitialise();
+
+    OUT_init();
 
     /* We need to get the previous state out off NVM and save it*/
     sSensor.sOccupancySensingServerCluster.u8Occupancy = bGetPreSleepOccupancyState();

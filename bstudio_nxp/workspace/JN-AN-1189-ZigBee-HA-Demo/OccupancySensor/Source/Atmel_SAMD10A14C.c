@@ -41,6 +41,9 @@ void I2C_Init(void)                   //IO初始化
   //-P0DIR |= 0x08;
   I2C_SCK_OUT;
   I2C_SCK_H;
+
+  I2C_SDA_IN;
+  LoadState = 0x80;
 }
 /**********************************************************************
 函    数:
@@ -59,14 +62,14 @@ uint8 I2C_ReadState(void)
   {
     RecData <<= 1;
     I2C_SCK_L;
-    Delay_us(5);
+    Delay_us(5*10);
     temp_data = I2C_SDA_DATA;
     RecData |= temp_data;
     Delay_us(2); 
     
     RecData <<= 1;
     I2C_SCK_H;
-    Delay_us(5);
+    Delay_us(5*10);
     temp_data = I2C_SDA_DATA;
     RecData |= temp_data;
     Delay_us(2);
@@ -93,7 +96,7 @@ uint8 I2C_CheckState(uint8 data)
     /*RecData:    1 0  0  0  0 K1  K2  K3*/
     if(RecData & 0X04)
     {
-      keys = SW1_PRESSED;
+      keys = SW4_PRESSED;
       //-if(halShift == HAL_KEY_STATE_NORMAL)
       {
         if(LoadState & 0x40)
@@ -108,7 +111,7 @@ uint8 I2C_CheckState(uint8 data)
     }
     else if(RecData & 0X02)
     {
-      keys = SW2_PRESSED;
+      keys = SW3_PRESSED;
       //-if(halShift == HAL_KEY_STATE_NORMAL)
       {      
         if(LoadState & 0x20)
@@ -123,7 +126,7 @@ uint8 I2C_CheckState(uint8 data)
     }
     else if(RecData & 0X01)
     {
-      //-keys = HAL_KEY_SW_5;
+      keys = SW2_PRESSED;
       //-if(halShift == HAL_KEY_STATE_NORMAL)
       {
         if(LoadState & 0x10)
@@ -158,13 +161,13 @@ void I2C_SendState(uint8 data)
   SendData = data;   
   /*状态切换*/
   I2C_SCK_L;
-  Delay_us(10); 
+  Delay_us(10*6); 
   
   I2C_SDA_OUT; 
   I2C_SDA_L;  
   
   I2C_SCK_H;                         
-  Delay_us(10);  
+  Delay_us(10*6);  
 
   /*LoadState:  1 l1 l2 L3 0 K1  K2  K3*/
   /*向触摸写状态数据,高位->低位*/
@@ -175,7 +178,7 @@ void I2C_SendState(uint8 data)
     else
       I2C_SDA_L; 
     I2C_SCK_L;
-    Delay_us(5);   
+    Delay_us(5*10);   
     SendData <<= 1;
     
     if(SendData & 0x80)
@@ -183,9 +186,10 @@ void I2C_SendState(uint8 data)
     else
       I2C_SDA_L; 
     I2C_SCK_H;                         
-    Delay_us(5);
+    Delay_us(5*10);
     SendData <<= 1;                           
-  }   
+  } 
+  I2C_SDA_IN;
 }
 /**********************************************************************
 函    数:
