@@ -61,9 +61,9 @@
 /****************************************************************************/
 /***        Type Definitions                                              ***/
 /****************************************************************************/
-PRIVATE bool_t bDIO1State = TRUE;
-PRIVATE bool_t bDIO2State = TRUE;
-PRIVATE bool_t bDIO3State = TRUE;
+PRIVATE bool_t bDIO1State = FALSE;
+PRIVATE bool_t bDIO2State = FALSE;
+PRIVATE bool_t bDIO3State = FALSE;
 /****************************************************************************/
 /***        Local Function Prototypes                                     ***/
 /****************************************************************************/
@@ -119,10 +119,10 @@ void Delay (uint32 u32DelayUs)
 
 void OUT_init(void)
 {
-	vAHI_DioSetOutput(0x0805,0x11400);	//-
+	vAHI_DioSetOutput(0x1000, 0x0800);	//-
 
 	Delay(50*1000);
-	vAHI_DioSetOutput(0x0000,0x11C05);	//-DIO3 12
+	vAHI_DioSetOutput(0x0000,0x1800);	//-DIO3 12
 }
 /****************************************************************************
  *
@@ -179,12 +179,12 @@ PUBLIC void vDioEventHandler(te_TransitionCode eTransitionCode )
     		//-I2C_SendState(LoadState);
         	//-Delay(500*1000);
         	if(bDIO1State == FALSE)
-        		vAHI_DioSetOutput(0x0001,0x10000);	//-DIO0 16
+        		vAHI_DioSetOutput(0x0800,0x1000);	//-DIO11 12
         	else
-        		vAHI_DioSetOutput(0x10000,0x0001);	//-
+        		vAHI_DioSetOutput(0x1000,0x0800);	//-
 
 			Delay(50*1000);
-        	vAHI_DioSetOutput(0x0000,0x10001);	//-DIO0 16
+        	vAHI_DioSetOutput(0x0000,0x1800);	//-DIO0 16
         	bDIO1State = !bDIO1State;
             break;
         case SW2_PRESSED:	//-Touch3
