@@ -182,11 +182,24 @@ PUBLIC void APP_vInitialiseNode(void)
         vAHI_DioSetPullup(APP_Switch_DIO_MASK, 0);
 
         /* Set the edge detection for falling edges */
-        vAHI_DioInterruptEdge(0, APP_Switch_DIO_MASK);
+        vAHI_DioInterruptEdge((1 << APP_Switch_SW1), (1 << APP_Switch_SW2));
 
         /* Enable interrupts to occur on selected edge */
         vAHI_DioInterruptEnable(APP_Switch_DIO_MASK, 0);
     //-end
+
+	//-³õÊ¼»¯·À²ð
+		vAHI_DioSetDirection(0x0006, 0);	//-DIO1 2
+	
+		/* Turn on pull-ups for DIO lines with buttons connected */
+		vAHI_DioSetPullup(0x0006, 0);
+	
+		/* Set the edge detection for falling edges */
+		vAHI_DioInterruptEdge(0x0004, 0x0002);
+	
+		/* Enable interrupts to occur on selected edge */
+		vAHI_DioInterruptEnable(0x0006, 0);
+	//-end
 
     /*In case of a deep sleep device any button wake up would cause a PDM delete , only check for DIO8
      * pressed for deleting the context */
@@ -484,7 +497,7 @@ void IASZONE_STATUS_MASK_SET_fun(void)
 {
 	//-vGenericLEDSetOutput(GEN_BOARD_LED_D2_VAL,TRUE);
 	vAHI_DioSetOutput(0,1<<0);
-	                        //-DBG_vPrintf(TRACE_ZONE_NODE,"\nCLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_SET\n ");
+	DBG_vPrintf(TRACE_ZONE_NODE,"\nCLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_SET\n ");
 	app_vUpdateZoneStatusAttribute (
 	                                ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/
 	                                CLD_IASZONE_STATUS_MASK_ALARM1,/*uint16                            u16StatusBitMask,*/
@@ -496,7 +509,7 @@ void IASZONE_STATUS_MASK_RESET_fun(void)
 {
 	//-vGenericLEDSetOutput(GEN_BOARD_LED_D2_VAL,FALSE);
 	vAHI_DioSetOutput(1<<0,0);
-	                        //-DBG_vPrintf(TRACE_ZONE_NODE,"\nCLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_RESET\n ");
+	DBG_vPrintf(TRACE_ZONE_NODE,"\nCLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_RESET\n ");
 	                        app_vUpdateZoneStatusAttribute (
 	                                                        ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/
 	                                                        CLD_IASZONE_STATUS_MASK_ALARM1,/*uint16                            u16StatusBitMask,*/

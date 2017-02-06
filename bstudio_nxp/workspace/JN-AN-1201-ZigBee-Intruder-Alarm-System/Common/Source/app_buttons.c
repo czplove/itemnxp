@@ -122,6 +122,7 @@ PUBLIC bool_t APP_bButtonInitialise(void)
 
     /* Set the edge detection for falling edges */
     vAHI_DioInterruptEdge(0, APP_BUTTONS_DIO_MASK);
+    //-vAHI_DioInterruptEdge(0x0004, 0x000A);
 
     /* Enable interrupts to occur on selected edge */
     vAHI_DioInterruptEnable(APP_BUTTONS_DIO_MASK, 0);
@@ -154,6 +155,8 @@ OS_ISR(vISR_SystemController)
     uint8 u8WakeInt = u8AHI_WakeTimerFiredStatus();
     uint32 u32IOStatus=u32AHI_DioInterruptStatus();
     uint32 u32DIOINdata = u32AHI_DioReadInput() & APP_Switch_DIO_MASK;
+	uint32 u32DIOINdata2 = u32AHI_DioReadInput() & APP_Tamper_DIO_MASK;
+	DBG_vPrintf(TRACE_APP_BUTTON,"u8WakeInt = %d u32IOStatus = %d u32DIOINdata = %d u32DIOINdata2 = %d\n ",u8WakeInt,u32IOStatus,u32DIOINdata,u32DIOINdata2);
 
     if( u32IOStatus & APP_BUTTONS_DIO_MASK )
     {
@@ -165,22 +168,35 @@ OS_ISR(vISR_SystemController)
 
 	//-DBG_vPrintf(TRUE,"CLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_SET\n ");
 
-    if(u32IOStatus & APP_Switch_DIO_MASK)
+    if(u32IOStatus & APP_Switch_DIO_MASK)	//-门磁
     {
-    	if(u32DIOINdata)
-    	{
-    		//-vGenericLEDSetOutput(GEN_BOARD_LED_D1_VAL,TRUE);
-    		IASZONE_STATUS_MASK_RESET_fun();
-    		vAHI_DioInterruptEdge(0, APP_Switch_DIO_MASK);
-    	}
-    	else
+    	if(u32DIOINdata)	//-读到高电平说明门开了,需要告警
     	{
     		//-vGenericLEDSetOutput(GEN_BOARD_LED_D1_VAL,FALSE);
     		IASZONE_STATUS_MASK_SET_fun();    		
-    		vAHI_DioInterruptEdge(APP_Switch_DIO_MASK, 0);
+    		//-vAHI_DioInterruptEdge(APP_Switch_DIO_MASK, 0);
+    	}
+    	else
+    	{    		
+			//-vGenericLEDSetOutput(GEN_BOARD_LED_D1_VAL,TRUE);
+    		IASZONE_STATUS_MASK_RESET_fun();
+    		//-vAHI_DioInterruptEdge(0, APP_Switch_DIO_MASK);
     	}
 
     }
+
+	//-防拆
+	if(u32IOStatus & APP_Tamper_DIO_MASK)
+	{
+		if(u32DIOINdata2 & ( 1 << APP_Tamper_SW1 ))
+		{
+			DBG_vPrintf(TRUE,"APP_Tamper_SW1\n ");	//-消警
+		}
+		else//- if(u32DIOINdata2 & ( 1 << APP_Tamper_SW2 ))
+		{
+			DBG_vPrintf(TRUE,"APP_Tamper_SW2\n ");	//-报警
+		}
+	}	
 
     if (u8WakeInt & E_AHI_WAKE_TIMER_MASK_1)
     {
