@@ -107,7 +107,8 @@ PUBLIC void vInitIndicationLEDs(void)
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1175\n");
 #elif defined DR1199
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1199\n");
-    vGenericLEDInit();
+    //-vGenericLEDInit();
+    APP_vInitLeds();
 #elif defined DR1159
     APP_vInitLeds();
 #endif

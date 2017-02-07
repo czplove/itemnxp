@@ -47,7 +47,7 @@
 /****************************************************************************/
 
 #define DIO_BASE_ADDR 0x02002000UL
-#define DIO_LED_MASK  0x03UL
+#define DIO_LED_MASK  0x04UL
 #define LED_BLINK_TIME 8E5                /*  16E6/8E5 = 0.05sec blink time */
 
 /****************************************************************************/
@@ -96,7 +96,10 @@ tsDio * const psDio = (tsDio *)DIO_BASE_ADDR;
 PUBLIC void APP_vInitLeds(void)
 {
     vAHI_DioSetPullup( DIO_LED_MASK,0);        /* pull up on */
-    psDio->u32DioDirection &= ~DIO_LED_MASK;  /* input */
+    //-psDio->u32DioDirection &= ~DIO_LED_MASK;  /* input */
+    vAHI_DioSetDirection(0, DIO_LED_MASK);	//-DIO9
+    //-vAHI_DioSetOutput(0, DIO_LED_MASK);	//-输出低电平,亮灯
+    vAHI_DioSetOutput(DIO_LED_MASK, 0);	//-输出高电平,灭灯
 }
 /****************************************************************************
  *

@@ -82,6 +82,8 @@
 #include "app_ias_indicator.h"
 #include "app_ias_save.h"
 #include "PingParent.h"
+#include "app_buttons.h"
+
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
 /****************************************************************************/
@@ -193,6 +195,19 @@ PUBLIC void APP_vInitialiseNode(void)
     /* Initialise buttons;
      */
     APP_bButtonInitialise();
+
+	//-³õÊ¼»¯·À²ð
+		vAHI_DioSetDirection(0x0200, 0);	//-DIO9
+	
+		/* Turn on pull-ups for DIO lines with buttons connected */
+		vAHI_DioSetPullup(0x0200, 0);
+	
+		/* Set the edge detection for falling edges */
+		vAHI_DioInterruptEdge(0x0200, 0);
+	
+		/* Enable interrupts to occur on selected edge */
+		vAHI_DioInterruptEnable(0x0200, 0);
+	//-end
 
     /* Restore any application data previously saved to flash */
     PDM_eReadDataFromRecord(PDM_ID_APP_ACE, &sDeviceDesc,

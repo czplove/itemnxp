@@ -153,6 +153,7 @@ OS_ISR(vISR_SystemController)
     /* clear pending DIO changed bits by reading register */
     uint8 u8WakeInt = u8AHI_WakeTimerFiredStatus();
     uint32 u32IOStatus=u32AHI_DioInterruptStatus();
+	uint32 u32DIOINdata2 = u32AHI_DioReadInput() & APP_Tamper_DIO_MASK;
 
     if( u32IOStatus & APP_BUTTONS_DIO_MASK )
     {
@@ -161,6 +162,19 @@ OS_ISR(vISR_SystemController)
         vAHI_DioInterruptEnable(0, APP_BUTTONS_DIO_MASK);
         OS_eStartSWTimer(APP_ButtonsScanTimer, APP_TIME_MS(10), NULL);
     }
+
+	//-防拆
+	if(u32IOStatus & APP_Tamper_DIO_MASK)
+	{
+		if(u32DIOINdata2 & ( 1 << APP_Tamper_SW1 ))
+		{
+			DBG_vPrintf(TRUE,"APP_Tamper_SW1\n ");	//-报警
+		}
+		else//- if(u32DIOINdata2 & ( 1 << APP_Tamper_SW2 ))
+		{
+			DBG_vPrintf(TRUE,"APP_Tamper_SW2\n ");	//-目前没有消警
+		}
+	}
 
     if (u8WakeInt & E_AHI_WAKE_TIMER_MASK_1)
     {

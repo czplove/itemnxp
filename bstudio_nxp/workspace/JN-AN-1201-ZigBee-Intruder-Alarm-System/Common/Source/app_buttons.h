@@ -54,15 +54,22 @@
         APP_E_BUTTONS_BUTTON_SW1
     } APP_teButtons;
 
-    #define APP_BUTTONS_NUM             (5UL)
+    #define APP_BUTTONS_NUM             (2UL)
     #define APP_BUTTONS_BUTTON_1        (8)
-    #define APP_BUTTONS_BUTTON_SW4        (1)
+    #define APP_BUTTONS_BUTTON_SW4        (19)
     #define APP_BUTTONS_BUTTON_SW3        (11)
     #define APP_BUTTONS_BUTTON_SW2        (12)
     #define APP_BUTTONS_BUTTON_SW1        (17)
-    #define APP_BUTTONS_DIO_MASK        ((1 << APP_BUTTONS_BUTTON_1)|(1 << APP_BUTTONS_BUTTON_SW4) | (1 << APP_BUTTONS_BUTTON_SW3) | (1 << APP_BUTTONS_BUTTON_SW2) | (1 << APP_BUTTONS_BUTTON_SW1))
-    #define APP_BUTTONS_DIO_MASK_FOR_DEEP_SLEEP        ((1 << APP_BUTTONS_BUTTON_SW4) | (1 << APP_BUTTONS_BUTTON_SW3) | (1 << APP_BUTTONS_BUTTON_SW2) | (1 << APP_BUTTONS_BUTTON_SW1))
+    //-#define APP_BUTTONS_DIO_MASK        ((1 << APP_BUTTONS_BUTTON_1)|(1 << APP_BUTTONS_BUTTON_SW4) | (1 << APP_BUTTONS_BUTTON_SW3) | (1 << APP_BUTTONS_BUTTON_SW2) | (1 << APP_BUTTONS_BUTTON_SW1))
+	#define APP_BUTTONS_DIO_MASK        ((1 << APP_BUTTONS_BUTTON_1)|(1 << APP_BUTTONS_BUTTON_SW4))
+    //-#define APP_BUTTONS_DIO_MASK_FOR_DEEP_SLEEP        ((1 << APP_BUTTONS_BUTTON_SW4) | (1 << APP_BUTTONS_BUTTON_SW3) | (1 << APP_BUTTONS_BUTTON_SW2) | (1 << APP_BUTTONS_BUTTON_SW1))
 
+	//-·À²ð
+	#define APP_Tamper_SW1        (9)
+	//-#define APP_Tamper_SW2        (2)
+	//-#define APP_Tamper_DIO_MASK        (( 1 << APP_Tamper_SW1 ) | ( 1 << APP_Tamper_SW2 ))
+	#define APP_Tamper_DIO_MASK        (( 1 << APP_Tamper_SW1 ))
+	
 #elif (defined BUTTON_MAP_DR1175)
 
     typedef enum {
