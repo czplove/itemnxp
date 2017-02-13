@@ -189,9 +189,12 @@ teIASDeviceState eGetIASDeviceState(void)
 void vSetIASDeviceState(teIASDeviceState eDeviceState)
 {
     eIASDeviceState=eDeviceState;
-	//-增加传感器的初始化,但成功注册之后
-	PIR_SetDefence();
-    ProcessDOCIInterrupt();
+	//-增加传感器的初始化,在成功注册之后
+	//-PIR_SetDefence();
+    //-ProcessDOCIInterrupt();
+	DOCI_INIT_IN(); 
+    vAHI_DioSetPullup(PIR_DOCI_PIN,0);
+	vAHI_DioWakeEdge(PIR_DOCI_PIN,0);
 	vAHI_DioInterruptEnable(PIR_DOCI_PIN,0);
 }
 /****************************************************************************
@@ -232,7 +235,7 @@ PRIVATE void vLED_Off(void)
 #elif defined DR1199
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1199 Off\n");
     //-vGenericLEDSetOutput(GEN_BOARD_LED_D3_VAL,FALSE);
-    vAHI_DioSetOutput(1<<12,0);
+    vAHI_DioSetOutput(WL_BOARD_LED_D1_VAL,0);
 #elif defined DR1159
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1159 Off\n");
     APP_vSetLeds(0);
@@ -258,7 +261,7 @@ PRIVATE void vLED_On(void)
 #elif defined DR1199
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1199 On\n");
     //-vGenericLEDSetOutput(GEN_BOARD_LED_D3_VAL,TRUE);
-    vAHI_DioSetOutput(0,1<<12);
+    vAHI_DioSetOutput(0,WL_BOARD_LED_D1_VAL);
 #elif defined DR1159
     DBG_vPrintf(TRACE_INDICATOR,"\nDR1159 On\n");
     APP_vSetLeds(1);

@@ -211,7 +211,7 @@ OS_TASK(ZCL_Task)
 	{
 	  OS_eStopSWTimer(APP_AlarmClearTimer);
 	  vAHI_DioInterruptEnable(PIR_DOCI_PIN,0);
-	  ProcessDOCIInterrupt();	  
+	  //-ProcessDOCIInterrupt();	  
 	  IASZONE_STATUS_MASK_RESET_fun();
 	  DBG_vPrintf(TRUE, "\nAPP E93196 Sensor Task: App Event CLEAN\n");
 	  

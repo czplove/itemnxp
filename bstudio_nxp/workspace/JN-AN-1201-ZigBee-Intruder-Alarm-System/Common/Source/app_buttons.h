@@ -55,7 +55,7 @@
     } APP_teButtons;
 
     #define APP_BUTTONS_NUM             (1UL)
-    #define APP_BUTTONS_BUTTON_1        (8)		//-SET¼ü ¼ÓÍøÍËÍø
+    #define APP_BUTTONS_BUTTON_1        (0)		//-SET¼ü ¼ÓÍøÍËÍø
     #define APP_BUTTONS_BUTTON_SW4        (1)
     #define APP_BUTTONS_BUTTON_SW3        (11)
     #define APP_BUTTONS_BUTTON_SW2        (12)

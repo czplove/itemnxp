@@ -78,7 +78,7 @@
 #include "app_sleep_functions.h"
 #include "PingParent.h"
 #ifdef MS
-//-#include "GenericBoard.h"
+#include "GenericBoard.h"
 #include "driver/E93196.h"
 #endif
 
@@ -174,9 +174,12 @@ PUBLIC void APP_vInitialiseNode(void)
      * context from flash
      */
     APP_bButtonInitialise();
-	PIR_SetDefence();	//-这个初始化必须保证中断已经准备好了,否则中断错过会导致传感器失效
-	ProcessDOCIInterrupt();
-	vAHI_DioInterruptEnable(PIR_DOCI_PIN,0);
+	//-PIR_SetDefence();	//-这个初始化必须保证中断已经准备好了,否则中断错过会导致传感器失效
+	//-ProcessDOCIInterrupt();
+	//-DOCI_INIT_IN(); 
+    //-vAHI_DioSetPullup(PIR_DOCI_PIN,0);
+	//-vAHI_DioWakeEdge(PIR_DOCI_PIN,0);
+	//-vAHI_DioInterruptEnable(PIR_DOCI_PIN,0);
 
 	APP_vManagelvInit();	//-初始化ADC
 
@@ -215,6 +218,8 @@ PUBLIC void APP_vInitialiseNode(void)
 
     APP_ZCL_vInitialise();
 
+    eAppApiPlmeSet(PHY_PIB_ATTR_TX_POWER, 10);
+
     /*Copy the EEPROM stuff on the shared structure */
     if (eStatusReload != PDM_E_STATUS_OK)
     {
@@ -237,11 +242,11 @@ PUBLIC void APP_vInitialiseNode(void)
         app_vStartNodeFactoryNew();
     }
     //-vInitIndicationLEDs();	//-这个不初始化指示灯就失效了
-    vAHI_DioSetDirection(0,1<<0);	//-设置为输出,使用这个就可以代替上面函数的功能
-    vAHI_DioSetDirection(0,1<<12);
+    vAHI_DioSetDirection(0,WL_BOARD_LED_D2_VAL);	//-设置为输出,使用这个就可以代替上面函数的功能
+    vAHI_DioSetDirection(0,WL_BOARD_LED_D1_VAL);
 
-    vAHI_DioSetOutput(1<<0,0);	//-关灯
-    vAHI_DioSetOutput(1<<12,0);
+    vAHI_DioSetOutput(WL_BOARD_LED_D2_VAL,0);	//-关灯
+    vAHI_DioSetOutput(WL_BOARD_LED_D1_VAL,0);
 
 #ifdef VMS
     bool_t bStatus= bTSL2550_Init();
@@ -481,7 +486,7 @@ PRIVATE void vDeletePDMOnButtonPress(uint8 u8ButtonDIO)
 void IASZONE_STATUS_MASK_SET_fun(void)
 {
 	//-vGenericLEDSetOutput(GEN_BOARD_LED_D2_VAL,TRUE);
-	vAHI_DioSetOutput(0,1<<0);
+	vAHI_DioSetOutput(0,WL_BOARD_LED_D2_VAL);
 	//-vAHI_DioSetOutput(1<<0,0);
 	                        //-DBG_vPrintf(TRACE_ZONE_NODE,"\nCLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_SET\n ");
 	app_vUpdateZoneStatusAttribute (
@@ -494,7 +499,7 @@ void IASZONE_STATUS_MASK_SET_fun(void)
 void IASZONE_STATUS_MASK_RESET_fun(void)
 {
 	//-vGenericLEDSetOutput(GEN_BOARD_LED_D2_VAL,FALSE);
-	vAHI_DioSetOutput(1<<0,0);
+	vAHI_DioSetOutput(WL_BOARD_LED_D2_VAL,0);
 	                        //-DBG_vPrintf(TRACE_ZONE_NODE,"\nCLD_IASZONE_STATUS_MASK_ALARM1,CLD_IASZONE_STATUS_MASK_RESET\n ");
 	                        app_vUpdateZoneStatusAttribute (
 	                                                        ZONE_ZONE_ENDPOINT,            /*uint8                             u8SourceEndPoint,*/

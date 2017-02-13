@@ -63,7 +63,7 @@
 #include "app_ias_indicator.h"
 #endif
 #ifdef MS
-//-#include "GenericBoard.h"
+#include "GenericBoard.h"
 #endif
 /****************************************************************************/
 /***        Macro Definitions                                             ***/
@@ -300,8 +300,8 @@ PRIVATE void vSetUpWakeUpConditions(void)
 	//-vAHI_DioSetDirection(12<<0,0);	//-ÂÌµÆ
 	//-vAHI_DioSetPullup(12<<0,0);
 
-    vAHI_DioSetOutput(1<<0,0);	//-¹ØµÆ
-    vAHI_DioSetOutput(1<<12,0);
+    vAHI_DioSetOutput(WL_BOARD_LED_D2_VAL,0);	//-¹ØµÆ
+    vAHI_DioSetOutput(WL_BOARD_LED_D1_VAL,0);
 
 	//-vAHI_DioSetDirection(11<<0,0);	//-SERIN
     //-vAHI_DioSetPullup(11<<0,0);

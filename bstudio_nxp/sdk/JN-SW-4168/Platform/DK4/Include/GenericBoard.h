@@ -55,15 +55,19 @@ extern "C" {
 /****************************************************************************/
 
 /*Switches*/
-#define GEN_BOARD_BUTTON_S1_VAL       (1)
-#define GEN_BOARD_BUTTON_S2_VAL       (2)
-#define GEN_BOARD_BUTTON_S3_VAL       (4)
-#define GEN_BOARD_BUTTON_S4_VAL       (8)
+//-#define GEN_BOARD_BUTTON_S1_VAL       (1)
+//-#define GEN_BOARD_BUTTON_S2_VAL       (2)
+//-#define GEN_BOARD_BUTTON_S3_VAL       (4)
+//-#define GEN_BOARD_BUTTON_S4_VAL       (8)
 
 /*LEDs*/
-#define GEN_BOARD_LED_D1_VAL          (1)
-#define GEN_BOARD_LED_D2_VAL          (2)
-#define GEN_BOARD_LED_D3_VAL          (4) 
+//-#define GEN_BOARD_LED_D1_VAL          (1)
+//-#define GEN_BOARD_LED_D2_VAL          (2)
+//-#define GEN_BOARD_LED_D3_VAL          (4)
+#define WL_BOARD_LED_D1_VAL          (1<<18)	//-ÔËÐÐµÆ,À¶µÆ
+#define WL_BOARD_LED_D2_VAL          (1<<9)	//-±¨¾¯µÆ,ºìµÆ
+
+
 /****************************************************************************/
 /***        Type Definitions                                              ***/
 /****************************************************************************/
@@ -72,13 +76,13 @@ extern "C" {
 /****************************************************************************/
 /***        Exported Functions                                            ***/
 /****************************************************************************/
-PUBLIC bool_t bPotEnable(void);
-PUBLIC uint16 u16ReadPotValue(void);
-PUBLIC bool_t bPotDisable(void);
-PUBLIC void vGenericButtonInit(void);
-PUBLIC uint8 u8GenericButtonRead(void);
-void vGenericLEDInit(void);
-PUBLIC void vGenericLEDSetOutput(uint8 u8LEDBitmap, bool_t bOn);
+//-PUBLIC bool_t bPotEnable(void);
+//-PUBLIC uint16 u16ReadPotValue(void);
+//-PUBLIC bool_t bPotDisable(void);
+//-PUBLIC void vGenericButtonInit(void);
+//-PUBLIC uint8 u8GenericButtonRead(void);
+//-void vGenericLEDInit(void);
+//-PUBLIC void vGenericLEDSetOutput(uint8 u8LEDBitmap, bool_t bOn);
 /****************************************************************************/
 /***        Exported Variables                                            ***/
 /****************************************************************************/

@@ -88,7 +88,7 @@ typedef enum{
 }ConfigureE93196Cmd_t;
 /* Exported constants --------------------------------------------------------*/
 #define PIR_SERIN_PIN (1<<11)
-#define PIR_DOCI_PIN (1<<17)
+#define PIR_DOCI_PIN (1<<19)
 
 
 

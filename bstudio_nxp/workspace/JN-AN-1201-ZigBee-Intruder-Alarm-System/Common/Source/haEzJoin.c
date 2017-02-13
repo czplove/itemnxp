@@ -216,7 +216,7 @@ PUBLIC teEZ_State eEZ_GetJoinState(void)
 PUBLIC void vEZ_EZModeNWKJoinHandler(ZPS_tsAfEvent *pZPSevent,teEZ_JoinAction eJoinAction)
 {
 	bool_t bBackOffTimerExpirredFlag;
-	bBackOffTimerExpirredFlag = bBackOffTimerExpirred();
+	bBackOffTimerExpirredFlag = bBackOffTimerExpirred();	//-15分钟计时到返回TRUE
 
 	if( bBackOffTimerExpirredFlag && (sEZModeData.u8EZSetUpState != E_EZ_BACKOFF) )
 	{
